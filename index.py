@@ -6,6 +6,7 @@ import re
 def title_from_dirname(dirname):
     title = " ".join(map(lambda x: x.capitalize(), dirname.split("-")))
     title = re.sub(r"[mM][sS][xX]", r"MSX", title)
+    title = re.sub(r"[sS][dD][kK]", r"SDK", title)
     title = re.sub(r"([0-9]+ )", r"", title)
     return title
 

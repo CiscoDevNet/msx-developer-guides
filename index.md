@@ -7,7 +7,7 @@
 * [Configuring Security Clients](01-msx-developer-program-basics/80-configuring-security-clients.md)
 * [Understanding Roles and Permissions](01-msx-developer-program-basics/90-understanding-roles-and-permissions.md)
 
-# MSX Platform Sdk
+# MSX Platform SDK
 * [Introducing the MSX Platform SDK](02-msx-platform-sdk/01-introducing-the-msx-platform-sdk.md)
 * [Using Java To Get an Access Token With the Password Grant](02-msx-platform-sdk/02-using-java-to-get-an-access-token-with-the-password-grant.md)
 * [Using Go To Get an Access Token With the Password Grant](02-msx-platform-sdk/03-using-go-to-get-an-access-token-with-the-password-grant.md)
