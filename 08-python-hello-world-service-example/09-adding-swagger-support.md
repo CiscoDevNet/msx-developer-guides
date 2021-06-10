@@ -26,7 +26,7 @@ Swagger documentation in the Cisco MSX Portal.
 <br>
 
 ## Prerequisites
-* Go Hello World Service 2 [(help me)](https://github.com/CiscoDevNet/msx-examples/tree/main/python-hello-world-service-2)
+* Python Hello World Service 2 [(help me)](https://github.com/CiscoDevNet/msx-examples/tree/main/python-hello-world-service-2)
 * access to an MSX environment [(help me)](../01-msx-developer-program-basics/02-getting-access-to-an-msx-environment.md)
 * Python MSX Swagger [(help me)](https://github.com/CiscoDevNet/python-msx-swagger)
 
@@ -134,18 +134,20 @@ from msxswagger import MSXSwaggerConfig, Security, DocumentationConfig, Sso
 from controllers.items_controller import ItemsApi, ItemApi
 from controllers.languages_controller import LanguageApi, LanguagesApi
 
+SSO_URL = "https://MY_MSX_HOSTNAME/idm"
+PUBLIC_CLIENT_ID = "hello-world-service-public-client"
+PRIVATE_CLIENT_ID = "hello-world-service-private-client"
+PRIVATE_CLIENT_SECRET = "make-up-a-private-client-secret-and-keep-it-safe"
 
 app = Flask(__name__)
-sso = Sso(base_url='https://MY_MSX_HOSTNAME/idm',
-          client_id='hello-world-service-public-client')
 
-documentation_config = DocumentationConfig(
+swagger_config = DocumentationConfig(
 	root_path='/helloworld',
-	security=Security(True, sso))
+	security=Security(True, Sso(base_url=SSO_URL, client_id=PUBLIC_CLIENT_ID)))
 
 swagger = MSXSwaggerConfig(
 	app,
-	documentation_config,
+	swagger_config,
 	swagger_resource="swagger.json")
 
 swagger.api.add_resource(ItemsApi, "/api/v1/items")
