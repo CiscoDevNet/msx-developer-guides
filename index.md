@@ -67,7 +67,9 @@
 # Python Hello World Service Example
 * [Creating a Hello World Service in Python](08-python-hello-world-service-example/01-creating-a-hello-world-service-in-python.md)
 * [Building the Component](08-python-hello-world-service-example/02-building-the-component.md)
-* [Adding Swagger Support](08-python-hello-world-service-example/06-adding-swagger-support.md)
+* [Creating the Security Clients](08-python-hello-world-service-example/08-creating-the-security-clients.md)
+* [Adding Swagger Support](08-python-hello-world-service-example/09-adding-swagger-support.md)
+* [Implementing Role Based Access Control](08-python-hello-world-service-example/10-implementing-role-based-access-control.md)
 
 # Reference
 * [Component Manager Manifest Reference](reference/component-manager-manifest-reference.md)
