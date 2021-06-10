@@ -42,8 +42,7 @@ associated with it.
 ## Configuring the Project
 Adding security to the Hello World Service is an exercise in configuration. In addition to updating some existing files, we will also add some new ones. Take note of the vertical ellipsis which are used to demarcate partial updates.
 
-There are quite a few files to add in this guide but once you have completed the configuration, the project will look
-like this.
+There are quite a few files to add in this guide but once you have completed the configuration, the project will look like this.
 
 ![](images/configuring-rbac-1.png)
 
@@ -450,16 +449,15 @@ rm -f helloworldservice-1.0.0.tar.gz
 
 
 ## Deploying the Component
-Log in to your MSX environment and deploy `helloworldservice-1.0.0-component.tar.gz` using **MSX UI->Settings->
-Components** [(help me)](../03-msx-component-manager/04-onboarding-and-deploying-components.md). If the
-helloworldservice is already deployed, delete it before uploading it again.
+Log in to your MSX environment and deploy `helloworldservice-1.0.0-component.tar.gz` using **MSX UI -> Settings -> Components** [(help me)](../03-msx-component-manager/04-onboarding-and-deploying-components.md). If the helloworldservice is already deployed, delete it before uploading it again.
 
 
 ## Testing the Component
 Looking at the code above in `main.go` you can see that we only secured the Languages controller. So you can still make insecure Item requests like this.
 
 ```bash
-$ curl --insecure --request GET https://dev-plt-aio1.lab.ciscomsx.com/helloworld/api/v1/items
+$ export MY_MSX_HOSTNAME=dev-plt-aio1.lab.ciscomsx.com
+$ curl --insecure --request GET https://$MY_MSX_HOSTNAME/helloworld/api/v1/items
 [
   {
     "id":"a619249d-8d5a-4b40-8b1f-ba4da2f8199b",
@@ -473,11 +471,12 @@ $ curl --insecure --request GET https://dev-plt-aio1.lab.ciscomsx.com/helloworld
 However, if you try to get a collection of Languages without passing an access token, you will get an "Access denied" response.
 
 ```bash
-curl --insecure --request GET https://dev-plt-aio1.lab.ciscomsx.com/helloworld/api/v1/languages
+$ export MY_MSX_HOSTNAME=dev-plt-aio1.lab.ciscomsx.com
+$ curl --insecure --request GET https://$MY_MSX_HOSTNAME/helloworld/api/v1/languages
 Access denied
 ```
 
-If you log in to the Cisco MSX Portal as superuser and go to the Swagger documentation for the Hello World Service you will be able to make a request that works because the superuser can do everything. To restrict access to the API, we need to create some roles and permissions then assign them to a user.
+If you log in to the Cisco MSX Portal as superuser and go to the Swagger documentation for the Hello World Service, you will be able to make a request that works because the superuser can do everything. To restrict access to the API, we need to create some roles and permissions then assign them to a user.
 
 <br>
 
@@ -485,8 +484,7 @@ If you log in to the Cisco MSX Portal as superuser and go to the Swagger documen
 ### Creating Custom Permissions
 To keep things simple, we will use Swagger to create the Permissions.
 
-Capabilities are synonymous with Permissions in the UI, so use the payload below with “Swagger -> IDM Microservice ->
-Roles -> POST /idm/api/v1/roles/capabilities” to create the Permissions.
+Capabilities are synonymous with Permissions in the UI, so use the payload below with **Swagger -> IDM Microservice ->Roles -> POST /idm/api/v1/roles/capabilities** to create the Permissions.
 
 ```json
 {
@@ -583,7 +581,7 @@ The response will look like this but with different identifiers.
 ### Creating Custom Roles
 Now that we have some Permissions we can create an administration role with read/write access to the Language resources, and a consumer role with read-only access.
 
-Create the consumer role with read-only access with the following payload, and an “owner” of “helloworld” using “Swagger -> IDM Microservice -> Roles -> POST /idm/api/v1/roles”.
+Create the consumer role with read-only access with the following payload, and an `owner` of `helloworld` using **Swagger -> IDM Microservice -> Roles -> POST /idm/api/v1/roles**.
 
 ```json
 {
@@ -597,7 +595,7 @@ Create the consumer role with read-only access with the following payload, and a
 }
 ```
 
-Save the response, as we will need the "roleid" when we create the user in the next step. Note that the `"roleid"` from your system will be different.
+Save the response, as we will need the `roleid` when we create the user in the next step. Note that the `roleid` from your system will be different.
 
 ```json
 {
@@ -622,20 +620,20 @@ Creating the administration role is left as an exercise for the reader. You need
 <br>
 
 ### Creating a Special User
-We still need to create a user that is assigned the Role "HELLOWORLD_CONSUMER", but for it to have access to the Cisco MSX Portal we also need to give it the "OPERATOR" role.
+We still need to create a user that is assigned the Role `HELLOWORLD_CONSUMER`, but for it to have access to the Cisco MSX Portal we also need to give it the `OPERATOR` role.
 
-Use “Swagger -> IDM Microservice -> Roles -> GET /idm/api/v1/roles/{name}” in the Swagger documentation to look up the role identifier for `OPERATOR`. On the system we used that requests looks like as follows, but your access token and response will be different.
+Use **Swagger -> IDM Microservice -> Roles -> GET /idm/api/v1/roles/{name}** in the Swagger documentation to look up the role identifier for `OPERATOR`. On the system we used that requests looks like as follows, but your access token and response will be different.
 
 ```bash
-$ curl -k -X GET "https://dev-plt-aio1.lab.ciscomsx.com/idm/api/v1/roles/OPERATOR" \
+$ export MY_MSX_HOSTNAME=dev-plt-aio1.lab.ciscomsx.com
+$ curl -k -X GET "https://$MY_MSX_HOSTNAME/idm/api/v1/roles/OPERATOR" \
 -H  "accept: application/json" \
 -H  "Authorization: Bearer eyJhb…truncated…abc"
 ```
 
-You now have role identifiers for "HELLOWORLD_CONSUMER" and "OPERATOR" which we can use to create a user.
+You now have role identifiers for `HELLOWORLD_CONSUMER` and `OPERATOR` which we can use to create a user.
 
-Expand the Swagger documentation for Users and find “Swagger -> IDM Microservice -> User -> POST /idm/api/v8/users”,
-plug your role identifiers into the payload below, then call it.
+Expand the Swagger documentation for Users and find **Swagger -> IDM Microservice -> User -> POST /idm/api/v8/user**”, plug your role identifiers into the payload below, then call it.
 
 ```json
 {
@@ -652,7 +650,7 @@ plug your role identifiers into the payload below, then call it.
 }
 ```
 
-If everything went according to plan you have created a user called Jeff with roles "OPERATOR" and "HELLOWORLD_CONSUMER" with a terrible password of "Password@1". The response from our test environment looks like the following, but your identifiers will be different.
+If everything went according to plan you have created a user called `Jeff` with roles `OPERATOR` and `HELLOWORLD_CONSUMER`, and a terrible password of `Password@1`. The response from our test environment looks like the following, but your identifiers will be different.
 
 ```json
 {
@@ -678,8 +676,7 @@ If everything went according to plan you have created a user called Jeff with ro
 ## Making Requests As Jeff
 If you have not used Swagger much, the last few steps might have seemed like a chore, but we hope you made it. We will cover scripting the creation of roles and permissions in a future guide to take the sting out of it.
 
-We are now ready to make some requests as Jeff. Open the Cisco MSX Portal in an incognito browser window and login in
-a "jeff" with password "Password@1".
+We are now ready to make some requests as Jeff. Open the Cisco MSX Portal in an incognito browser window and login in a `jeff` with password `Password@1`.
 
 Once you logged in navigate to the Hello World Service Swagger documentation
 [(help me)](../01-msx-developer-program-basics/04-using-the-swagger-documentation.md).
@@ -688,13 +685,13 @@ Once you logged in navigate to the Hello World Service Swagger documentation
 
 <br>
 
-Our implementation only enforces RBAC rules on the language resources and "HELLOWORLD_CONSUMER" can only read language resources, so we should be able to do a `GET` but not `POST`, `PUT`, or `DELETE`. Here is a screenshot showing a successful `GET` request.
+Our implementation only enforces RBAC rules on the language resources and `HELLOWORLD_CONSUMER` can only read language resources, so we should be able to do a `GET` but not `POST`, `PUT`, or `DELETE`. Here is a screenshot showing a successful `GET` request.
 
 ![](images/requesting-jeff-2.png)
 
 <br>
 
-The RBAC rules will prevent Jeff from creating a new language: Poor Jeff. Aut viam inveniam aut faciam.
+The RBAC rules will prevent Jeff from creating a new language; Poor Jeff. _Aut viam inveniam aut faciam._
 
 ![](images/requesting-jeff-3.png)
 

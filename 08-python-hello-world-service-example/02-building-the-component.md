@@ -194,8 +194,8 @@ We can now test the component by updating the request we made to localhost.
 The HelloWorldService component has been installed on MSX, and we can make service requests. Set the value of "MY_MSX_ENVIRONMENT" to match your MSX environment, then run the curl command.
 
 ```bash
-$ export MY_MSX_ENVIRONMENT=dev-plt-aio1.lab.ciscomsx.com
-$ curl --insecure --request GET "https://$MY_MSX_ENVIRONMENT/helloworld/api/v1/languages"
+$ export MY_MSX_HOSTNAME=dev-plt-aio1.lab.ciscomsx.com
+$ curl --insecure --request GET "https://$MY_MSX_HOSTNAME/helloworld/api/v1/languages"
 [
   {
     "id": "01f643a5-7e34-4366-af1a-9cce5e5c68e8", 
