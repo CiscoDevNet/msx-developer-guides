@@ -128,23 +128,18 @@ $ export VAULT_ADDR="http://localhost:8200"
 
 $ export VAULT_TOKEN="s.luaQKUKIZKYo9PbqouIy5bUR"
 
+# Disable default V2 secret engine.
+$ vault secrets disable secret
+Success! Disabled the secrets engine (if it existed) at: secret/
+
+# Enable V1 secret engine.
+$ vault secrets enable -path=secret kv
+Success! Enabled the kv secrets engine at: secret/
+
 $ vault kv put secret/hello foo=bar
-Key              Value
----              -----
-created_time     2021-05-03T14:38:46.521075484Z
-deletion_time    n/a
-destroyed        false
-version          1
+Success! Data written to: secret/hello
 
 $ vault kv get secret/hello
-====== Metadata ======
-Key              Value
----              -----
-created_time     2021-05-03T14:38:46.521075484Z
-deletion_time    n/a
-destroyed        false
-version          1
-
 === Data ===
 Key    Value
 ---    -----
