@@ -13,8 +13,24 @@ Service development has to take them into account.
 * [Navigating the MSX User Interface](../01-msx-developer-program-basics/03-navigating-the-msx-user-interface.md)
 
 
-* [Tenancy](01-tenancy.md)
-* [Users](02-users.md)
-* [Roles](03-roles.md)
-* [How do Permissions Work in MSX?](03-roles.md)
+* Prerequisites
+    * [Tenancy](01-tenancy.md)
+    * [Users](02-users.md)
+    * [Roles](03-roles.md)
+    * [How do Permissions Work in MSX?](04-permissions-combined.md)
+    * [Service Catalog and Offers](05-catalog.md)
+    * [Billing](06-billing.md)
+* Operational
+    * [Components](20-components.md)
+    * [Packaging](21-packaging.md)
+    * [Deployment](22-deployment.md)
+
+
+# Usage Examples
+
+The following example walk you throgh the implementation scenarios of different services. They are structuted towards further detailing development for MSX and have link to concrete code examples.
+
+* [Device Monitoring](40-example-device-monitoring.md)
+* [Configuring Device with NSO](41-example-configuring-device-with-nso.md)
+* [Viewing Devices accross multiple DNACs](42-example-view-devices-cross-dnac.md)
 
