@@ -4,7 +4,7 @@
 * [Goals](#goals)
 * [Prerequisites](#prerequisites)
 * [Creating the Public Security Client](#creating-the-public-security-client)
-* [Creating the Private Security Client](#creating-the-public-security-client)
+* [Creating the Private Security Client](#creating-the-private-security-client)
 
 
 ## Introduction
