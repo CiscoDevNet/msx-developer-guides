@@ -67,6 +67,8 @@
 # Python Hello World Service Example
 * [Creating a Hello World Service in Python](08-python-hello-world-service-example/01-creating-a-hello-world-service-in-python.md)
 * [Building the Component](08-python-hello-world-service-example/02-building-the-component.md)
+* [Adding Consul Configuration](08-python-hello-world-service-example/04-adding-consul-configuration.md)
+* [Adding Vault Configuration](08-python-hello-world-service-example/05-adding-vault-configuration.md)
 * [Creating the Security Clients](08-python-hello-world-service-example/08-creating-the-security-clients.md)
 * [Adding Swagger Support](08-python-hello-world-service-example/09-adding-swagger-support.md)
 * [Implementing Role Based Access Control](08-python-hello-world-service-example/10-implementing-role-based-access-control.md)
