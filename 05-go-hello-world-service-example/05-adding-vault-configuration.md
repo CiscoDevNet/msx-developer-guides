@@ -31,8 +31,8 @@ In addition to non-sensitive configuration that we can pass with Consul, we also
 
 
 ## Prerequisites
-* access to an MSX environment [(help me)](docs/msx-dev/getting-access-to-an-msx-environment/d)
 * Go Hello World Service 3 [(help me)](https://github.com/CiscoDevNet/msx-examples/tree/main/go-hello-world-service-3)
+* access to an MSX environment [(help me)](../01-msx-developer-program-basics/02-getting-access-to-an-msx-environment.md)
 
 
 ## Bootstrapping Vault
@@ -95,7 +95,7 @@ vault:
 <br>
 
 ### manifest.yml
-Update `manifest.yml` to set a secret that in Vault that we can retrieve at runtime.
+Update `manifest.yml` to set a secret in Vault that we can retrieve at runtime.
 
 ```yaml
 .
@@ -274,8 +274,8 @@ func NewVault(c *config.Config) (HelloWorldVault, error) {
 
 ### main.go
 We have to do a few things in "main.go", for brevity we only include the changes.
-* connect to Consul
-* retrieve and print Consul values
+* connect to Vault
+* retrieve and print Vault values
 
 ```go
 package main

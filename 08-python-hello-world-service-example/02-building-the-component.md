@@ -83,12 +83,8 @@ Next we create or edit Dockerfile, so that we can containerize Hello World Servi
 
 ```dockerfile
 FROM python:3-alpine3.12
-COPY requirements.txt requirements.txt
-COPY app.py app.py
-COPY models/item.py models/item.py
-COPY models/language.py models/language.py
-COPY controllers/items_controller.py controllers/items_controller.py
-COPY controllers/languages_controller.py controllers/languages_controller.py
+WORKDIR /app
+ADD . /app
 RUN pip3 install -r requirements.txt
 EXPOSE 8082
 ENTRYPOINT ["flask", "run", "--host", "0.0.0.0", "--port", "8082"]
@@ -212,5 +208,6 @@ $ curl --insecure --request GET "https://$MY_MSX_HOSTNAME/helloworld/api/v1/lang
 
 <br>
 
+
 ## Conclusion
-In this guide we containerized Hello World Service and deployed it to an MSX environment. We can make `curl` requests to access our service in MSX, but it would be more useful if we could use Swagger documentation instead [(help me)](../01-msx-developer-program-basics/04-using-the-swagger-documentation.md). In the next guide we show to add Swagger support for your service in MSX.
+In this guide we containerized Hello World Service and deployed it to an MSX environment. In the next guide we show to add Consul support for your service in MSX.
