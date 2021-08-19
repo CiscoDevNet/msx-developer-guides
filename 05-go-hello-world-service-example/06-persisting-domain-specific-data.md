@@ -41,7 +41,7 @@ So far the HelloWorldService has just returned canned responses that are baked i
 
 
 ## Configuring the Project
-Before we can update the service to handle real data we need to update the project dependencies and configuration to the database. In this project we will be using CockrochDB.
+Before we can update the service to handle real data we need to update the project dependencies and configuration to the database. In this project we will be using CockroachDB.
 
 ### go.mod
 Update the module path in `go.mod` and create an alias for it as shown.

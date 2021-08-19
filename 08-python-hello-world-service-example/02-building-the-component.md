@@ -82,7 +82,7 @@ Containers:
 Next we create or edit Dockerfile, so that we can containerize Hello World Service. Create Dockerfile as shown below:
 
 ```dockerfile
-FROM python:3-alpine3.12
+FROM python:3.9.6-slim-buster
 WORKDIR /app
 ADD . /app
 RUN pip3 install -r requirements.txt
