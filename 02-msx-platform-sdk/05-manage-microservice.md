@@ -57,13 +57,16 @@ This guide outlines what is possible with the service, please check back for upd
 
 ### Create Device
 #### Description
-Device management is a central part of some MSX Services. After calling this API, user should be able to see a device associated with a given tenant and a given service pack in the tenant centric workspace of MSX. Device can display things like description, status, model, version as well as a history of all the changes applied to the device.
-A device can have live monitoring data (using MSX's monitoring capabilities) and it can be associated with one or more site.
+Device management is a central part of some MSX Services. After calling this API, user should be able to see a device associated with a given tenant and a given service pack in the tenant-centric workspace of MSX. Devices can display things like description, status, model, version, and a history of all the changes applied to the device.
+A device can have live monitoring data (using MSX's monitoring capabilities) and it can be associated with one or more sites.
+
 #### API
 POST /manage/api/v8/devices
+
 #### Prerequisites
 When specifying a model in the payload, ensure the device model is a device model recognized by MSX.
-To verify that the device model of your choosing exists, see Device Models section. You can add a model if its not already present in MSX.
+To verify that the device model of your choosing exists, see Device Models section. You can add a model if it is not already present in MSX.
+
 #### Inputs
 The following is a sample payload for creating a device.
 ```javascript
@@ -91,24 +94,28 @@ The following is a sample payload for creating a device.
   version: "15.4(3) M1"
 }
 ```
-#### Inputs Explained
-- attributes: {} : this one is optional. You can use it to store key-value pairs about your device.
-- complianceState: defaults to UNKNOWN, but options are: UNKNOWN,COMPLIANT,NOT_COMPLIANT,NOT_APPLICABLE***
-- tags: {}  : defines whether or not this device needs to be processed by other services (currently only nso is available) Set empty if not
-- tenantId: required to be valid; ensure the token used to create the request has access to the tenant in question
-- subscriptionId: required, if serviceType is not set. Subscription*** must be created by the same tenant provided.
-- serviceInstanceId: required, if serviceType is not set. Is typically created when a subscription*** is created.
-- serviceType: not required if subscriptionId and serviceInstanceId are both provided. This is the unique name of your custom service
-- serialKey: required, visual identifier for the user. This will be displayed in the devices section of the workspace
-- managed: this is entirely optional; can be set to true or false
-- model: required, and model must match exactly the model name in the device models list. See Create device model section
-- version: this model corresponds to the OS version of the device model. Suggestion is to use an accurate version, since this will be used to determine if there are any vulnerability alerts for the given model/version
-- deviceOnboarding: this attribute should never be set; it is used exclusively by manageddevice and relies on the presence of vmsservice package in nso. In the event that you want to add your device to an NSO (be it your own, or the generic nso provided by MSX), setting this variable will prevent this device from being added to the NSO service.
-- name: this can be whatever you choose to identify the device with
-- onboardType: this is not needed if deviceOnboarding is provided.
-- type/subtype: These two parameters are optional, but recommended. The values provided here can be used to filter devices in the ui (ie based on type). Setting the types/subtype for your device will enable you to create monitoring commands based on a given type/subtype, rather than having to create a new monitoring profile for each individual device.
 
-*** Details of a subscription can be retrieved by calling GET /manage/api/v3/subscriptions It would include things like subscriptionId, serviceInstanceId and serviceType. See subscriptions api section
+#### Inputs Explained
+| Attribute         | Required    | Description |
+|-------------------|-------------|-------------|
+| attributes        | optional    |  You can use it to store key-value pairs about your device. |
+| complianceState   |             | Defaults to UNKNOWN, options are: UNKNOWN, COMPLIANT, NOT_COMPLIANT, NOT_APPLICABLE. |
+| tags              | optional    | Defines whether this device needs to be processed by other services (currently only NSO is available), set empty if not. |
+| tenantId          | required    |  Ensure the token used to create the request has access to the tenant in question. |
+| subscriptionId    | required if serviceType is not set | The subscription\* must be created by the same tenant provided. |
+| serviceInstanceId | required if serviceType is not set | Is typically created when a subscription\* is created. |
+| serviceType       | optional if subscriptionId and serviceInstanceId are set | This is the unique name of your custom service. |
+| serialKey         | required    | Visual identifier for the user. This will be displayed in the devices section of the workspace. |
+| managed           | optional    | Can be set to true or false. |
+| model             | required    | Model must match the model name in the device models list exactly. See Create device model section. |
+| version           |             | Corresponds to the OS version of the device model. Suggestion is to use an accurate version, since this will be used to determine if there are any vulnerability alerts for the given model/version. |
+| deviceOnboarding  | system      | This attribute should never be set; it is used exclusively by manageddevice and relies on the presence of vmsservice package in NSO. In the event that you want to add your device to an NSO, your own or the generic NSO provided by MSX, setting this variable will prevent this device from being added to the NSO service. |
+| name              |             | This can be whatever you choose to identify the device with. |
+| onboardType       |             | Optional if deviceOnboarding is provided. |
+| type/subtype      | recommended | The values provided here can be used to filter devices in the ui (i.e. based on type). Setting the types/subtype for your device will enable you to create monitoring commands based on a given type/subtype, rather than having to create a new monitoring profile for each individual device. |
+
+\* Details of a subscription can be retrieved by calling `GET /manage/api/v3/subscriptions` It would include things like subscriptionId, serviceInstanceId and serviceType. See Subscriptions API section.
+
 #### Outputs
 ```javascript
 {
@@ -149,11 +156,14 @@ The following is a sample payload for creating a device.
    vulnerabilityState: "NOT_APPLICABLE"
 }
 ```
+
 ### Outputs Explained
-- createdOn: datestamp of the request
-- id: uniqueIdentifier, which will be referenced as deviceId from here on in
-- vulnerabilityState: will be set to not applicable by default
-- userId: this field is populated based on the user that was logged in when the auth token was generated
-- status: Shows the overall status of the device
-- statusDetails: Shows the breakdown of the different status states (ie health, lifecycle State, etc and when the status was last modified) See the API on updating device status for options
+| Attribute            | Description |
+|----------------------|-------------|
+| createdOn            | Datestamp of the request. |
+| id                   | A unique system generated identifier which will be referenced as deviceId from here on in. |
+| vulnerabilityState   | Defaults to NOT_APPLICABLE, options are UNKNOWN, VULNERABLE, NOT_VULNERABLE, NOT_APPLICABLE. |  
+| userId               | This field is populated based on the user that was logged in when the auth token was generated. |
+| status               | Shows the overall status of the device. |
+| statusDetails        | Shows the breakdown of the different status states (e.g. health, lifecycle state, when the status was last modified),  ee the API on updating device status for options. |
 
