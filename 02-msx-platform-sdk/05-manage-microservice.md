@@ -69,33 +69,35 @@ To verify that the device model of your choosing exists, see Device Models secti
 
 #### Inputs
 The following is a sample payload for creating a device.
-```javascript
+
+```json
 {
-  attributes: {
-    deviceRegistrationInProgress: true,
-    deviceTypeName: "CISCO CSR 1000v",
-    deviceInterfaces: "[{\"name\":\"GigabitEthernet1\",\"roles\":[\"onboard\",\"wan\"],\"snmp\":\"GigabitEthernet1\",\"nedId\":\"cisco-ios\"}]",
-    devicePassword: "$8$MGg7+Cx0syRusnXmOG5STbgXrQccIA+A8Dd7HKl6mrjf4VW3gr+UhpZJoh0VL7o6"
-  },
-  complianceState: "COMPLIANT",
-  managed: false,
-  model: "CISCO CSR 1000v",
-  name: "CPE-25de466c-7ce7-494b-9817-f4ae8ab31bcb",
-  onboardInformation: {},
-  onboardType: "",
-  serialKey: "FTX1738AJMG",
-  serviceInstanceId: "tst310453251-3df577a4d3454c3ab7fedf4d53562231-sda",
-  serviceType: "manageddevice",
-  subType: "ISR",
-  subscriptionId: "tst310453251-3df577a4d3454c3ab7fedf4d53562231-sda",
-  tags: {},
-  tenantId: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-  type: "CISCO CSR 1000v",
-  version: "15.4(3) M1"
+    attributes: {
+        deviceRegistrationInProgress: true,
+        deviceTypeName: "CISCO CSR 1000v",
+        deviceInterfaces: "[{\"name\":\"GigabitEthernet1\",\"roles\":[\"onboard\",\"wan\"],\"snmp\":\"GigabitEthernet1\",\"nedId\":\"cisco-ios\"}]",
+        devicePassword: "$8$MGg7+Cx0syRusnXmOG5STbgXrQccIA+A8Dd7HKl6mrjf4VW3gr+UhpZJoh0VL7o6"
+    },
+    complianceState: "COMPLIANT",
+    managed: false,
+    model: "CISCO CSR 1000v",
+    name: "CPE-25de466c-7ce7-494b-9817-f4ae8ab31bcb",
+    onboardInformation: {},
+    onboardType: "",
+    serialKey: "FTX1738AJMG",
+    serviceInstanceId: "tst310453251-3df577a4d3454c3ab7fedf4d53562231-sda",
+    serviceType: "manageddevice",
+    subType: "ISR",
+    subscriptionId: "tst310453251-3df577a4d3454c3ab7fedf4d53562231-sda",
+    tags: {},
+    tenantId: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+    type: "CISCO CSR 1000v",
+    version: "15.4(3) M1"
 }
 ```
 
 #### Inputs Explained
+
 | Attribute         | Required    | Description |
 |-------------------|-------------|-------------|
 | attributes        | optional    |  You can use it to store key-value pairs about your device. |
@@ -117,47 +119,49 @@ The following is a sample payload for creating a device.
 \* Details of a subscription can be retrieved by calling `GET /manage/api/v3/subscriptions` It would include things like subscriptionId, serviceInstanceId and serviceType. See Subscriptions API section.
 
 #### Outputs
-```javascript
+
+```json
 {
-   attributes: { },
-   complianceState: "COMPLIANT",
-   createdOn: "yyyy-MM-dd'T'HH:mm:ss'Z'",
-   id: "uniqueIdentifier",
-   managed: false,
-   model: "CISCO CSR 1000v",
-   modifiedOn: "yyyy-MM-dd'T'HH:mm:ss'Z'",
-   name: "nameofyourdevice",
-   onboardInformation: { },
-   providerId: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-   serialKey: "FTX1738AJMG",
-   serviceInstanceId: "tst310453251-3df577a4d3454c3ab7fedf4d53562231-sda",
-   serviceType: "helloworld",
-   status: {
-      lastUpdated: "yyyy-MM-dd'T'HH:mm:ss'Z'",
-      lastUpdatedMessage: "Updated by system",
-      severity: "1",
-      value: "GOOD"
-   },
-   statusDetails: {
-      healthStatus: {
-         value: "UP",
-         severity: "3",
-         lastUpdated: "2020-01-29T09:12:33.001Z",
-         lastUpdatedMesage: "Updated by system user"
-      },
-   },
-   subType: "ISR",
-   subscriptionId: "tst310453251-3df577a4d3454c3ab7fedf4d53562231-sda",
-   tags: {},
-   tenantId: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-   type: "CISCO CSR 1000v",
-   userId: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-   version: "15.4(3) M1",
-   vulnerabilityState: "NOT_APPLICABLE"
+    attributes: { },
+    complianceState: "COMPLIANT",
+    createdOn: "yyyy-MM-dd'T'HH:mm:ss'Z'",
+    id: "uniqueIdentifier",
+    managed: false,
+    model: "CISCO CSR 1000v",
+    modifiedOn: "yyyy-MM-dd'T'HH:mm:ss'Z'",
+    name: "nameofyourdevice",
+    onboardInformation: { },
+    providerId: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+    serialKey: "FTX1738AJMG",
+    serviceInstanceId: "tst310453251-3df577a4d3454c3ab7fedf4d53562231-sda",
+    serviceType: "helloworld",
+    status: {
+        lastUpdated: "yyyy-MM-dd'T'HH:mm:ss'Z'",
+        lastUpdatedMessage: "Updated by system",
+        severity: "1",
+        value: "GOOD"
+    },
+    statusDetails: {
+        healthStatus: {
+            value: "UP",
+            severity: "3",
+            lastUpdated: "2020-01-29T09:12:33.001Z",
+            lastUpdatedMesage: "Updated by system user"
+        },
+    },
+    subType: "ISR",
+    subscriptionId: "tst310453251-3df577a4d3454c3ab7fedf4d53562231-sda",
+    tags: {},
+    tenantId: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+    type: "CISCO CSR 1000v",
+    userId: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+    version: "15.4(3) M1",
+    vulnerabilityState: "NOT_APPLICABLE"
 }
 ```
 
 ### Outputs Explained
+
 | Attribute            | Description |
 |----------------------|-------------|
 | createdOn            | Datestamp of the request. |
