@@ -11,7 +11,8 @@
   * [requirements.txt](#requirementstxt)
 * [Adding the Datastore](#adding-the-datastore)
   * [helpers/cockroach_helper.py](#helperscockroach_helperpy)
-  * [models/language.py]
+  * [models/language.py](#modelslanguagepy)
+  * [models/items.py](#modelsitempy)
   * [controllers/languages_controller.py](#controllerslanguages_controllerpy)
   * [controllers/items_controller.py](#controllersitems_controllerpy)
   * [app.py](#apppy)
@@ -378,7 +379,7 @@ class CockroachHelper(object):
 
 <br>
 
-### models/languge.py
+### models/language.py
 Update `models/language.py` so that the constructor can populate an instance from a database row.
 
 ```python
@@ -403,7 +404,7 @@ class Language:
 
 <br>
 
-### models/items.py
+### models/item.py
 Update `models/item.py` so that the constructor can populate an instance from a database row.
 
 ```python
