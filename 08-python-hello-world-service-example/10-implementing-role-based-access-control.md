@@ -44,6 +44,7 @@ Adding security to the Hello World Service is an exercise in configuration. In a
 
 ### requirements.txt
 An MSX integration library is required to support RBAC (roles based access control) and Tenancy. We declare that dependency in `requirements.txt` as shown:
+
 ```python
 Flask==1.1.2
 Flask-Cors==3.0.10
@@ -62,6 +63,7 @@ msxsecurity @ git+https://github.com/CiscoDevNet/python-msx-security@v0.1.0
 
 ### models/error.py
 So far all the Hello World Service responses have been fixed. As we are going to introduce RBAC we need to declare the error model defined in the contract, so we return suitable responses.
+
 ```python
 class Error:
     def __init__(self, code=None, message=None):
@@ -99,10 +101,6 @@ ENTRYPOINT ["flask", "run", "--host", "0.0.0.0", "--port", "8082"]
 Hello World Service uses `GET /helloworld/api/v1/items` for the health check, so we cannot add security to that endpoint. Instead, we secure the `Languages` controller updating it as follows:
 
 ```python
-#
-# Copyright (c) 2021 Cisco Systems, Inc and its affiliates
-# All rights reserved
-#
 import http
 import logging
 
@@ -197,9 +195,6 @@ class LanguageApi(Resource):
                  return None, http.HTTPStatus.NO_CONTENT
 
             return LANGUAGE_NOT_FOUND, http.HTTPStatus.NOT_FOUND
-
-
-
 ```
 
 We have added `__init__` methods to both classes, which take an `MSXSecurity` object as an argument. The convenience method `has_permission` checks if the user has a given permission, takes the permission name and MSX access token as arguments. You can pull the MSX access token out of the HTTP Authorization header.

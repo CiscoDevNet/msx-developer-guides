@@ -598,11 +598,6 @@ class ItemApi(Resource):
                 return ITEM_NOT_FOUND, http.HTTPStatus.NOT_FOUND
 
             return result, http.HTTPStatus.NO_CONTENT
-
-
-
-
-
 ```
 
 <br>
@@ -691,6 +686,7 @@ RESPONSE HTTP-200 OK
 
 ### Getting Single Languages
 Retrieve a language by copying the "id" returned by the GET request.
+
 ```bash
 $ curl --request GET "http://localhost:8080/helloworld/api/v1/languages/0e118c70-d000-4acd-8c58-e649ce5d6fe4" \
 --header "Content-Type: application/json" 
@@ -707,6 +703,7 @@ RESPONSE HTTP-200 OK
 
 ### Updating Languages
 We can change the description of the language with a PUT request.
+
 ```bash
 $ curl --request PUT "http://localhost:8080/helloworld/api/v1/languages/0e118c70-d000-4acd-8c58-e649ce5d6fe4" \
 --header "Content-Type: application/json" \
@@ -724,6 +721,7 @@ RESPONSE HTTP-200 OK
 
 ### Deleting Languages
 Finally, delete a language with a DELETE request.
+
 ```bash
 $ curl --request DELETE "http://localhost:8080/helloworld/api/v1/languages/0e118c70-d000-4acd-8c58-e649ce5d6fe4" 
 
@@ -734,6 +732,7 @@ RESPONSE HTTP-204 No Content
 
 ### Creating Greeting Items
 We deleted the French language item, but we can still create a greeting item for English.
+
 ```bash
 $ curl --request POST "http://localhost:8080/helloworld/api/v1/items" \
 --header "Content-Type: application/json" \
