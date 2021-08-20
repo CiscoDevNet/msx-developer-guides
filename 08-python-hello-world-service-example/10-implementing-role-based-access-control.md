@@ -15,7 +15,7 @@
     * [Creating Custom Roles](#creating-custom-roles)
     * [Creating a Special User](#creating-a-special-user)
     * [Making Requests As Jeff](#making-requests-as-jeff)
-* [The Missing Pieces](#the-missing-pieces)
+* [Conclusion](#conclusion)
 
 
 
@@ -44,12 +44,17 @@ Adding security to the Hello World Service is an exercise in configuration. In a
 
 ### requirements.txt
 An MSX integration library is required to support RBAC (roles based access control) and Tenancy. We declare that dependency in `requirements.txt` as shown:
+
 ```python
 Flask==1.1.2
 Flask-Cors==3.0.10
 flask-restplus==0.13.0
 Werkzeug==0.16.1
-urllib3~=1.24.1
+psycopg2-binary==2.9.1
+PyYAML==5.4.1
+python-consul==1.1.0
+urllib3==1.24.1
+hvac==0.10.14
 msxswagger @ git+https://github.com/CiscoDevNet/python-msx-swagger@v0.6.0
 msxsecurity @ git+https://github.com/CiscoDevNet/python-msx-security@v0.1.0
 ```
@@ -58,6 +63,7 @@ msxsecurity @ git+https://github.com/CiscoDevNet/python-msx-security@v0.1.0
 
 ### models/error.py
 So far all the Hello World Service responses have been fixed. As we are going to introduce RBAC we need to declare the error model defined in the contract, so we return suitable responses.
+
 ```python
 class Error:
     def __init__(self, code=None, message=None):
@@ -74,40 +80,42 @@ class Error:
 <br>
 
 ### Dockerfile
-We need to update `Dockerfile` to copy `models/error.py` to our container.
+The MSX Swagger package is hosted on GitHub, so we have to make some changes to the `Dockerfile` so that it can be installed in the container. 
+
 ```dockerfile
-.
-.
-.
-COPY models/item.py models/item.py
-COPY models/language.py models/language.py
-COPY models/error.py models/error.py 
-.
-.
-.
+FROM python:3.9.6-slim-buster
+WORKDIR /app
+ADD . /app
+RUN apt-get update \
+&& apt-get install -y --no-install-recommends git \
+&& apt-get purge -y --auto-remove \
+&& rm -rf /var/lib/apt/lists/*
+RUN pip3 install -r requirements.txt
+EXPOSE 8082
+ENTRYPOINT ["flask", "run", "--host", "0.0.0.0", "--port", "8082"]
 ```
 
 <br>
 
 ### controllers/languages_controller.py
 Hello World Service uses `GET /helloworld/api/v1/items` for the health check, so we cannot add security to that endpoint. Instead, we secure the `Languages` controller updating it as follows:
+
 ```python
+import http
+import logging
+
 import flask
 from flask_restplus import Resource
+from flask_restplus import reqparse
+
 from models.error import Error
 from models.language import Language
+from config import Config
+from helpers.cockroach_helper import CockroachHelper
 
+LANGUAGE_INPUT_ARGUMENTS = ['name', 'description']
 
-LANGUAGE_ENGLISH = Language(
-    id="01f643a5-7e34-4366-af1a-9cce5e5c68e8",
-    name="English",
-    description="A West Germanic language that uses the Roman alphabet.")
-
-
-LANGUAGE_RUSSIAN = Language(
-    id="55f3028f-1b94-4edd-b14f-183b51b33d68",
-    name="Russian",
-    description="An East Slavic language that uses the Cyrillic alphabet.")
+LANGUAGE_NOT_FOUND = 'Language not found'
 
 
 def get_access_token():
@@ -117,37 +125,76 @@ def get_access_token():
 
 class LanguagesApi(Resource):
     def __init__(self, *args, **kwargs):
+        self._config = kwargs["config"]
         self._security = kwargs["security"]
 
     def get(self):
-        if self._security.has_permission("HELLOWORLD_READ_LANGUAGE", get_access_token()):
-            return [LANGUAGE_ENGLISH.to_dict(), LANGUAGE_RUSSIAN.to_dict()], 200
-        return Error(code="my_error_code", message="permission denied").to_dict(), 403
+        if not self._security.has_permission("HELLOWORLD_READ_LANGUAGE", get_access_token()):
+            return Error(code="my_error_code", message="permission denied").to_dict(), 403
+
+        with CockroachHelper(self._config) as db:
+            rows = db.get_rows('Languages')
+            logging.info(rows)
+
+        languages = [Language(row=x) for x in rows]
+        return [x.to_dict() for x in languages], http.HTTPStatus.OK
 
     def post(self):
-        if self._security.has_permission("HELLOWORLD_WRITE_LANGUAGE", get_access_token()):
-            return LANGUAGE_ENGLISH.to_dict(), 201
-        return Error(code="my_error_code", message="permission denied").to_dict(), 403
+        if not self._security.has_permission("HELLOWORLD_WRITE_LANGUAGE", get_access_token()):
+            return Error(code="my_error_code", message="permission denied").to_dict(), 403
+
+        parser = reqparse.RequestParser()
+        [parser.add_argument(arg) for arg in LANGUAGE_INPUT_ARGUMENTS]
+        args = parser.parse_args()
+        logging.info(args)
+
+        with CockroachHelper(self._config) as db:
+            row = db.insert_row('Languages', args)
+            return Language(row=row).to_dict(), http.HTTPStatus.CREATED
 
 
 class LanguageApi(Resource):
     def __init__(self, *args, **kwargs):
+        self._config = kwargs["config"]
         self._security = kwargs["security"]
 
     def get(self, id):
-        if self._security.has_permission("HELLOWORLD_READ_LANGUAGE", get_access_token()):
-            return LANGUAGE_ENGLISH.to_dict(), 200
-        return Error(code="my_error_code", message="permission denied").to_dict(), 403
+        if not self._security.has_permission("HELLOWORLD_READ_LANGUAGE", get_access_token()):
+            return Error(code="my_error_code", message="permission denied").to_dict(), 403
+
+        with CockroachHelper(self._config) as db:
+            row = db.get_row('Languages', id)
+            if not row:
+                return LANGUAGE_NOT_FOUND, http.HTTPStatus.NOT_FOUND
+
+            return Language(row=row).to_dict(), http.HTTPStatus.OK
 
     def put(self, id):
-        if self._security.has_permission("HELLOWORLD_WRITE_LANGUAGE", get_access_token()):
-            return LANGUAGE_ENGLISH.to_dict(), 200
-        return Error(code="my_error_code", message="permission denied").to_dict(), 403
+        if not self._security.has_permission("HELLOWORLD_WRITE_LANGUAGE", get_access_token()):
+            return Error(code="my_error_code", message="permission denied").to_dict(), 403
+
+        parser = reqparse.RequestParser()
+        [parser.add_argument(arg) for arg in LANGUAGE_INPUT_ARGUMENTS]
+        args = parser.parse_args()
+        logging.info(args)
+
+        with CockroachHelper(self._config) as db:
+            row = db.update_row('Languages', id, args)
+            if not row:
+                return LANGUAGE_NOT_FOUND, http.HTTPStatus.NOT_FOUND
+
+            return Language(row=row).to_dict(), http.HTTPStatus.OK
 
     def delete(self, id):
-        if self._security.has_permission("HELLOWORLD_WRITE_LANGUAGE", get_access_token()):
-            return "", 204
-        return Error(code="my_error_code", message="permission denied").to_dict(), 403
+        if not self._security.has_permission("HELLOWORLD_WRITE_LANGUAGE", get_access_token()):
+            return Error(code="my_error_code", message="permission denied").to_dict(), 403
+
+        with CockroachHelper(self._config) as db:
+            result = db.delete_row("Languages", id)
+            if result == "DELETE 1":
+                 return None, http.HTTPStatus.NO_CONTENT
+
+            return LANGUAGE_NOT_FOUND, http.HTTPStatus.NOT_FOUND
 ```
 
 We have added `__init__` methods to both classes, which take an `MSXSecurity` object as an argument. The convenience method `has_permission` checks if the user has a given permission, takes the permission name and MSX access token as arguments. You can pull the MSX access token out of the HTTP Authorization header.
@@ -159,71 +206,70 @@ If you want to implement Tenancy use `has_tenant`, passing it the tenant identif
 ### app.py
 We update the `Languages` controller to take an `MSXSecurity` object, but we have not created it yet. The update to `app.py` below configures that instance and passes it to the controller.
 
-Update the constants declared at the start of `app.py` to match your MSX environment and security clients [(help me)](../08-python-hello-world-service-example/08-creating-the-security-clients.md). It is possible to pull these details from Consul/Vault, so you do not need to hardcode them. This will be covered in a future example.
-
 ```python
+import logging
 from flask import Flask
-from msxsecurity import MSXSecurity, MSXSecurityConfig
-from msxswagger import MSXSwaggerConfig, Security, DocumentationConfig, Sso
+from msxsecurity import MSXSecurity
+from msxswagger import MSXSwaggerConfig
+from config import Config
 from controllers.items_controller import ItemsApi, ItemApi
 from controllers.languages_controller import LanguageApi, LanguagesApi
+from helpers.consul_helper import ConsulHelper
+from helpers.security_helper import SecurityHelper
+from helpers.swagger_helper import SwaggerHelper
+from helpers.vault_helper import VaultHelper
+from helpers.cockroach_helper import CockroachHelper
 
-SSO_URL = "https://MY_MSX_HOSTNAME/idm"
-PUBLIC_CLIENT_ID = "hello-world-service-public-client"
-PRIVATE_CLIENT_ID = "hello-world-service-private-client"
-PRIVATE_CLIENT_SECRET = "make-up-a-private-client-secret-and-keep-it-safe"
+config = Config("helloworld.yml")
+consul_helper = ConsulHelper(config.consul)
+vault_helper = VaultHelper(config.vault)
+swagger_helper = SwaggerHelper(config, consul_helper)
+security_helper = SecurityHelper(config, consul_helper, vault_helper)
 
 app = Flask(__name__)
+consul_helper.test()
+vault_helper.test()
 
-swagger_config = DocumentationConfig(
-	root_path='/helloworld',
-	security=Security(True, Sso(base_url=SSO_URL, client_id=PUBLIC_CLIENT_ID)))
+with CockroachHelper(config) as db:
+    db.test()
 
 swagger = MSXSwaggerConfig(
-	app,
-	swagger_config,
-	swagger_resource="swagger.json")
+    app=app,
+    documentation_config=swagger_helper.get_documentation_config(),
+    swagger_resource=swagger_helper.get_swagger_resource())
 
-security = MSXSecurity(MSXSecurityConfig(
-    sso_url=SSO_URL,
-    client_id=PRIVATE_CLIENT_ID,
-    client_secret=PRIVATE_CLIENT_SECRET,
-	cache_enabled=True,
-	cache_ttl_seconds=300))
+security = MSXSecurity(
+    config=security_helper.get_config(cache_enabled=True, cache_ttl_seconds=300))
 
-swagger.api.add_resource(ItemsApi, "/api/v1/items")
-swagger.api.add_resource(ItemApi, "/api/v1/items/<id>")
-swagger.api.add_resource(LanguagesApi, "/api/v1/languages", resource_class_kwargs={"security": security})
-swagger.api.add_resource(LanguageApi, "/api/v1/languages/<id>", resource_class_kwargs={"security": security})
+swagger.api.add_resource(ItemsApi, "/api/v1/items", resource_class_kwargs={"config": config})
+swagger.api.add_resource(ItemApi, "/api/v1/items/<id>", resource_class_kwargs={"config": config})
+swagger.api.add_resource(LanguagesApi, "/api/v1/languages", resource_class_kwargs={"config": config, "security": security})
+swagger.api.add_resource(LanguageApi, "/api/v1/languages/<id>", resource_class_kwargs={"config": config, "security": security})
 app.register_blueprint(swagger.api.blueprint)
 
 if __name__ == '__main__':
-	app.run()
+    app.run()
 ```
 
-<br>
-
 ## Building the Component
-Like we did in earlier guides, build the component `helloworldservice-1.0.0-component.tar.gz` by calling make with component "NAME" and "VERSION" parameters.
+Like we did in earlier guides build the component `helloworldservice-1.0.0-component.tar.gz` by calling make with component "NAME" and "VERSION" parameters. If you do not see `helloworld.yml` being added to the tarball you need to back and check the Makefile.
 
 ```bash
-$ make NAME=helloworldservice VERSION=1.0.0 
+$ make NAME=helloworldservice VERSION=1.0.0
 .
 .
 .
 docker save helloworldservice:1.0.0 | gzip > helloworldservice-1.0.0.tar.gz
-tar -czvf helloworldservice-1.0.0-component.tar.gz manifest.yml helloworldservice-1.0.0.tar.gz
+tar -czvf helloworldservice-1.0.0-component.tar.gz manifest.yml helloworld.yml helloworldservice-1.0.0.tar.gz
 a manifest.yml
+a helloworld.yml
 a helloworldservice-1.0.0.tar.gz
 rm -f helloworldservice-1.0.0.tar.gz
 ```
 
-<br>
 
 ## Deploying the Component
-Log in to your MSX environment and deploy `helloworldservice-1.0.0-component.tar.gz` using **MSX UI -> Settings -> Components** [(help me)](../03-msx-component-manager/04-onboarding-and-deploying-components.md). If the helloworldservice is already deployed, delete it before uploading it again.
-
-<br>
+Log in to your MSX environment and deploy `helloworldservice-1.0.0-component.tar.gz` using **MSX UI->Settings->Components** [(help me)](../03-msx-component-manager/04-onboarding-and-deploying-components.md). If the helloworldservice is already deployed, delete it before uploading it again.
 
 
 ## Testing the Component
@@ -246,7 +292,7 @@ $ curl --insecure --request GET https://$MY_MSX_HOSTNAME/helloworld/api/v1/items
 ]
 ```
 
-However, if you try to get a collection of Languages without passing an access token, you will get an "permission denied" response.
+However, if you try to get a collection of Languages without passing an access token, you will get a "permission denied" response.
 
 ```bash
 $ export MY_MSX_HOSTNAME=dev-plt-aio1.lab.ciscomsx.com
@@ -260,7 +306,6 @@ $ curl --insecure --request GET https://$MY_MSX_HOSTNAME/helloworld/api/v1/langu
 If you log in to the Cisco MSX Portal as superuser and go to the Swagger documentation for the Hello World Service, you will be able to make a request that works because the superuser can do everything. To restrict access to the API, we need to create some roles and permissions then assign them to a user.
 
 <br>
-
 
 ### Creating Custom Permissions
 To keep things simple, we will use Swagger to create the Permissions.
@@ -479,7 +524,7 @@ The RBAC rules will prevent Jeff from creating a new language; Poor Jeff. _Aut v
 <br>
 
 
-## The Missing Pieces
+## Conclusion
 That is it folks. We created a service from an OpenAPI Specification that integrates with MSX Swagger, and MSX Security. Then we containerized, packaged, deployed, and tested it in a production-like MSX environment.
 
 Please check back periodically for new MSX development guides.

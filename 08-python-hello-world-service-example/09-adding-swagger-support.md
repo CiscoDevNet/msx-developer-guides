@@ -45,30 +45,30 @@ Flask==1.1.2
 Flask-Cors==3.0.10
 flask-restplus==0.13.0
 Werkzeug==0.16.1
-msxswagger @ git+https://github.com/CiscoDevNet/python-msx-swagger@v0.6.0#egg=msxswagger
+psycopg2-binary==2.9.1
+PyYAML==5.4.1
+python-consul==1.1.0
+urllib3==1.24.1
+hvac==0.10.14
+msxswagger @ git+https://github.com/CiscoDevNet/python-msx-swagger@v0.6.0
 ```
 
 ### Dockerfile
-The MSX Swagger package is hosted on GitHub, so we have to make some changes to the `Dockerfile` so that it can be installed in the container. We also add the file `swagger.json` which contains the OpenAPI Specification we display in the Cisco MSX Portal.
+The MSX Swagger package is hosted on GitHub, so we have to make some changes to the `Dockerfile` so that it can be installed in the container. 
 
 ```dockerfile
-FROM python:3-alpine3.12
-COPY requirements.txt requirements.txt
-COPY app.py app.py
-# Add the OpenAPI Specification we want to display.
-COPY swagger.json swagger.json
-COPY models/item.py models/item.py
-COPY models/language.py models/language.py
-COPY controllers/items_controller.py controllers/items_controller.py
-COPY controllers/languages_controller.py controllers/languages_controller.py
-# Install git so that pip3 can install msxswagger.
-RUN apk update && apk add git
+FROM python:3.9.6-slim-buster
+WORKDIR /app
+ADD . /app
+RUN apt-get update \
+&& apt-get install -y --no-install-recommends git \
+&& apt-get purge -y --auto-remove \
+&& rm -rf /var/lib/apt/lists/*
 RUN pip3 install -r requirements.txt
 EXPOSE 8082
 ENTRYPOINT ["flask", "run", "--host", "0.0.0.0", "--port", "8082"]
 ```
 
-<br>
 
 ## Creating the Security Client
 To integrate the Hello World Service with MSX SSO, so that we can make secure requests from Swagger, we need to create a public security client [(help me)](../01-msx-developer-program-basics/80-configuring-security-clients.md). If you are using Swagger to create the security client use the payload below:
@@ -129,80 +129,64 @@ Create `swagger.json` in the root folder of the project with the contents of the
 The service we wrote in the first example already conforms to the contract above, so all that remains is to serve up the Swagger UI. Open `app.py` and update the contents as shown. In our example we load `swagger.json` and display a Swagger UI for it when the user hits `/helloworld/swagger`. The Python MSX Swagger package can also generate the Swagger UI from annotations in the code [(help me)](https://github.com/CiscoDevNet/python-msx-swagger/blob/main/README.md).
 
 ```python
+import logging
 from flask import Flask
-from msxswagger import MSXSwaggerConfig, Security, DocumentationConfig, Sso
+from msxswagger import MSXSwaggerConfig
+from config import Config
 from controllers.items_controller import ItemsApi, ItemApi
 from controllers.languages_controller import LanguageApi, LanguagesApi
+from helpers.consul_helper import ConsulHelper
+from helpers.swagger_helper import SwaggerHelper
+from helpers.vault_helper import VaultHelper
+from helpers.cockroach_helper import CockroachHelper
 
-SSO_URL = "https://MY_MSX_HOSTNAME/idm"
-PUBLIC_CLIENT_ID = "hello-world-service-public-client"
-PRIVATE_CLIENT_ID = "hello-world-service-private-client"
-PRIVATE_CLIENT_SECRET = "make-up-a-private-client-secret-and-keep-it-safe"
+config = Config("helloworld.yml")
+consul_helper = ConsulHelper(config.consul)
+vault_helper = VaultHelper(config.vault)
+swagger_helper = SwaggerHelper(config, consul_helper)
 
 app = Flask(__name__)
-
-swagger_config = DocumentationConfig(
-	root_path='/helloworld',
-	security=Security(True, Sso(base_url=SSO_URL, client_id=PUBLIC_CLIENT_ID)))
+consul_helper.test()
+vault_helper.test()
+with CockroachHelper(config) as db:
+    db.test()
 
 swagger = MSXSwaggerConfig(
-	app,
-	swagger_config,
-	swagger_resource="swagger.json")
+    app=app,
+    documentation_config=swagger_helper.get_documentation_config(),
+    swagger_resource=swagger_helper.get_swagger_resource())
 
-swagger.api.add_resource(ItemsApi, "/api/v1/items")
-swagger.api.add_resource(ItemApi, "/api/v1/items/<id>")
-swagger.api.add_resource(LanguagesApi, "/api/v1/languages")
-swagger.api.add_resource(LanguageApi, "/api/v1/languages/<id>")
+swagger.api.add_resource(ItemsApi, "/api/v1/items", resource_class_kwargs={"config": config})
+swagger.api.add_resource(ItemApi, "/api/v1/items/<id>", resource_class_kwargs={"config": config})
+swagger.api.add_resource(LanguagesApi, "/api/v1/languages", resource_class_kwargs={"config": config})
+swagger.api.add_resource(LanguageApi, "/api/v1/languages/<id>", resource_class_kwargs={"config": config})
 app.register_blueprint(swagger.api.blueprint)
 
 if __name__ == '__main__':
-	app.run()
+    app.run()
 ```
 
-Make sure you update `sso.base_url` and `sso.client_id` to match your MSX environment and security client respectively. After you have added Consul support to your application you will be able to look up those values at runtime, so they do not need to be hard coded. To disable SSO integration set `security.enabled` to false, or remove the `Security` object from `DocumentationConfig`.
-
-| Property | Consul Property | Example |
-|----------|-----------------|----------|
-| sso.base_url | thirdpartyservices/defaultapplication/swagger.security.sso.baseUrl | https://dev-plt-aio1.lab.ciscomsx.com/idm |
-| sso.client_id | thirdpartyservices/helloworldservice/public.security.clientId | hello-world-service-public-client |
-
-<br>
 
 ## Building the Component
-Like we did in earlier guides, build the component `helloworldservice-1.0.0-component.tar.gz` by calling make with component "NAME" and "VERSION" parameters.
+Like we did in earlier guides build the component `helloworldservice-1.0.0-component.tar.gz` by calling make with component "NAME" and "VERSION" parameters. If you do not see `helloworld.yml` being added to the tarball you need to back and check the Makefile.
 
 ```bash
-$ make NAME=helloworldservice VERSION=1.0.0 
+$ make NAME=helloworldservice VERSION=1.0.0
 .
 .
 .
- => [2/10] COPY requirements.txt requirements.txt
- => [3/10] COPY app.py app.py
- => [4/10] COPY swagger.json swagger.json
- => [5/10] COPY models/item.py models/item.py
- => [6/10] COPY models/language.py models/language.py
- => [7/10] COPY controllers/items_controller.py controllers/items_controller.py
- => [8/10] COPY controllers/languages_controller.py controllers/languages_controller.py
- => [9/10] RUN apk update && apk add git
- => [10/10] RUN pip3 install -r requirements.txt
- => exporting to image
- => => exporting layers
- => => writing image sha256:2999bbdf208b7187c5dee474ccfbead438c43ad83f9abcb04083c049b7ff9ec1
- => => naming to docker.io/library/helloworldservice:1.0.0
 docker save helloworldservice:1.0.0 | gzip > helloworldservice-1.0.0.tar.gz
-tar -czvf helloworldservice-1.0.0-component.tar.gz manifest.yml helloworldservice-1.0.0.tar.gz
+tar -czvf helloworldservice-1.0.0-component.tar.gz manifest.yml helloworld.yml helloworldservice-1.0.0.tar.gz
 a manifest.yml
+a helloworld.yml
 a helloworldservice-1.0.0.tar.gz
 rm -f helloworldservice-1.0.0.tar.gz
 ```
 
-<br>
 
 ## Deploying the Component
 Log in to your MSX environment and deploy `helloworldservice-1.0.0-component.tar.gz` using **MSX UI->Settings->Components** [(help me)](../03-msx-component-manager/04-onboarding-and-deploying-components.md). If the helloworldservice is already deployed, delete it before uploading it again.
 
-<br>
 
 ## Finding the Swagger Documentation
 There are two ways to find the Swagger documentation for Hello World Service in 
