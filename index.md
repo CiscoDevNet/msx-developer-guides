@@ -69,6 +69,7 @@
 * [Building the Component](08-python-hello-world-service-example/02-building-the-component.md)
 * [Adding Consul Configuration](08-python-hello-world-service-example/04-adding-consul-configuration.md)
 * [Adding Vault Configuration](08-python-hello-world-service-example/05-adding-vault-configuration.md)
+* [Persisting Domain Specific Data](08-python-hello-world-service-example/06-persisting-domain-specific-data.md)
 * [Creating the Security Clients](08-python-hello-world-service-example/08-creating-the-security-clients.md)
 * [Adding Swagger Support](08-python-hello-world-service-example/09-adding-swagger-support.md)
 * [Implementing Role Based Access Control](08-python-hello-world-service-example/10-implementing-role-based-access-control.md)
