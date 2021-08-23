@@ -104,11 +104,9 @@ import (
 	"crypto/tls"
 	"encoding/base64"
 	"fmt"
-	"github.com/antihax/optional"
+	"github.com/CiscoDevNet/go-msx-sdk"
 	"net/http"
 )
-
-import msx "github.com/haemish/msx-platform-go-client"
 
 func main() {
     // TODO - Replace these with values from your test MSX environment.
