@@ -1,4 +1,4 @@
-# Using Go To Get an Access Token With the Password Grant
+# Using Python To Get an Access Token With the Password Grant
 * [Introduction](#introduction)
 * [Goals](#goals)
 * [Prerequisites](#prerequisites)
