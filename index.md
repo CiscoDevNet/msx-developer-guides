@@ -11,11 +11,12 @@
 * [Introducing the MSX Platform SDK](02-msx-platform-sdk/01-introducing-the-msx-platform-sdk.md)
 * [Using Java To Get an Access Token With the Password Grant](02-msx-platform-sdk/02-using-java-to-get-an-access-token-with-the-password-grant.md)
 * [Using Go To Get an Access Token With the Password Grant](02-msx-platform-sdk/03-using-go-to-get-an-access-token-with-the-password-grant.md)
-* [Catalog Microservice](02-msx-platform-sdk/04-catalog-microservice.md)
-* [Manage Microservice](02-msx-platform-sdk/05-manage-microservice.md)
-* [Monitor Microservice](02-msx-platform-sdk/06-monitor-microservice.md)
-* [User Management Microservice](02-msx-platform-sdk/07-user-management-microservice.md)
-* [Workflow Microservice](02-msx-platform-sdk/08-workflow-microservice.md)
+* [Using Go To Get an Access Token With the Password Grant](02-msx-platform-sdk/04-using-python-to-get-an-access-token-with-the-password-grant.md)
+* [Catalog Microservice](02-msx-platform-sdk/10-catalog-microservice.md)
+* [Manage Microservice](02-msx-platform-sdk/11-manage-microservice.md)
+* [Monitor Microservice](02-msx-platform-sdk/12-monitor-microservice.md)
+* [User Management Microservice](02-msx-platform-sdk/13-user-management-microservice.md)
+* [Workflow Microservice](02-msx-platform-sdk/14-workflow-microservice.md)
 
 # MSX Component Manager
 * [What is Component Manager in a Nutshell?](03-msx-component-manager/01-what-is-component-manager-in-a-nutshell.md)

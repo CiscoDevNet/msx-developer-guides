@@ -4,6 +4,7 @@
 * [Prerequisites](#prerequisites)
 * [Java MSX Dependency](#java-msx-dependency)
 * [Go MSX Dependency](#go-msx-dependency)
+* [Python MSX Dependency](#python-msx-dependency)
 * [MSX Microservices](#msx-microservices)
 * [References](#references)
 
@@ -73,13 +74,24 @@ require (
 ``` 
 
 
+## Python MSX Dependency
+To install the latest Python MSX SDK client run pip as shown:
+```shell
+$ pip3 install git+https://github.com/CiscoDevNet/python-msx-sdk
+```
+
+If you need to declare a dependency in `requirements.txt` so that can initialize a container you can do so by adding this:
+```python
+python-msx-sdk @ git+https://github.com/CiscoDevNet/python-msx-sdk@v1.0.2
+```
+
 ## MSX Microservices
 The MSX Platform SDK is composed of the following microservices:
-* [Catalog Microservice](../02-msx-platform-sdk/04-catalog-microservice.md)
-* [Manage Microservice](../02-msx-platform-sdk/05-manage-microservice.md)
-* [Monitor Microservice](../02-msx-platform-sdk/06-monitor-microservice.md)
-* [User Management Microservice](/docs/msx/services/management-microservice/)
-* [Workflow Microservice](../02-msx-platform-sdk/08-workflow-microservice.md)
+* [Catalog Microservice](../02-msx-platform-sdk/10-catalog-microservice.md)
+* [Manage Microservice](../02-msx-platform-sdk/11-manage-microservice.md)
+* [Monitor Microservice](../02-msx-platform-sdk/12-monitor-microservice.md)
+* [User Management Microservice](../02-msx-platform-sdk/13-user-management-microservice.md)
+* [Workflow Microservice](../02-msx-platform-sdk/14-workflow-microservice.md)
 
 
 ## References

@@ -18,10 +18,10 @@ In this guide we will write a Go application that uses the MSX Platform SDK to g
 
 
 ## Prerequisites
-* [access to an MSX environment](../01-msx-developer-program-basics/02-getting-access-to-an-msx-environment.md)
-* [a confidential security client for your application](../01-msx-developer-program-basics/80-configuring-security-clients.md) 
-* [Go 1.15](https://golang.org) 
-
+* access to an MSX environment [(help me)](../01-msx-developer-program-basics/02-getting-access-to-an-msx-environment.md)
+* a confidential security client for your application [(help me)](../01-msx-developer-program-basics/80-configuring-security-clients.md) 
+* the example source code [(help me)](https://github.com/CiscoDevNet/msx-examples/tree/main/go-password-grant-demo)
+* a Go IDE like IntelliJ GoLand [(help me)](https://www.jetbrains.com/goland/)
 
 ## Creating the OAuth2 Confidential Security Client
 Before we can create the Go application and write the code we need to create a confidential security client [(help me)](../01-msx-developer-program-basics/80-configuring-security-clients.md). Use this payload to create the security client on your MSX environment using Swagger:
