@@ -167,6 +167,23 @@ class ConsulHelper(object):
 
 ```
 
+Pay attention to the key paths in the `test`m as there are different patterns for different MSX versions and uses.
+
+| Pattern                              | Description                 |
+|--------------------------------------|-----------------------------|
+| {prefix}/helloworldservice/my.key    | for service specific values |
+| {prefix}/defaultapplication/my.key   | for common system values    |
+
+
+<br>
+
+The prefix depends on the version of MSX you are running:
+
+| MSX Version | Prefix               |
+|-------------|----------------------|
+| <= 4.0.0    | thirdpartyservices   |
+| >= 4.1.0    | thirdpartycomponents |
+
 <br>
 
 ### app.py
@@ -192,23 +209,6 @@ consul_helper.test(config.config_prefix)
 .
 .
 ```
-
-Pay attention to the key path in the "testConsul", there are different patterns for different MSX versions and uses.
-
-| Pattern                              | Description                 |
-|--------------------------------------|-----------------------------|
-| {prefix}/helloworldservice/my.key    | for service specific values |
-| {prefix}/defaultapplication/my.key   | for common system values    |
-
-
-<br>
-
-The prefix depends on the version of MSX you are running:
-
-| MSX Version | Prefix               |
-|-------------|----------------------|
-| <= 4.0.0    | thirdpartyservices   |
-| >= 4.1.0    | thirdpartycomponents |
 
 <br>
 

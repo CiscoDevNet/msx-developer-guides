@@ -158,8 +158,23 @@ class VaultHelper(object):
         secret_squirrel_location = self.get_string(f"{prefix}/helloworldservice/", "secret.squirrel.location", "UNKNOWN")
         logging.info("Where are the acorns buried?")
         logging.info(secret_squirrel_location)
-
 ```
+
+Pay attention to the key path in the `test` noting that the `secrets/` prefix is added automatically. There are different patterns for different MSX versions and uses.
+
+| Pattern                              | Description                  |
+|--------------------------------------|------------------------------|
+| {prefix}/helloworldservice/my.key    | for service specific secrets |
+| {prefix}/defaultapplication/my.key   | for common system secrets    |
+
+<br>
+
+The prefix depends on the version of MSX you are running:
+
+| MSX Version | Prefix               |
+|-------------|----------------------|
+| <= 4.0.0    | thirdpartyservices   |
+| >= 4.1.0    | thirdpartycomponents |
 
 <br>
 
@@ -188,22 +203,6 @@ vault_helper.test(config.config_prefix)
 .
 .
 ```
-
-Pay attention to the key path in the `vault.test` noting that the `secrets/` prefix is added automatically. There are different patterns for different MSX versions and uses.
-
-| Pattern                              | Description                  |
-|--------------------------------------|------------------------------|
-| {prefix}/helloworldservice/my.key    | for service specific secrets |
-| {prefix}/defaultapplication/my.key   | for common system secrets    |
-
-<br>
-
-The prefix depends on the version of MSX you are running:
-
-| MSX Version | Prefix               |
-|-------------|----------------------|
-| <= 4.0.0    | thirdpartyservices   |
-| >= 4.1.0    | thirdpartycomponents |
 
 <br>
 
