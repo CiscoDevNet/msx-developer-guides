@@ -47,7 +47,7 @@ So far the HelloWorldService has just returned canned responses that are baked i
 Before we can update the service to handle real data we need to update the project dependencies and configuration to the database. In this project we will be using CockroachDB.
 
 ### helloworld.yml
-When a service is deployed to MSX it must pick up the database configuration from Consul and Vault. The table below shows where to get those values and exampled values.
+When a service is deployed to MSX it must pick up the database configuration from Consul and Vault. The table below shows where to get those values with values.
 
 | Service        | Name                                                 | Example |
 |----------------|------------------------------------------------------|---------|
@@ -68,7 +68,9 @@ The prefix depends on the version of MSX you are running:
 | <= 4.0.0    | thirdpartyservices   |
 | >= 4.1.0    | thirdpartycomponents |
 
-When developing you can run Consul, Vault, and CockroachDB [(help me)](#references). You can pass required CockroachDB configuration in `helloworld.yml` by adding the following.
+<br>
+
+When developing you can run Consul, Vault, and CockroachDB locally [(help me)](#references). You can pass the required CockroachDB configuration in `helloworld.yml` by adding the following.
 
 ```yaml
 .
@@ -610,7 +612,7 @@ class ItemApi(Resource):
 <br>
 
 ### app.py
-The controllers above need the application configuration in order to connect to the database. Pass that configuration to the controllers in `app.py` as shown below. 
+The controllers above needs the application configuration in order to connect to the database. Pass that configuration to the controllers in `app.py` as shown below. 
 
 ```python
 .

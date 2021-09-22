@@ -24,7 +24,7 @@
 
 
 ## Introduction
-All the Hello World Service requests we have made so were insecure because we have not passed an access token in the header. In this guide, we will add that security and show how to validate the access token and get a list of permissions associated with it.
+All the Hello World Service requests we have made so far were insecure because we have not passed an access token in the header. In this guide we will add that security and show how to validate the access token and get a list of permissions associated with it.
 
 <br>
 
@@ -308,7 +308,7 @@ Then populate it in the `__init__` method:
 <br>
 
 ### app.py
-We update the `Languages` controller to take an `MSXSecurity` object, but we have not created it yet. The update to `app.py` below configures that instance and passes it to the controller.
+We updated the `Languages` controller to take an `MSXSecurity` object, but we have not created it yet. The changes to `app.py` below configure that instance and pass it to the controller.
 
 ```python
 import logging

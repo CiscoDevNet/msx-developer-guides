@@ -39,7 +39,7 @@ A number of changes and new files are required to add Swagger support to Hello W
 ![](images/python-configuring-swagger-1.png)
 
 ### requirements.txt
-In order to add Swagger support we need to add MSX Python Swagger package to `requirements.txt`. This is the file we created in the first example to manage the project dependencies, update the contents as shown.
+In order to add Swagger support we need to add the MSX Python Swagger package to `requirements.txt`. This is the file we created in the first example to manage the project dependencies, update the contents as shown.
 
 ```
 Flask==1.1.2
