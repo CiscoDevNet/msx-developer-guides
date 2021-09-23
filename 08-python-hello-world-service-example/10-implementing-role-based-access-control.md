@@ -6,7 +6,7 @@
     * [requirements.txt](#requirementstxt)
     * [Dockerfile](#dockerfile)
     * [helloworld.yml](#helloworldyml)
-*[Updating the Project](#updating-the-project)
+* [Updating the Project](#updating-the-project)
     * [models/error.py](#modelserrorpy)
     * [controllers/languages_controller.py](#controllerslanguages_controllerpy)
     * [helpers/security_helper.py](#helperssecurity_helperpy)
