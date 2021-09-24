@@ -37,7 +37,7 @@ Before we can install the Hello World Service in MSX, we need to containerize it
 Before we can package up the Hello World Service component and deploy it into MSX with Component Manager [(help me)](../03-msx-component-manager/01-what-is-component-manager-in-a-nutshell.md), we need to create some configuration files.
 
 ### manifest.xml
-The first file is the SLM manifest which tells MSX how to deploy the associated containers. Create a manifest.yml in the root folder of the project with the following contents:
+The first file is the SLM manifest which tells MSX how to deploy the associated containers. Create `manifest.yml` in the root folder of the project with the following contents:
 
 ```yaml
 ---
@@ -55,6 +55,8 @@ Containers:
     Tags:
       - "3.10.0"
       - "4.0.0"
+      - "4.1.0"
+      - "4.2.0"
       - "managedMicroservice"
       - "name=Hello World Service"
       - "componentAttributes=serviceName:helloworldservice~context:helloworld~name:Hello World Service~description:Hello World service with support for multiple languages."
@@ -67,8 +69,8 @@ Containers:
       InitialDelaySec: 30
       TimeoutSec: 30
     Limits:
-      Memory: "1500Mi"
-      CPU: "2"
+      Memory: "1000Mi"
+      CPU: "1"
     Command:
       - "/usr/local/bin/flask"
       - "run"
@@ -79,7 +81,7 @@ Containers:
 ```
 
 ### Dockerfile
-Next we create or edit Dockerfile, so that we can containerize Hello World Service. Create Dockerfile as shown below:
+Next we create or edit Dockerfile, so that we can containerize Hello World Service. Create `Dockerfile` as shown below:
 
 ```dockerfile
 FROM python:3.9.6-slim-buster
@@ -95,8 +97,7 @@ ENTRYPOINT ["flask", "run", "--host", "0.0.0.0", "--port", "8082"]
 > Take care to make sure the ports in `Dockerfile` and `manifest.xml` match.
 
 ### Makefile
-There are several steps to containerize and package the component. This will be 
-done multiple times during development, so we use a build utility. Create a file called `Makefile` with the contents below.
+There are several steps to containerize and package the component. This will be done multiple times during development, so we use a build utility. Create a file called `Makefile` with the contents below.
 
 ```bash
 IMAGE = ${NAME}-${VERSION}.tar.gz
@@ -169,16 +170,14 @@ $ curl --request GET http://localhost:8082/helloworld/api/v1/languages
 ]
 ```
 
-An alternative is to look for Hello World Service in  the `Docker Dashboard`. You can look at the logs or connect to the container if you something went wrong and you need to debug.
+An alternative is to look for Hello World Service in  the `Docker Dashboard`. You can look at the logs or connect to the container if you see something went wrong, and you need to debug.
 
 ![](images/docker-desktop-list-1.png)
 
 <br>
 
 ## Deploying the Component
-Log in to your MSX environment and deploy `helloworldservice-1.0.0-component.tar.gz` using the “Component Manager” in the “Settings” blade [(help me)]( ../03-msx-component-manager/04-onboarding-and-deploying-components.md). The component will appear in the manager as shown.
-
-[slm-blade]: ../03-msx-component-manager/04-onboarding-and-deploying-components.md 
+Log in to your MSX environment and deploy `helloworldservice-1.0.0-component.tar.gz` using the “Component Manager” in the “Settings” section [(help me)]( ../03-msx-component-manager/04-onboarding-and-deploying-components.md). The component will appear in the manager as shown.
 
 ![](images/deploying-component-1.png)
 

@@ -47,19 +47,30 @@ So far the HelloWorldService has just returned canned responses that are baked i
 Before we can update the service to handle real data we need to update the project dependencies and configuration to the database. In this project we will be using CockroachDB.
 
 ### helloworld.yml
-When a service is deployed to MSX it must pick up the database configuration from Consul and Vault. The table below shows where to get those values and exampled values.
+When a service is deployed to MSX it must pick up the database configuration from Consul and Vault. The table below shows where to get those values with values.
 
-| service        | name                                                           | example |
-|----------------|----------------------------------------------------------------|---------|
-| consul         | thirdpartyservices/defaultapplication/db.cockroach.host        | cockroachdb-public.vms.svc.cluster.local |
-| consul         | thirdpartyservices/defaultapplication/db.cockroach.port        | 26257 |
-| consul         | thirdpartyservices/defaultapplication/db.cockroach.sslmode     | verify-full |
-| consul         | thirdpartyservices/helloworldservice/db.cockroach.databaseName | helloworld |
-| consul         | thirdpartyservices/helloworldservice/db.cockroach.username     | helloworldservice_5cf38a82c57b4872b425bb89b0d3250d |
-| vault          | thirdpartyservices/helloworldservice                           | vzorfs0UFr124K5zoevP |
-| helloworld.yml | cockroach.cacert                                               | /etc/ssl/certs/ca-bundle.crt |
+| Service        | Name                                                 | Example |
+|----------------|------------------------------------------------------|---------|
+| consul         | {prefix}/defaultapplication/db.cockroach.host        | cockroachdb-public.vms.svc.cluster.local |
+| consul         | {prefix}/defaultapplication/db.cockroach.port        | 26257 |
+| consul         | {prefix}/defaultapplication/db.cockroach.sslmode     | verify-full |
+| consul         | {prefix}/helloworldservice/db.cockroach.databaseName | helloworld |
+| consul         | {prefix}/helloworldservice/db.cockroach.username     | helloworldservice_5cf38a82c57b4872b425bb89b0d3250d |
+| vault          | {prefix}/helloworldservice                           | vzorfs0UFr124K5zoevP |
+| helloworld.yml | cockroach.cacert                                     | /etc/ssl/certs/ca-bundle.crt |
 
-When developing you can run Consul, Vault, and CockroachDB [(help me)](#references). You can pass required CockroachDB configuration in `helloworld.yml` by adding the following.
+<br>
+
+The prefix depends on the version of MSX you are running:
+
+| MSX Version | Prefix               |
+|-------------|----------------------|
+| <= 4.0.0    | thirdpartyservices   |
+| >= 4.1.0    | thirdpartycomponents |
+
+<br>
+
+When developing you can run Consul, Vault, and CockroachDB locally [(help me)](#references). You can pass the required CockroachDB configuration in `helloworld.yml` by adding the following.
 
 ```yaml
 .
@@ -100,28 +111,27 @@ Infrastructure:
 ### config.py
 In previous guides we created `config.py` to bootstrap Consul and Vault into our service. That same module also serves as a common place for us to store other configuration. Update `config.py` to include a structure to store the CockroachDB values. Note that they will be populated from Consul, Vault, and `helloworld.yml`, depending on whether your service is running on local infrastructure or in an MSX environment.
 
-```python
-import pkgutil
-from os import environ
-from collections import namedtuple
-import yaml
+Add a named tuple to `config.py` for the Cockroach configuration:
 
+```python
+.
+.
+.
 ConsulConfig = namedtuple("ConsulConfig", ["host", "port", "cacert"])
 VaultConfig = namedtuple("VaultConfig", ["scheme", "host", "port", "token", "cacert"])
 CockroachConfig = namedtuple("CockroachConfig", ["host", "port", "databasename", "username", "sslmode", "cacert"])
+.
+.
+.
+```
 
+Then populate it in the `__init__` method:
 
-class Config(object):
+```python
     def __init__(self, resource_name):
-        # Load and parse the configuration.
-        resource = pkgutil.get_data(__name__, resource_name)
-        config = yaml.safe_load(resource)
-
-        # Apply environment variables and create Consul config object.
-        config["consul"]["host"] = environ.get("SPRING_CLOUD_CONSUL_HOST", config["consul"]["host"])
-        config["consul"]["port"] = environ.get("SPRING_CLOUD_CONSUL_PORT", config["consul"]["port"])
-        self.consul = ConsulConfig(**config["consul"])
-
+        .
+        .
+        .
         # Apply environment variables and create Vault config object.
         config["vault"]["scheme"] = environ.get("SPRING_CLOUD_VAULT_SCHEME", config["vault"]["scheme"])
         config["vault"]["host"] = environ.get("SPRING_CLOUD_VAULT_HOST", config["vault"]["host"])
@@ -131,6 +141,9 @@ class Config(object):
 
         # Create Cockroach config object.
         self.cockroach = CockroachConfig(**config["cockroach"])
+        .
+        .
+        .
 ```
 
 <br>
@@ -167,10 +180,6 @@ We need to work on a few more files before the database integration is complete.
 The module `helpers/cockroach_helper.py` provides the code to connect to CockroachDB and perform CRUD operations.
 
 ```python
-#
-# Copyright (c) 2021 Cisco Systems, Inc and its affiliates
-# All rights reserved
-#
 import uuid
 import logging
 import psycopg2
@@ -198,24 +207,24 @@ class CockroachHelper(object):
         self._conn = None
         # Common configuration.
         self._host = consul_helper.get_string(
-            "thirdpartyservices/defaultapplication/db.cockroach.host",
+            f"{config.config_prefix}/defaultapplication/db.cockroach.host",
             cockroach_config.host)
         self._port = consul_helper.get_string(
-            "thirdpartyservices/defaultapplication/db.cockroach.port",
+            f"{config.config_prefix}/defaultapplication/db.cockroach.port",
             cockroach_config.port)
         self._sslmode = consul_helper.get_string(
-            "thirdpartyservices/defaultapplication/db.cockroach.sslmode",
+            f"{config.config_prefix}/defaultapplication/db.cockroach.sslmode",
             cockroach_config.sslmode)
 
         # Application configuration.
         self._databasename = consul_helper.get_string(
-            "thirdpartyservices/helloworldservice/db.cockroach.databaseName",
+            f"{config.config_prefix}/helloworldservice/db.cockroach.databaseName",
             cockroach_config.databasename)
         self._username = consul_helper.get_string(
-            "thirdpartyservices/helloworldservice/db.cockroach.username",
+            f"{config.config_prefix}/helloworldservice/db.cockroach.username",
             cockroach_config.username)
         self._password = vault_helper.get_string(
-            "thirdpartyservices/helloworldservice",
+            f"{config.config_prefix}/helloworldservice",
             "db.cockroach.password",
             "")
         self._cacert = cockroach_config.cacert
@@ -603,7 +612,7 @@ class ItemApi(Resource):
 <br>
 
 ### app.py
-The controllers above need the application configuration in order to connect to the database. Pass that configuration to the controllers in `app.py` as shown below. 
+The controllers above needs the application configuration in order to connect to the database. Pass that configuration to the controllers in `app.py` as shown below. 
 
 ```python
 .

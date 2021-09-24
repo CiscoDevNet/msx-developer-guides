@@ -4,9 +4,13 @@
 * [Prerequisites](#prerequisites)
 * [Configuring the Project](#configuring-the-project)
     * [requirements.txt](#requirementstxt)
-    * [models/error.py](#modelserrorpy)
     * [Dockerfile](#dockerfile)
+    * [helloworld.yml](#helloworldyml)
+* [Updating the Project](#updating-the-project)
+    * [models/error.py](#modelserrorpy)
     * [controllers/languages_controller.py](#controllerslanguages_controllerpy)
+    * [helpers/security_helper.py](#helperssecurity_helperpy)
+    * [config.py](#configpy)
     * [app.py](#apppy)
 * [Building the Component](#building-the-component)
 * [Deploying the Component](#deploying-the-component)
@@ -20,7 +24,7 @@
 
 
 ## Introduction
-All the Hello World Service requests we have made so were insecure because we have not passed an access token in the header. In this guide, we will add that security and show how to validate the access token and get a list of permissions associated with it.
+All the Hello World Service requests we have made so far were insecure because we have not passed an access token in the header. In this guide we will add that security and show how to validate the access token and get a list of permissions associated with it.
 
 <br>
 
@@ -61,6 +65,42 @@ msxsecurity @ git+https://github.com/CiscoDevNet/python-msx-security@v0.1.0
 
 <br>
 
+### Dockerfile
+The MSX Swagger package is hosted on GitHub, so we have to make some changes to the `Dockerfile` so that it can be installed in the container. 
+
+```dockerfile
+FROM python:3.9.6-slim-buster
+WORKDIR /app
+ADD . /app
+RUN apt-get update \
+&& apt-get install -y --no-install-recommends git \
+&& apt-get purge -y --auto-remove \
+&& rm -rf /var/lib/apt/lists/*
+RUN pip3 install -r requirements.txt
+EXPOSE 8082
+ENTRYPOINT ["flask", "run", "--host", "0.0.0.0", "--port", "8082"]
+```
+
+<br> 
+
+### helloworld.yml
+When a service is deployed to MSX it will pick up the Security configuration from Consul and Vault. When developing locally you can pass values in `helloworld.yml` instead.
+
+```yaml
+.
+.
+.
+security:
+  ssourl: "http://localhost:9515/idm" # CONSUL {prefix}/defaultapplication/swagger.security.sso.baseUrl
+  clientid: "local-private-client" # CONSUL {prefix}/helloworldservice/integration.security.clientId
+  clientsecret: "make-up-a-private-client-secret-and-keep-it-safe" # Required by MSX.
+.
+.
+.
+```
+
+## Updating the Project
+
 ### models/error.py
 So far all the Hello World Service responses have been fixed. As we are going to introduce RBAC we need to declare the error model defined in the contract, so we return suitable responses.
 
@@ -77,23 +117,7 @@ class Error:
         }
 ```
 
-<br>
 
-### Dockerfile
-The MSX Swagger package is hosted on GitHub, so we have to make some changes to the `Dockerfile` so that it can be installed in the container. 
-
-```dockerfile
-FROM python:3.9.6-slim-buster
-WORKDIR /app
-ADD . /app
-RUN apt-get update \
-&& apt-get install -y --no-install-recommends git \
-&& apt-get purge -y --auto-remove \
-&& rm -rf /var/lib/apt/lists/*
-RUN pip3 install -r requirements.txt
-EXPOSE 8082
-ENTRYPOINT ["flask", "run", "--host", "0.0.0.0", "--port", "8082"]
-```
 
 <br>
 
@@ -203,8 +227,88 @@ If you want to implement Tenancy use `has_tenant`, passing it the tenant identif
 
 <br>
 
+### helpers/security_helper.py
+The module `helpers/security_helper.py` provides the code to support RBAC and Tenancy.
+
+```python
+from msxsecurity import MSXSecurityConfig
+
+from config import Config
+from helpers.consul_helper import ConsulHelper
+from helpers.vault_helper import VaultHelper
+
+
+class SecurityHelper(object):
+    def __init__(self, config: Config, consul_helper: ConsulHelper, vault_helper: VaultHelper):
+        self._config = config
+        self._consul_helper = consul_helper
+        self._vault_helper = vault_helper
+
+    def get_config(self, cache_enabled, cache_ttl_seconds):
+        sso_url = self._consul_helper.get_string(
+            key=f"{self._config.config_prefix}/defaultapplication/swagger.security.sso.baseUrl",
+            default=self._config.security.ssourl)
+        client_id = self._consul_helper.get_string(
+            key=f"{self._config.config_prefix}/helloworldservice/integration.security.clientId",
+            default=self._config.security.clientid)
+        client_secret = self._vault_helper.get_string(
+            secret=f"{self._config.config_prefix}/helloworldservice",
+            key="integration.security.clientSecret",
+            default=self._config.security.clientsecret)
+
+        return MSXSecurityConfig(
+            sso_url=sso_url,
+            client_id=client_id,
+            client_secret=client_secret,
+            cache_enabled=cache_enabled,
+            cache_ttl_seconds=cache_ttl_seconds)
+```
+
+<br>
+
+### config.py
+In previous guides we created `config.py` to bootstrap Consul and Vault into our service. That same module also serves as a common place for us to store other configuration. Update `config.py` to include a structure to store the Security values. Note that they will be populated from Consul, Vault, and `helloworld.yml`, depending on whether your service is running on local infrastructure or in an MSX environment.
+
+Add a named tuple to `config.py` for the Security configuration:
+
+```python
+.
+.
+.
+ConsulConfig = namedtuple("ConsulConfig", ["host", "port", "cacert"])
+VaultConfig = namedtuple("VaultConfig", ["scheme", "host", "port", "token", "cacert"])
+CockroachConfig = namedtuple("CockroachConfig", ["host", "port", "databasename","username", "sslmode", "cacert"])
+SwaggerConfig = namedtuple("SwaggerConfig", ["rootpath", "secure", "ssourl", "clientid", "swaggerjsonpath"])
+SecurityConfig = namedtuple("SecurityConfig", ["ssourl", "clientid", "clientsecret"])
+.
+.
+.
+```
+
+Then populate it in the `__init__` method:
+
+```python
+    def __init__(self, resource_name):
+        .
+        .
+        .
+        # Create Cockroach config object.
+        self.cockroach = CockroachConfig(**config["cockroach"])
+
+        # Create Swagger config object.
+        self.swagger = SwaggerConfig(**config["swagger"])
+
+        # Create Security config object.
+        self.security = SecurityConfig(**config["security"])
+        .
+        .
+        .
+```
+
+<br>
+
 ### app.py
-We update the `Languages` controller to take an `MSXSecurity` object, but we have not created it yet. The update to `app.py` below configures that instance and passes it to the controller.
+We updated the `Languages` controller to take an `MSXSecurity` object, but we have not created it yet. The changes to `app.py` below configure that instance and pass it to the controller.
 
 ```python
 import logging

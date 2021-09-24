@@ -5,9 +5,11 @@
 * [Configuring the Project](#configuring-the-project)
     * [requirements.txt](#requirementstxt)
     * [Dockerfile](#dockerfile)
-    * [Creating the Security Client](#creating-the-security-client)
+    * [helloworld.yml](helloworldyml)
 * [Updating the Project](#updating-the-project)
     * [swagger.json](#swaggerjson)
+    * [helpers/swagger_helper.py](#helpersswagger_helperpy)
+    * [config.py](#configpy)
     * [app.py](#apppy)
 * [Building the Component](#building-the-component)
 * [Deploying the Component](#deploying-the-component)
@@ -15,8 +17,7 @@
 * [Conclusion](#conclusion)
 
 ## Introduction
-Swagger is an important tool that allows users to explore an API [(help me)](../01-msx-developer-program-basics/04-using-the-swagger-documentation.md). In this guide, we will update Hello World Service so that we can browse its 
-Swagger documentation in the Cisco MSX Portal. 
+Swagger is an important tool that allows users to explore an API [(help me)](../01-msx-developer-program-basics/04-using-the-swagger-documentation.md). In this guide, we will update Hello World Service so that we can browse the Swagger documentation in the Cisco MSX Portal. 
 
 <br>
 
@@ -38,7 +39,7 @@ A number of changes and new files are required to add Swagger support to Hello W
 ![](images/python-configuring-swagger-1.png)
 
 ### requirements.txt
-In order to add Swagger support we need to add MSX Python Swagger package to `requirements.txt`. This is the file we created in the first example to manage the project dependencies, update the contents as shown.
+In order to add Swagger support we need to add the MSX Python Swagger package to `requirements.txt`. This is the file we created in the first example to manage the project dependencies, update the contents as shown.
 
 ```
 Flask==1.1.2
@@ -69,70 +70,115 @@ EXPOSE 8082
 ENTRYPOINT ["flask", "run", "--host", "0.0.0.0", "--port", "8082"]
 ```
 
-
-## Creating the Security Client
-To integrate the Hello World Service with MSX SSO, so that we can make secure requests from Swagger, we need to create a public security client [(help me)](../01-msx-developer-program-basics/80-configuring-security-clients.md). If you are using Swagger to create the security client use the payload below:
-
-```json
-{
-  "clientId": "hello-world-service-public-client",
-  "grantTypes": [
-    "refresh_token",
-    "authorization_code"
-  ],
-  "maxTokensPerUser": -1,
-  "useSessionTimeout": false,
-  "resourceIds": [
-  ],
-  "scopes": [
-    "address",
-    "read",
-    "phone",
-    "openid",
-    "profile",
-    "write",
-    "email"
-  ],
-  "autoApproveScopes": [
-    "address",
-    "read",
-    "phone",
-    "openid",
-    "profile",
-    "write",
-    "email"
-  ],
-  "authorities": [
-    "ROLE_USER",
-    "ROLE_PUBLIC"
-  ],
-  "registeredRedirectUris": [
-    "/**/swagger-sso-redirect.html"
-  ],
-  "accessTokenValiditySeconds": 9000,
-  "refreshTokenValiditySeconds": 18000,
-  "additionalInformation": {
-  }
-}
-```
-
 <br> 
+
+### helloworld.yml
+When a service is deployed to MSX it will pick up the Swagger configuration from Consul and Vault. When developing locally you can pass values in `helloworld.yml` instead.
+
+```yaml
+.
+.
+.
+swagger:
+  rootpath: "/helloworld"             # Required by MSX.
+  secure: true                        # Required by MSX.
+  ssourl: "http://localhost:9515/idm" # CONSUL {prefix}/defaultapplication/swagger.security.sso.baseUrl
+  clientid: "local-public-client"     # CONSUL {prefix}/helloworldservice/public.security.clientId
+  swaggerjsonpath: "swagger.json"     # Required by MSX.
+.
+.
+.
+```
 
 ## Updating the Project
 Now that the project is configured we need to add the OpenAPI Specification and update the application to serve up a Swagger UI for it.
 
 ### swagger.json
-Create `swagger.json` in the root folder of the project with the contents of the OpenAPI specification from the example [(download me)](https://github.com/CiscoDevNet/msx-examples/tree/main/python-hello-world-service-6/swagger.json). T
+Create `swagger.json` in the root folder of the project with the contents of the OpenAPI specification from the example [(download me)](https://github.com/CiscoDevNet/msx-examples/tree/main/python-hello-world-service-6/swagger.json). 
 
+<br>
+
+### helpers/swagger_helper.py
+The module `helpers/swagger_helper.py` provides the code to integrate with Swagger.
+
+```python
+from msxswagger import DocumentationConfig, Security, Sso
+
+from config import Config
+from helpers.consul_helper import ConsulHelper
+
+
+class SwaggerHelper(object):
+    def __init__(self, config: Config, consul_helper: ConsulHelper):
+        self._config = config
+        self._consul_helper = consul_helper
+
+    def get_documentation_config(self):
+        sso_url = self._consul_helper.get_string(
+            key=f"{self._config.config_prefix}/defaultapplication/swagger.security.sso.baseUrl",
+            default=self._config.swagger.ssourl)
+        client_id = self._consul_helper.get_string(
+            key=f"{self._config.config_prefix}/helloworldservice/public.security.clientId",
+            default=self._config.swagger.clientid)
+
+        return DocumentationConfig(
+            root_path='/helloworld',
+            security=Security(
+                enabled=self._config.swagger.secure,
+                sso=Sso(base_url=sso_url, client_id=client_id)))
+
+    def get_swagger_resource(self):
+        return self._config.swagger.swaggerjsonpath
+```
+
+<br>
+
+### config.py
+In previous guides we created `config.py` to bootstrap Consul and Vault into our service. That same module also serves as a common place for us to store other configuration. Update `config.py` to include a structure to store the Swagger values. Note that they will be populated from Consul, Vault, and `helloworld.yml`, depending on whether your service is running on local infrastructure or in an MSX environment.
+
+Add a named tuple to `config.py` for the Swagger configuration:
+
+```python
+.
+.
+.
+ConsulConfig = namedtuple("ConsulConfig", ["host", "port", "cacert"])
+VaultConfig = namedtuple("VaultConfig", ["scheme", "host", "port", "token", "cacert"])
+CockroachConfig = namedtuple("CockroachConfig", ["host", "port", "databasename","username", "sslmode", "cacert"])
+SwaggerConfig = namedtuple("SwaggerConfig", ["rootpath", "secure", "ssourl", "clientid", "swaggerjsonpath"])
+.
+.
+.
+```
+
+Then populate it in the `__init__` method:
+
+```python
+    def __init__(self, resource_name):
+        .
+        .
+        .
+        # Create Cockroach config object.
+        self.cockroach = CockroachConfig(**config["cockroach"])
+
+        # Create Swagger config object.
+        self.swagger = SwaggerConfig(**config["swagger"])
+        .
+        .
+        .
+```
+
+<br>
 
 ### app.py
 The service we wrote in the first example already conforms to the contract above, so all that remains is to serve up the Swagger UI. Open `app.py` and update the contents as shown. In our example we load `swagger.json` and display a Swagger UI for it when the user hits `/helloworld/swagger`. The Python MSX Swagger package can also generate the Swagger UI from annotations in the code [(help me)](https://github.com/CiscoDevNet/python-msx-swagger/blob/main/README.md).
 
 ```python
-import logging
 from flask import Flask
 from msxswagger import MSXSwaggerConfig
+
 from config import Config
+
 from controllers.items_controller import ItemsApi, ItemApi
 from controllers.languages_controller import LanguageApi, LanguagesApi
 from helpers.consul_helper import ConsulHelper
@@ -143,11 +189,13 @@ from helpers.cockroach_helper import CockroachHelper
 config = Config("helloworld.yml")
 consul_helper = ConsulHelper(config.consul)
 vault_helper = VaultHelper(config.vault)
+config.find_consul_vault_prefix(consul_helper)
 swagger_helper = SwaggerHelper(config, consul_helper)
 
 app = Flask(__name__)
-consul_helper.test()
-vault_helper.test()
+consul_helper.test(config.config_prefix)
+vault_helper.test(config.config_prefix)
+
 with CockroachHelper(config) as db:
     db.test()
 

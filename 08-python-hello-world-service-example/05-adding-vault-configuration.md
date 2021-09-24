@@ -88,24 +88,26 @@ Secrets:
 <br>
 
 ### config.py
-Add a named tuple to `config.py` for the Vault configuration, then populate it in the init method.
+Add a named tuple to `config.py` for the Vault configuration:
 
 ```python
-import pkgutil
-from os import environ
-from collections import namedtuple
-import yaml
-
+.
+.
+.
 ConsulConfig = namedtuple("ConsulConfig", ["host", "port", "cacert"])
 VaultConfig = namedtuple("VaultConfig", ["scheme", "host", "port", "token", "cacert"])
+.
+.
+.
+```
 
+Then populate it in the `__init__` method:
 
-class Config(object):
+```python
     def __init__(self, resource_name):
-        # Load and parse the configuration.
-        resource = pkgutil.get_data(__name__, resource_name)
-        config = yaml.safe_load(resource)
-
+        .
+        .
+        .
         # Apply environment variables and create Consul config object.
         config["consul"]["host"] = environ.get("SPRING_CLOUD_CONSUL_HOST", config["consul"]["host"])
         config["consul"]["port"] = environ.get("SPRING_CLOUD_CONSUL_PORT", config["consul"]["port"])
@@ -117,6 +119,9 @@ class Config(object):
         config["vault"]["port"] = environ.get("SPRING_CLOUD_VAULT_PORT", config["vault"]["port"])
         config["vault"]["token"] = environ.get("SPRING_CLOUD_VAULT_TOKEN", config["vault"]["token"])
         self.vault = VaultConfig(**config["vault"])
+        .
+        .
+        .
 ```
 
 ### helpers/vault_helper.py
@@ -147,13 +152,29 @@ class VaultHelper(object):
             logging.error(str(e))
         return default
 
-    def test(self):
+    def test(self, prefix):
         # Read a secret from Vault  and it to the console.
         # Do not leak secrets in production as it is a security violation.
-        secret_squirrel_location = self.get_string("thirdpartyservices/helloworldservice/", "secret.squirrel.location", "UNKNOWN")
+        secret_squirrel_location = self.get_string(f"{prefix}/helloworldservice/", "secret.squirrel.location", "UNKNOWN")
         logging.info("Where are the acorns buried?")
         logging.info(secret_squirrel_location)
 ```
+
+Pay attention to the key path in the `test` noting that the `secrets/` prefix is added automatically. There are different patterns for different MSX versions and uses.
+
+| Pattern                              | Description                  |
+|--------------------------------------|------------------------------|
+| {prefix}/helloworldservice/my.key    | for service specific secrets |
+| {prefix}/defaultapplication/my.key   | for common system secrets    |
+
+<br>
+
+The prefix depends on the version of MSX you are running:
+
+| MSX Version | Prefix               |
+|-------------|----------------------|
+| <= 4.0.0    | thirdpartyservices   |
+| >= 4.1.0    | thirdpartycomponents |
 
 <br>
 
@@ -171,20 +192,17 @@ from helpers.consul_helper import ConsulHelper
 from helpers.vault_helper import VaultHelper
 
 config = Config("helloworld.yml")
-consul = ConsulHelper(config.consul)
-vault = VaultHelper(config.vault)
+consul_helper = ConsulHelper(config.consul)
+vault_helper = VaultHelper(config.vault)
+config.find_consul_vault_prefix(consul_helper)
 
 app = Flask(__name__)
-consul.test()
-vault.test()
+consul_helper.test(config.config_prefix)
+vault_helper.test(config.config_prefix)
 .
 .
 .
 ```
-
-Pay attention to the key path in the `vault.test` noting that the `secrets/` prefix is added automatically, there are two possible patterns:
-* thirdpartyservices/helloworldservice/my.key - for service specific secrets
-* thirdpartyservices/defaultapplication/my.key - for common system secrets
 
 <br>
 

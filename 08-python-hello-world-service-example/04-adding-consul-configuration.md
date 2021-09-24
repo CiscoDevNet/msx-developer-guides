@@ -93,8 +93,13 @@ import pkgutil
 from os import environ
 from collections import namedtuple
 import yaml
+from consul import ACLPermissionDenied
 
 ConsulConfig = namedtuple("ConsulConfig", ["host", "port", "cacert"])
+VaultConfig = namedtuple("VaultConfig", ["scheme", "host", "port", "token", "cacert"])
+CockroachConfig = namedtuple("CockroachConfig", ["host", "port", "databasename","username", "sslmode", "cacert"])
+SwaggerConfig = namedtuple("SwaggerConfig", ["rootpath", "secure", "ssourl", "clientid", "swaggerjsonpath"])
+SecurityConfig = namedtuple("SecurityConfig", ["ssourl", "clientid", "clientsecret"])
 
 
 class Config(object):
@@ -102,11 +107,25 @@ class Config(object):
         # Load and parse the configuration.
         resource = pkgutil.get_data(__name__, resource_name)
         config = yaml.safe_load(resource)
+        self._config_prefix = None
 
         # Apply environment variables and create Consul config object.
         config["consul"]["host"] = environ.get("SPRING_CLOUD_CONSUL_HOST", config["consul"]["host"])
         config["consul"]["port"] = environ.get("SPRING_CLOUD_CONSUL_PORT", config["consul"]["port"])
         self.consul = ConsulConfig(**config["consul"])
+
+    # Find the correct Consul/Vault prefix.
+    def find_consul_vault_prefix(self, consul_helper):
+        try:
+            test_value = consul_helper.get_string("thirdpartycomponents/defaultapplication/swagger.security.sso.baseUrl", None)
+        except ACLPermissionDenied:
+            test_value = None
+        self._config_prefix = "thirdpartycomponents" if test_value else "thirdpartyservices"
+        return self._config_prefix
+
+    @property
+    def config_prefix(self):
+        return self._config_prefix
 ```
 
 <br>
@@ -135,16 +154,35 @@ class ConsulHelper(object):
         index, data = self._client.kv.get(key)
         return data["Value"].decode("utf-8") if data else default
 
-    def test(self):
+    def test(self, prefix):
         # Read our favourites from Consul and print them to the console.
         # Do not leak config in production as it is a security violation.
-        favourite_colour = self.get_string("thirdpartyservices/helloworldservice/favourite.color", "UNKNOWN")
-        logging.info("My favourite color is %s.", favourite_colour)
-        favourite_food = self.get_string("thirdpartyservices/helloworldservice/favourite.food", "UNKNOWN")
-        logging.info("My favourite food is %s.", favourite_food)
-        favourite_dinosaur = self.get_string("thirdpartyservices/helloworldservice/favourite.dinosaur", "UNKNOWN")
-        logging.info("My favourite dinosaur is %s.", favourite_dinosaur)
+        favourite_colour = self.get_string(f"{prefix}/helloworldservice/favourite.color", "UNKNOWN")
+        logging.info(f"My favourite color is {favourite_colour}")
+        favourite_food = self.get_string(f"{prefix}/helloworldservice/favourite.food", "UNKNOWN")
+        logging.info(f"My favourite food is {favourite_food}")
+        favourite_dinosaur = self.get_string(f"{prefix}/helloworldservice/favourite.dinosaur", "UNKNOWN")
+        logging.info(f"My favourite dinosaur is {favourite_dinosaur}")
+
+
 ```
+
+Pay attention to the key paths in the `test`m as there are different patterns for different MSX versions and uses.
+
+| Pattern                              | Description                 |
+|--------------------------------------|-----------------------------|
+| {prefix}/helloworldservice/my.key    | for service specific values |
+| {prefix}/defaultapplication/my.key   | for common system values    |
+
+
+<br>
+
+The prefix depends on the version of MSX you are running:
+
+| MSX Version | Prefix               |
+|-------------|----------------------|
+| <= 4.0.0    | thirdpartyservices   |
+| >= 4.1.0    | thirdpartycomponents |
 
 <br>
 
@@ -162,17 +200,15 @@ from config import Config
 from helpers.consul_helper import ConsulHelper
 
 config = Config("helloworld.yml")
-consul = ConsulHelper(config.consul)
+consul_helper = ConsulHelper(config.consul)
+config.find_consul_vault_prefix(consul_helper)
+
 app = Flask(__name__)
-consul.test()
+consul_helper.test(config.config_prefix)
 .
 .
 .
 ```
-
-Pay attention to the key path in the "testConsul", there are two possible patterns:
-* thirdpartyservices/helloworldservice/my.key - for service specific values
-* thirdpartyservices/defaultapplication/my.key - for common system values
 
 <br>
 
