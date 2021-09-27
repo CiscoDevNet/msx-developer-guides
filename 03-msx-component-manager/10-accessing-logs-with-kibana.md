@@ -24,7 +24,7 @@ When your service is running locally, inspecting the logs is no problem. As soon
 <br>
 
 ## Deploying the Component
-If you have not already deployed the Hello World Service to you MSX environment start by downloading it [(help me)](artifacts/helloworldservice-1.0.0-component.tar.gz), then use the Cisco MSX Portal to deploy it [(help me)](/docs/cmx/onboarding-and-deploying-components).
+If you have not already deployed the Hello World Service to you MSX environment start by downloading it [(help me)](artifacts/helloworldservice-1.0.0-component.tar.gz), then use the Cisco MSX Portal to deploy it [(help me)](../03-msx-component-manager/04-onboarding-and-deploying-components.md)
 
 <br>
 

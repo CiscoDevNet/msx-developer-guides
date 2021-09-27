@@ -163,11 +163,9 @@ class ConsulHelper(object):
         logging.info(f"My favourite food is {favourite_food}")
         favourite_dinosaur = self.get_string(f"{prefix}/helloworldservice/favourite.dinosaur", "UNKNOWN")
         logging.info(f"My favourite dinosaur is {favourite_dinosaur}")
-
-
 ```
 
-Pay attention to the key paths in the `test`m as there are different patterns for different MSX versions and uses.
+Pay attention to the key paths in the `test` method as there are different patterns for different MSX versions and uses.
 
 | Pattern                              | Description                 |
 |--------------------------------------|-----------------------------|

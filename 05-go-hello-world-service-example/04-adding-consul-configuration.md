@@ -135,6 +135,7 @@ type Consul struct {
 	CACert   string
 	Insecure bool
 	Token    string
+	Prefix   string
 }
 
 func ReadConfig() *Config {
@@ -236,6 +237,15 @@ func (p *HelloWorldConsul) GetString(key string, defaultValue string) (string, e
 	return defaultValue, error
 }
 
+func (p *HelloWorldConsul) FindPrefix() string {
+	_, err  := p.GetString("thirdpartycomponents/defaultapplication/swagger.security.sso.baseUrl", "")
+	if err == nil {
+		return "thirdpartycomponents"
+	} else {
+		return "thirdpartyservices"
+	}
+}
+
 func NewConsul(cfg *config.Config) (HelloWorldConsul, error) {
 	ic := HelloWorldConsul{
 		Config: cfg.Consul,
@@ -278,27 +288,40 @@ func main() {
 	if err != nil {
 		log.Printf("Could not initialize Consul: %s", err.Error())
 	}
-	testConsul(&consul)
-	.
+	config.Consul.Prefix = consul.FindPrefix()
+	testConsul(config, &consul)	.
 	.
 	.
 }
 
-func testConsul(c *consul.HelloWorldConsul) {
+func testConsul(config *config.Config, consul *consul.HelloWorldConsul) {
 	// Read our favourites from Consul and print them to the console.
 	// Do not leak config in production as it is a security violation.
-	favouriteColor, _:= c.GetString("thirdpartyservices/helloworldservice/favourite.color", "UNKNOWN")
+	favouriteColor, _:= consul.GetString(config.Consul.Prefix + "/helloworldservice/favourite.color", "UNKNOWN")
 	log.Printf("My favourite color is %s.", favouriteColor)
-	favouriteFood, _ := c.GetString("thirdpartyservices/helloworldservice/favourite.food", "UNKNOWN")
+	favouriteFood, _ := consul.GetString(config.Consul.Prefix + "/helloworldservice/favourite.food", "UNKNOWN")
 	log.Printf("My favourite food is %s.", favouriteFood)
-	favouriteDinosaur, _ := c.GetString("thirdpartyservices/helloworldservice/favourite.dinosaur", "UNKNOWN")
+	favouriteDinosaur, _ := consul.GetString(config.Consul.Prefix + "/helloworldservice/favourite.dinosaur", "UNKNOWN")
 	log.Printf("My favourite dinosaur is %s.", favouriteDinosaur)
 }
 ```
 
-Pay attention to the key path in the "testConsul", there are two possible patterns:
-* thirdpartyservices/helloworldservice/my.key - for service specific values
-* thirdpartyservices/defaultapplication/my.key - for common system values
+Pay attention to the key paths in the `testConsul` method as there are different patterns for different MSX versions and uses.
+
+| Pattern                              | Description                 |
+|--------------------------------------|-----------------------------|
+| {prefix}/helloworldservice/my.key    | for service specific values |
+| {prefix}/defaultapplication/my.key   | for common system values    |
+
+
+<br>
+
+The prefix depends on the version of MSX you are running:
+
+| MSX Version | Prefix               |
+|-------------|----------------------|
+| <= 4.0.0    | thirdpartyservices   |
+| >= 4.1.0    | thirdpartycomponents |
 
 <br>
 
@@ -471,5 +494,5 @@ We can now pass configuration to our service, the remaining pieces are:
 
 [Kibana Data Visualization Dashboard](https://www.elastic.co/kibana)
 
-[MSX Component Manager Manifest Reference](/docs/reference/component-manager-manifest)
+[MSX Component Manager Manifest Reference](../reference/component-manager-manifest-reference.md)
 

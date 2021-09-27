@@ -94,8 +94,8 @@ import (
 
 // Override configuration with values from Consul and Vault.
 func UpdateConfig(c *config.Config, consul *consul.HelloWorldConsul, vault *vault.HelloWorldVault) error {
-	c.Swagger.SsoURL, _ = consul.GetString("thirdpartyservices/defaultapplication/swagger.security.sso.baseUrl", c.Swagger.SsoURL)
-	c.Swagger.ClientID, _ = consul.GetString("thirdpartyservices/helloworldservice/public.security.clientId", c.Swagger.ClientID)
+	c.Swagger.SsoURL, _ = consul.GetString(c.Consul.Prefix + "/defaultapplication/swagger.security.sso.baseUrl", c.Swagger.SsoURL)
+	c.Swagger.ClientID, _ = consul.GetString(c.Consul.Prefix + "/helloworldservice/public.security.clientId", c.Swagger.ClientID)
 	return nil
 }
 
@@ -181,8 +181,8 @@ Update `helloworld.yml` to include the Swagger configuration. You can download t
 .
 swagger:
   secure: true                                # Required by MSX.
-  ssourl: "http://localhost:9515/idm"         # CONSUL thirdpartyservices/defaultapplication/swagger.security.sso.baseUrl
-  clientid: "local-public-client"             # CONSUL thirdpartyservices/helloworldservice/public.security.clientId
+  ssourl: "http://localhost:9515/idm"         # CONSUL {prefix}/defaultapplication/swagger.security.sso.baseUrl
+  clientid: "local-public-client"             # CONSUL {prefix}/helloworldservice/public.security.clientId
   swaggerjsonpath: "HelloWorldService-1.json" # Required by MSX.
 .
 .
@@ -213,6 +213,12 @@ ConfigFiles:
       Path: "/helloworld.yml"
 
 ConsulKeys:
+  - Name: "favourite.color"
+    Value: "Green"
+  - Name: "favourite.food"
+    Value: "Pizza"
+  - Name: "favourite.dinosaur"
+    Value: "Moros Intrepidus"
   - Name: "public.security.clientId"
     Value: "hello-world-service-public-client"
 
@@ -225,6 +231,8 @@ Containers:
     Tags:
       - "3.10.0"
       - "4.0.0"
+      - "4.1.0"
+      - "4.2.0"
       - "managedMicroservice"
       - "name=Hello World Service"
       - "componentAttributes=serviceName:helloworldservice~serviceName:helloworldservice~context:helloworld~name:Hello World Service~description:Hello World service with support for multiple languages."

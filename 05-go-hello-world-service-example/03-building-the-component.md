@@ -74,9 +74,7 @@ import (
 ```
 
 ### manifest.yml
-The first file is the SLM manifest which tells MSX how to deploy the associated 
-containers. Create a `manifest.yml` in the root folder of the project with the
-following contents:
+The first file is the SLM manifest which tells MSX how to deploy the associated containers. Create a `manifest.yml` in the root folder of the project with the following contents:
 
 ```yaml
 ---
@@ -93,6 +91,8 @@ Containers:
     Tags:
       - "3.10.0"
       - "4.0.0"
+      - "4.1.0"
+      - "4.2.0"
       - "name=Hello World Service"
       - "componentAttributes=serviceName:helloworldservice~context:helloworld~name:Hello World Service~description:Hello World service with support for multiple languages."
     Check:
