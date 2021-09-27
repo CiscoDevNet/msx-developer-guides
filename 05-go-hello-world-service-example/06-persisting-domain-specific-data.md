@@ -509,11 +509,12 @@ func main() {
     .
     .
     .
-    // Setup Vault.
+	// Setup Vault.
 	vault, err := vault.NewVault(config)
 	if err != nil {
 		log.Printf("Could not initialize Vault: %s", err.Error())
 	}
+	config.Vault.Prefix = "secret/" + config.Consul.Prefix
 	testVault(&vault)
 	
 	// Setup CockroachDB

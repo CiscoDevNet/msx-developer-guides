@@ -308,7 +308,7 @@ func main() {
 	if err != nil {
 		log.Printf("Could not initialize Vault: %s", err.Error())
 	}
-    config.Vault.Prefix = "secret/" + config.Consul.Prefix
+	config.Vault.Prefix = "secret/" + config.Consul.Prefix
 	testVault(config, &vault)
     .
     .
@@ -326,7 +326,7 @@ func testVault(config *config.Config, vault *vault.HelloWorldVault) {
 }
 ```
 
-Pay attention to the key path in `testVault`, as there are different patterns for different MSX versions and uses.
+Pay attention to the key path in `testVault` as there are different patterns for different MSX versions and uses.
 
 | Pattern                              | Description                  |
 |--------------------------------------|------------------------------|
