@@ -245,11 +245,9 @@ type EnsureAuth struct {
 
 // Override configuration with values from Consul and Vault.
 func UpdateConfig(c *config.Config, consul *consul.HelloWorldConsul, vault *vault.HelloWorldVault) error {
-	c.Security.SsoURL, _ = consul.GetString("thirdpartyservices/defaultapplication/swagger.security.sso.baseUrl", c.Security.SsoURL)
-
-	c.Security.ClientID, _ = consul.GetString("thirdpartyservices/helloworldservice/integration.security.clientId", c.Security.ClientID)
-
-	c.Security.ClientSecret, _ = vault.GetString("secret/thirdpartyservices/helloworldservice", "integration.security.clientSecret", c.Security.ClientSecret)
+	c.Security.SsoURL, _ = consul.GetString(c.Consul.Prefix + "/defaultapplication/swagger.security.sso.baseUrl", c.Security.SsoURL)
+	c.Security.ClientID, _ = consul.GetString(c.Consul.Prefix + "/helloworldservice/integration.security.clientId", c.Security.ClientID)
+	c.Security.ClientSecret, _ = vault.GetString(c.Vault.Prefix + "/helloworldservice", "integration.security.clientSecret", c.Security.ClientSecret)
 	return nil
 }
 
@@ -412,12 +410,20 @@ Update `manifest.yml` to include configuration for the confidential security cli
 .
 .
 ConsulKeys:
+  - Name: "favourite.color"
+    Value: "Green"
+  - Name: "favourite.food"
+    Value: "Pizza"
+  - Name: "favourite.dinosaur"
+    Value: "Moros Intrepidus"
   - Name: "public.security.clientId"
     Value: "hello-world-service-public-client"
   - Name: "integration.security.clientId"
     Value: "hello-world-service-private-client"
 
 Secrets:
+  - Name: "secret.squirrel.location"
+    Value: "The acorns are buried under the big oak tree!"
   - Name: "integration.security.clientSecret"
     Value: "make-up-a-private-client-secret-and-keep-it-safe"
 .

@@ -132,6 +132,7 @@ type Vault struct {
 	Token           string
 	CACert          string
 	Insecure        bool
+	Prefix          string
 }
 .
 .
@@ -299,14 +300,16 @@ func main() {
 	if err != nil {
 		log.Printf("Could not initialize Consul: %s", err.Error())
 	}
-	testConsul(&consul)
-	
+	config.Consul.Prefix = consul.FindPrefix()
+	testConsul(config, &consul)
+		
 	// Setup Vault.
 	vault, err := vault.NewVault(config)
 	if err != nil {
 		log.Printf("Could not initialize Vault: %s", err.Error())
 	}
-	testVault(&vault)
+	config.Vault.Prefix = "secret/" + config.Consul.Prefix
+	testVault(config, &vault)
     .
     .
     .
@@ -314,18 +317,32 @@ func main() {
 .
 .
 .
-func testVault(v *vault.HelloWorldVault) {
+func testVault(config *config.Config, vault *vault.HelloWorldVault) {
 	// Read a secret from Vault  and it to the console.
 	// Do not leak secrets in production as it is a security violation.
-	secretSquirrelLocation, _ := v.GetString("secret/thirdpartyservices/helloworldservice/", "secret.squirrel.location", "UNKNOWN")
+	secretSquirrelLocation, _ := vault.GetString(config.Vault.Prefix + "/helloworldservice/", "secret.squirrel.location", "UNKNOWN")
 	log.Printf("Where are the acorns buried?")
 	log.Print(secretSquirrelLocation)
 }
 ```
 
-Pay attention to the key path in the "testVault", there are two possible patterns:
-* secret/thirdpartyservices/helloworldservice/my.key - for service specific secrets
-* secret/thirdpartyservices/defaultapplication/my.key - for common system secrets
+Pay attention to the key path in `testVault` as there are different patterns for different MSX versions and uses.
+
+| Pattern                              | Description                  |
+|--------------------------------------|------------------------------|
+| {prefix}/helloworldservice/my.key    | for service specific secrets |
+| {prefix}/defaultapplication/my.key   | for common system secrets    |
+
+<br>
+
+The prefix depends on the version of MSX you are running:
+
+| MSX Version | Prefix                      |
+|-------------|-----------------------------|
+| <= 4.0.0    | secret/thirdpartyservices   |
+| >= 4.1.0    | secret/thirdpartycomponents |
+
+<br>
 
 
 ### Dockerfile
@@ -415,6 +432,6 @@ Our service can now accept sensitive and non-sensitive configuration, the missin
 ## References
 [Vault Container in Docker](https://hub.docker.com/_/vault)
 
-[MSX Component Manager Manifest Reference](/docs/reference/component-manager-manifest)
+[MSX Component Manager Manifest Reference](../reference/component-manager-manifest-reference.md)
 
 [Kibana Data Visualization Dashboard](https://www.elastic.co/kibana)

@@ -22,7 +22,7 @@ The Component Manifest is a configuration file that contains all the information
 
 
 ## Areas of Configuration
-Full details of the manifest contents can be found in the reference documentation [(help me)](/docs/reference/component-manager-manifest). The view from 30,000 feet looks like this:
+Full details of the manifest contents can be found in the reference documentation [(help me)](../reference/component-manager-manifest-reference.md). The view from 30,000 feet looks like this:
 * service metadata 
 * container details
     * container metadata
@@ -143,4 +143,4 @@ For example, if a Java application's "Max Heap" is larger than the defined limit
 
 
 ## References
-[Component Manager Manifest Reference](/docs/reference/component-manager-manifest)
+[Component Manager Manifest Reference](../reference/component-manager-manifest-reference.md)

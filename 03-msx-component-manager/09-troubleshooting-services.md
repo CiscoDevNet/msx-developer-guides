@@ -27,7 +27,7 @@ So you have written a service and have tried to deploy it to MSX but either the 
 
 
 ## Running a Container Locally
-If you have tried deploying your component to MSX, but it does not come up, check that you can start the container locally. Depending on what your service does, you may have to start some infrastructure locally first [(help me)](/docs/cmx/managing-local-infrastructure).
+If you have tried deploying your component to MSX, but it does not come up, check that you can start the container locally. Depending on what your service does, you may have to start some infrastructure locally first [(help me)](../03-msx-component-manager/08-managing-local-infrastructure.md).
 
 ### Downloading the Component
 First you need to download an example MSX component tarball [(help me)](artifacts/helloworldservice-1.0.0-component.tar.gz). Then unpack it with the following terminal command so that we can get at the Docker image `helloworldservice-1.0.0.tar.gz` (note this file does not have component in the name).
@@ -127,5 +127,5 @@ A failing health check is one reason your service might not come up properly ins
 .
 ```
 
-The Go Hello World Service is small so does not require much. Full details of what you can set here can be found in the Component Manager Manifest Reference [(help me)](/docs/reference/component-manager-manifest).
+The Go Hello World Service is small so does not require much. Full details of what you can set here can be found in the Component Manager Manifest Reference [(help me)](../reference/component-manager-manifest-reference.md).
 

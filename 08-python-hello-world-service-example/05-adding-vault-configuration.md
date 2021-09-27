@@ -160,7 +160,7 @@ class VaultHelper(object):
         logging.info(secret_squirrel_location)
 ```
 
-Pay attention to the key path in the `test` noting that the `secrets/` prefix is added automatically. There are different patterns for different MSX versions and uses.
+Pay attention to the key path in the `test` method, noting that the `secrets/` prefix is added automatically. There are different patterns for different MSX versions and uses.
 
 | Pattern                              | Description                  |
 |--------------------------------------|------------------------------|

@@ -3,7 +3,7 @@
 * [References](#references)
 
 ## Introduction
-There are no hard rules about which framework to use for your user interface. However, we do recommend following our style guide [(help me)](/docs/reference/msx-ui-style-guide). Some options include:
+There are no hard rules about which framework to use for your user interface. However, we do recommend following our style guide [(help me)](../reference/user-interface-style-guide.md). Some options include:
 * Angular
 * React JS
 * Vue JS

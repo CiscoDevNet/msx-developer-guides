@@ -69,15 +69,28 @@ replace github.com/CiscoDevNet/msx-examples/go-hello-world-service-5/go => ./go/
 ### helloworld.yml
 When a service is deployed to MSX it must pick up the database configuration from Consul and Vault. The table below shows where to get those values and exampled values.
 
-| service        | name                                                       | example |
-|----------------|------------------------------------------------------------|---------|
-| consul         | thirdpartyservices/defaultapplication/db.cockroach.host    | cockroachdb-public.vms.svc.cluster.local |
-| consul         | thirdpartyservices/defaultapplication/db.cockroach.port    | 26257 |
-| consul         | thirdpartyservices/defaultapplication/db.cockroach.sslmode | verify-full |
-| consul         | thirdpartyservices/helloworldservice/db.cockroach.databaseName | helloworld |
-| consul         | thirdpartyservices/helloworldservice/db.cockroach.username | helloworldservice_5cf38a82c57b4872b425bb89b0d3250d |
-| vault          | secret/thirdpartyservices/helloworldservice                | vzorfs0UFr124K5zoevP |
-| helloworld.yml | cockroach.cacert                                           | /etc/ssl/certs/ca-bundle.crt |
+| Service        | Name                                                 | Example |
+|----------------|------------------------------------------------------|---------|
+| consul         | {prefix}/defaultapplication/db.cockroach.host        | cockroachdb-public.vms.svc.cluster.local |
+| consul         | {prefix}/defaultapplication/db.cockroach.port        | 26257 |
+| consul         | {prefix}/defaultapplication/db.cockroach.sslmode     | verify-full |
+| consul         | {prefix}/helloworldservice/db.cockroach.databaseName | helloworld |
+| consul         | {prefix}/helloworldservice/db.cockroach.username     | helloworldservice_5cf38a82c57b4872b425bb89b0d3250d |
+| vault          | {prefix}/helloworldservice                           | vzorfs0UFr124K5zoevP |
+| helloworld.yml | cockroach.cacert                                     | /etc/ssl/certs/ca-bundle.crt |
+
+<br>
+
+The prefix depends on the version of MSX you are running:
+
+| Service  | MSX Version | Prefix                      |
+|----------|-------------|-----------------------------|
+| consul   | <= 4.0.0    | thirdpartyservices          |
+| vault    | <= 4.0.0    | secret/thirdpartyservices   |
+| consul   | >= 4.1.0    | thirdpartycomponents        |
+| vault    | >= 4.1.0    | secret/thirdpartycomponents |
+
+<br>
 
 When developing you can run Consul, Vault, and CockroachDB [(help me)](#references). You can pass required CockroachDB configuration in `helloworld.yml` by adding the following.
 
@@ -238,12 +251,12 @@ type Cockroach struct {
 }
 
 func UpdateConfig(c *config.Config, consul *consul.HelloWorldConsul, vault *vault.HelloWorldVault) error {
-	c.Cockroach.Host, _         = consul.GetString("thirdpartyservices/defaultapplication/db.cockroach.host", c.Cockroach.Host)
-	c.Cockroach.Port, _         = consul.GetString("thirdpartyservices/defaultapplication/db.cockroach.port", c.Cockroach.Port)
-	c.Cockroach.SSLMode, _      = consul.GetString("thirdpartyservices/defaultapplication/db.cockroach.sslmode", c.Cockroach.SSLMode)
-	c.Cockroach.DatabaseName, _ = consul.GetString("thirdpartyservices/helloworldservice/db.cockroach.databaseName", c.Cockroach.DatabaseName)
-	c.Cockroach.Username, _     = consul.GetString("thirdpartyservices/helloworldservice/db.cockroach.username", c.Cockroach.Username)
-	c.Cockroach.Password, _     = vault.GetString("secret/thirdpartyservices/helloworldservice", "db.cockroach.password", c.Cockroach.Password)
+	c.Cockroach.Host, _         = consul.GetString(c.Consul.Prefix + "/defaultapplication/db.cockroach.host", c.Cockroach.Host)
+	c.Cockroach.Port, _         = consul.GetString(c.Consul.Prefix + "/defaultapplication/db.cockroach.port", c.Cockroach.Port)
+	c.Cockroach.SSLMode, _      = consul.GetString(c.Consul.Prefix + "/defaultapplication/db.cockroach.sslmode", c.Cockroach.SSLMode)
+	c.Cockroach.DatabaseName, _ = consul.GetString(c.Consul.Prefix + "/helloworldservice/db.cockroach.databaseName", c.Cockroach.DatabaseName)
+	c.Cockroach.Username, _     = consul.GetString(c.Consul.Prefix + "/helloworldservice/db.cockroach.username", c.Cockroach.Username)
+	c.Cockroach.Password, _     = vault.GetString(c.Vault.Prefix + "/helloworldservice", "db.cockroach.password", c.Cockroach.Password)
 	return nil
 }
 
@@ -496,11 +509,12 @@ func main() {
     .
     .
     .
-    // Setup Vault.
+	// Setup Vault.
 	vault, err := vault.NewVault(config)
 	if err != nil {
 		log.Printf("Could not initialize Vault: %s", err.Error())
 	}
+	config.Vault.Prefix = "secret/" + config.Consul.Prefix
 	testVault(&vault)
 	
 	// Setup CockroachDB
@@ -709,4 +723,4 @@ Hello World Service can now persist data, next we lay the groundwork for adding 
 
 [CockroachDB Container in Docker](https://hub.docker.com/r/cockroachdb/cockroach)
 
-[MSX Component Manager Manifest Reference](/docs/reference/component-manager-manifest)
+[MSX Component Manager Manifest Reference](../reference/component-manager-manifest-reference.md)
