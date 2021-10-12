@@ -7,8 +7,9 @@
 * [Configuring the Project](#configuring-the-project)
     * [pom.xml](#pomxml)
     * [application.properties](#srcmainresourcesapplicationproperties)
-    * [src/main/resources/application.yml.yml](#srcmainresourcesapplicationyml)
-    * [src/main/resources/bootstrap.yml.yml](#srcmainresourcesbootstrapyml)
+    * [src/main/resources/application.yml](#srcmainresourcesapplicationyml)
+    * [src/main/resources/bootstrap.yml](#srcmainresourcesbootstrapyml)
+    * [src/main/resources/bootstrap-legacy.yml](#srcmainresourcesbootstrap-legacyyml)
     * [src/main/java/com/example/helloworldservice/config/OpenAPIDocumentationConfig.java](#srcmainjavacomexamplehelloworldserviceconfigopenapidocumentationconfigjava)
 * [Running it Locally](#running-it-locally)
   * [Building the Service](#building-the-service)
@@ -37,7 +38,7 @@ In this guide we describe how to build a simple Java service that exposes an API
 
 
 ## Generating Server Stubs
-Even if you want to work through this example from scratch you still need the Hello World Service OpenAPI Specification [(help me)](../03-msx-component-manager/07-working-with-openapi-specifications.md). First check that you have the latest version of OpenAPI Generator installed:
+Even if you want to work through this example from scratch you still need the Hello World Service OpenAPI Specification [(help me)](../03-msx-component-manager/07-working-with-openapi-specifications.md). First check that you have this version of OpenAPI Generator installed:
 ```shell
 $ openapi-generator --version
 openapi-generator-cli 5.0.1
@@ -296,7 +297,43 @@ debug: false
 ### src/main/resources/bootstrap.yml
 **Create** this file if it does not exist.
 
-This file configures the project context, port, and runtime information. Customize the details based on your application and environment.
+This file configures the project context, port, and runtime information for *MSX >= 4.1.0*. Customize the details based on your application and environment.
+
+```yaml
+info:
+  component: Hello World Service
+  app:
+    name: helloworldservice
+    description: Hello World service with support for multiple languages.
+    version: 1.0.0
+    attributes:
+      displayName: Hello World Service
+
+spring:
+  application:
+    name: helloworldservice
+  cloud:
+    consul:
+      host: localhost
+      port: 8500
+      config:
+        enabled: true
+        prefix: thirdpartycomponents
+        defaultContext: defaultapplication
+
+server:
+  port: @server.port@ # see pom.xml
+  servlet:
+    context-path: @server.contextpath@ # see pom.xml
+```
+
+<br>
+
+
+### src/main/resources/bootstrap-legacy.yml
+**Create** this file if it does not exist.
+
+This file configures the project context, port, and runtime information for *MSX <= 4.0.0*. Customize the details based on your application and environment.
 
 ```yaml
 info:

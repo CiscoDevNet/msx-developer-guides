@@ -207,6 +207,7 @@ The datastore module `internal/datastore/cockroach.go` does the following.
 * implements CRUD operations for Item resources
 
 > **GOTCHA**
+> 
 > When your service is deployed into the MSX the database will be created for you. 
 > However when running locally, you will need to create the database yourself.
 
