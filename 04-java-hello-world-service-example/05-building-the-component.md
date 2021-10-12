@@ -74,6 +74,8 @@ Containers:
     Tags:
       - "3.10.0"    
       - "4.0.0"
+      - "4.1.0"
+      - "4.2.0"
       - "managedMicroservice"
       - "buildNumber=@project.version@"
       - "name=@project.artifactId@"
@@ -106,7 +108,13 @@ Containers:
     # Command to use to start the application.
     Command:
       - "/service/dockerlaunch.sh"
+      # Set the profile for MSX <= 4.0.0
+      # - "-Dspring.profiles.active=legacy"
 ```
+
+> **GOTCHA**
+> 
+> To target MSX <= 4.0.0 you must set the active spring profile to `legacy` by uncommenting the last line in the example above. Note you can use the same image in two tarballs with different manifests to support MSX <= 4.0 and MSX >= 4.1 from a single build.
 
 
 ## Writing the Docker File
@@ -174,7 +182,7 @@ JAVA_OPTS=${JAVA_OPTS:-" \\
   -XX:+HeapDumpOnOutOfMemoryError \\
   -XX:HeapDumpPath=/data/conf/dump.hprof"}
 
-CMD="exec java -Djavax.net.ssl.trustStore=/keystore/msxtruststore.jks $JAVA_OPTS -jar /service/$SERVICE_JAR $@"
+CMD="exec java -Djavax.net.ssl.trustStore=/keystore/msxtruststore.jks $@ $JAVA_OPTS -jar /service/$SERVICE_JAR"
 
 echo "$CMD"
 eval "$CMD"
@@ -452,7 +460,8 @@ Once you have finished editing `pom.xml` right click it in the project navigatio
 
 
 ## Putting It All Together
-> **Gotcha**
+
+> **GOTCHA**
 >
 > Make sure that Docker is running, or the containerization will fail.
 

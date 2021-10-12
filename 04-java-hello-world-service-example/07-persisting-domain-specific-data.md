@@ -7,6 +7,7 @@
   * [pom.xml](#pomxml)
   * [application.yml](#applicationyml)
   * [bootstrap.yml](#bootstrapyml)
+  * [bootstrap-legacy.yml](#bootstrap-legacyyml)
   * [manifest.yml](#manifestyml)
 * [Adding the Database Model](#adding-the-database-model)
   * [GreetingRow.java](#greetingrowjava)
@@ -149,18 +150,49 @@ spring:
 <br>
 
 ### bootstrap.yml
-The file `src/main/resources/bootstrap.yml` configures the bootstrap context. The bootstrap context is created by Spring to load configuration before starting the application.
+The file `src/main/resources/bootstrap.yml` configures the bootstrap context for *MSX >= 4.1.0*. The bootstrap context is created by Spring to load configuration before starting the application.
 
 ```yaml
-info:
-  component: Hello World Service
-  app:
+.
+.
+.
+spring:
+  application:
     name: helloworldservice
-    description: Hello World service with support for multiple languages.
-    version: 1.0.0
-    attributes:
-      displayName: Hello World Service
+  cloud:
+    consul:
+      host: localhost
+      port: 8500
+      config:
+        enabled: true
+        prefix: thirdpartycomponents
+        defaultContext: defaultapplication
+    vault:
+      host: localhost
+      port: 8200
+      scheme: http
+      kv:
+        default-context: defaultapplication
+        enabled: true
+        backend: secret/thirdpartycomponents
+      authentication: TOKEN
+      token: replace_with_token_value # replace with actual token value or provide this value via another property source 
+.
+.
+.
 
+```
+
+<br>
+
+
+### bootstrap-legacy.yml
+The file `src/main/resources/bootstrap.yml` configures the bootstrap context for *MSX <= 4.0.0*. The bootstrap context is created by Spring to load configuration before starting the application.
+
+```yaml
+.
+.
+.
 spring:
   application:
     name: helloworldservice
@@ -182,14 +214,14 @@ spring:
         backend: secret/thirdpartyservices
       authentication: TOKEN
       token: replace_with_token_value # replace with actual token value or provide this value via another property source 
-
-server:
-  port: @server.port@ # see pom.xml
-  servlet:
-    context-path: @server.contextpath@ # see pom.xml
+.
+.
+.
 ```
 
 <br>
+
+
 
 ### manifest.yml
 The file "manifest.yml" controls how SLM with deploy a component into MSX. Add the following to the end of the file to configure the database.
@@ -832,7 +864,7 @@ Now that you know how to make language and greeting requests try adding some lan
 
 
 ## Building and Deploying the Service
-Once again we a are ready to build and deploy the service into MSX.  We have covered this in previous guides so will not go over it here [(help me)](../04-java-hello-world-service-example/06-implementing-the-service-layer.md#building-and-deploying-the-service). Note you will need to update `application.yml` to enable SSL before you build.
+Once again we are ready to build and deploy the service into MSX. We have covered this in previous guides so will not go over it here [(help me)](../04-java-hello-world-service-example/06-implementing-the-service-layer.md#building-and-deploying-the-service). Note you will need to update `application.yml` to enable SSL before you build.
 ```yaml
 # src/main/resources/application.yml
 .
