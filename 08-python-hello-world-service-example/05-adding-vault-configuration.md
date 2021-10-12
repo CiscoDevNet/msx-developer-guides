@@ -45,6 +45,7 @@ SPRING_CLOUD_VAULT_TOKEN  = [a valid vault token]
 As with Consul, we also need a convenient way to configure Vault when developing locally, and a common mechanism to surface those key value pairs to our service or application. We laid the groundwork for this in the previous guide on Consul, so for brevity we will document the required incremental changes.
 
 > **GOTCHA**
+> 
 > The Vault token passed as environment variable SPRING_CLOUD_VAULT_TOKEN expires after 30 days. 
 Renewing the Vault token is left as an exercise for the reader.
 

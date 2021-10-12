@@ -133,10 +133,9 @@ ApiClient client = new ApiClient().setBasePath(MY_SERVER_URL);
 client.setVerifyingSsl(false);
 ````
 
-``` 
-GOTCHA:
-Do not defeat the SSL certificate in production code!
-```
+> **GOTCHA**
+>
+> Do not defeat the SSL certificate in production code!
 
 ### Getting an Access Token
 We use a SecurityApi object to make the password grant request to get an access token. Before we can make the request we have to construct the "Basic Authentication Token". To make this concatenate the client identifier and client secret separated by a colon, then base64 encode the result. The server will decode this string to get the information it needs to complete the request.

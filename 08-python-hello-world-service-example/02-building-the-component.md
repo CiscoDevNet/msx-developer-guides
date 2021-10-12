@@ -92,7 +92,7 @@ EXPOSE 8082
 ENTRYPOINT ["flask", "run", "--host", "0.0.0.0", "--port", "8082"]
 ```
 
-> **Gotcha**
+> **GOTCHA**
 >
 > Take care to make sure the ports in `Dockerfile` and `manifest.xml` match.
 

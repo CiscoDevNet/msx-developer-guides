@@ -47,9 +47,9 @@ Follow the prompts until the application is published, and you see the success s
 ## Creating an Offer
 Next we need to create an offer that sets details like price and the terms and conditions. Click the ellipsis on the application this time (instead of the component), and select "Offers".
 
-```GOTCHA:
-To create offers your user must have role SUPERUSER or ADMIN.
-```
+> **GOTCHA**
+>
+>To create offers your user must have role SUPERUSER or ADMIN.
 
 ![](images/offering-1.png?raw=true)
 
