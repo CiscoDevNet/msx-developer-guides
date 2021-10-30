@@ -253,4 +253,3 @@ Clicking on "Tenants" in the application bar at the top of the screen will fetch
 
 
 | [PREVIOUS](02-working-with-self-signed-certifcates.md) | [NEXT](04-building-the-component.md) | [HOME](../index.md#react-user-interface-example) |
-|---|---|---|

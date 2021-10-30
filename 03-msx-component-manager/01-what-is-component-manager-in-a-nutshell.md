@@ -32,4 +32,3 @@ Service applications are services that include a user interface component. They 
 
 
 | [NEXT](02-configuring-the-component-manifest.md) | [HOME](../index.md#msx-component-manager) |
-|---|---|

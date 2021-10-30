@@ -400,4 +400,3 @@ You can use `deviceService.updateStatus` to set any of the following statuses:
 
 
 | [PREVIOUS](01-introduction-to-tenant-centric-ui.md) | [NEXT](04-working-with-sites.md) | [HOME](../index.md#angular-user-interface-example) |
-|---|---|---|

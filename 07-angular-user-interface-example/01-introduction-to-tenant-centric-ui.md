@@ -98,4 +98,3 @@ You should now see your service pack in the offer catalog under tenant workspace
 
 
 | [NEXT](03-working-with-devices.md) | [HOME](../index.md#angular-user-interface-example) |
-|---|---|

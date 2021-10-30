@@ -728,4 +728,3 @@ Hello World Service can now persist data, next we lay the groundwork for adding 
 
 
 | [PREVIOUS](05-adding-vault-configuration.md) | [NEXT](08-creating-the-security-clients.md) | [HOME](../index.md#go-hello-world-service-example) |
-|---|---|---|

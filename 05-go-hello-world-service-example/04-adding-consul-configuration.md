@@ -498,4 +498,3 @@ We can now pass configuration to our service, the remaining pieces are:
 
 
 | [PREVIOUS](03-building-the-component.md) | [NEXT](05-adding-vault-configuration.md) | [HOME](../index.md#go-hello-world-service-example) |
-|---|---|---|

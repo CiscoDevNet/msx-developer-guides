@@ -22,5 +22,5 @@ The Cisco dCloud labs for MSX are still being setup. Please contact us directly 
 
 
 | [PREVIOUS](01-what-is-msx-in-a-nutshell.md) | [NEXT](03-navigating-the-msx-user-interface.md) | [HOME](../index.md#msx-developer-program-basics) | 
-|---|---|---|
+
 

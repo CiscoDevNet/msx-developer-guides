@@ -35,4 +35,4 @@ This guide outlines what is possible with the service, please check back for upd
 
 
 | [PREVIOUS](10-catalog-microservice.md) | [NEXT](11-manage-microservice.md) | [HOME](../index.md#msx-platform-sdk) |
-|---|---|---|
+

@@ -264,4 +264,3 @@ In this guide we added Vault support to the Hello World Service. Then we set sec
 
 
 | [PREVIOUS](04-adding-consul-configuration.md) | [NEXT](06-persisting-domain-specific-data.md) | [HOME](../index.md#python-hello-world-service-example) |
-|---|---|---|

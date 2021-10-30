@@ -318,4 +318,3 @@ In this guide we added configuration to Hello World Service to bootstrap Consul 
 
 
 | [PREVIOUS](02-building-the-component.md) | [NEXT](05-adding-vault-configuration.md) | [HOME](../index.md#python-hello-world-service-example) |
-|---|---|---|

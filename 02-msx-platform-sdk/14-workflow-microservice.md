@@ -66,4 +66,3 @@ This guide outlines what is possible with the service, please check back for upd
 
 
 | [PREVIOUS](13-user-management-microservice.md) | [HOME](../index.md#msx-platform-sdk) |
-|---|---|

@@ -173,4 +173,3 @@ The following is a sample payload for creating a device.
 
 
 | [PREVIOUS](10-catalog-microservice.md) | [NEXT](12-monitor-microservice.md) | [HOME](../index.md#msx-platform-sdk) |
-|---|---|---|

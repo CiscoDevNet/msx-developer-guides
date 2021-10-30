@@ -213,4 +213,3 @@ In this guide we containerized Hello World Service and deployed it to an MSX env
 
 
 | [PREVIOUS](01-creating-a-hello-world-service-in-python.md) | [NEXT](04-adding-consul-configuration.md) | [HOME](../index.md#python-hello-world-service-example) |
-|---|---|---|

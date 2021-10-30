@@ -232,4 +232,3 @@ We have already built a useful framework and run code in MSX, but we still need 
 
 
 | [PREVIOUS](02-sending-mock-server-responses.md) | [NEXT](04-adding-consul-configuration.md) | [HOME](../index.md#go-hello-world-service-example) |
-|---|---|---|

@@ -124,4 +124,3 @@ With the administrative task out of the way, we can move on to adding Swagger su
 
 
 | [PREVIOUS](06-persisting-domain-specific-data.md) | [NEXT](09-adding-swagger-support.md) | [HOME](../index.md#go-hello-world-service-example) |
-|---|---|---|

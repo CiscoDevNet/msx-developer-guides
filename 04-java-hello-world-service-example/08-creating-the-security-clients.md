@@ -118,4 +118,4 @@ When we deploy the secure Hello World Service with SLM [(help me)](../03-msx-com
 
 
 | [PREVIOUS](07-persisting-domain-specific-data.md) | [NEXT](09-adding-swagger-support.md) | [HOME](../index.md#java-hello-world-service-example) |
-|---|---|---|
+

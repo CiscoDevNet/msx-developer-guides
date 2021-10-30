@@ -218,4 +218,3 @@ If the request is successful you see will an HTTP-201 response.
 
 
 | [PREVIOUS](04-using-the-swagger-documentation.md) | [NEXT](90-understanding-roles-and-permissions.md) | [HOME](../index.md#msx-developer-program-basics) |
-|---|---|---|

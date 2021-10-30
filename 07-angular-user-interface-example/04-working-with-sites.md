@@ -163,4 +163,4 @@ The corresponding HTML component is:
 
 
 | [PREVIOUS](03-working-with-devices.md) | [NEXT](05-routing-in-msx.md) | [HOME](../index.md#angular-user-interface-example) |
-|---|---|---|
+

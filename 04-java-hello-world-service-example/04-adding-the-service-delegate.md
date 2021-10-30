@@ -267,4 +267,4 @@ Running the service locally is a good start but there are still a number of miss
 
 
 | [PREVIOUS](03-creating-a-hello-world-service-in-java.md) | [NEXT](05-building-the-component.md) | [HOME](../index.md#java-hello-world-service-example) |
-|---|---|---|
+

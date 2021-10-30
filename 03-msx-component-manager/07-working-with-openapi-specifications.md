@@ -522,4 +522,3 @@ components:
 
 
 | [PREVIOUS](06-choosing-between-java-and-go.md) | [NEXT](08-managing-local-infrastructure.md) | [HOME](../index.md#msx-component-manager) |
-|---|---|---|

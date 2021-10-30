@@ -457,4 +457,3 @@ $ curl http://localhost:9515/helloworldservice --verbose
 
 
 | [NEXT](03-creating-a-hello-world-service-in-java.md) | [HOME](../index.md#java-hello-world-service-example) |
-|---|---|

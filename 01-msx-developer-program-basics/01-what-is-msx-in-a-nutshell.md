@@ -34,4 +34,5 @@ Third parties can develop service packs for MSX using the rich set of APIs provi
 
 
 | [NEXT](02-getting-access-to-an-msx-environment.md) | [HOME](../index.md#msx-developer-program-basics) |
-|---|---|
+
+

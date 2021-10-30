@@ -103,4 +103,3 @@ If your service works as expected locally, but has some strange behaviours when 
 
 
 | [PREVIOUS](09-troubleshooting-services.md) | [HOME](../index.md#msx-component-manager) |
-|---|---|

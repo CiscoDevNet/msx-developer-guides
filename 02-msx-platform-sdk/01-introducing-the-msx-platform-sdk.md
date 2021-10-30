@@ -101,4 +101,3 @@ The MSX Platform SDK is composed of the following microservices:
 
 
 | [NEXT](02-using-java-to-get-an-access-token-with-the-password-grant.md) | [HOME](../index.md#msx-platform-sdk) |
-|---|---|

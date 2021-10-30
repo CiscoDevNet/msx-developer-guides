@@ -178,5 +178,5 @@ catch (ApiException e) {
 
 
 | [PREVIOUS](01-introducing-the-msx-platform-sdk.md) | [NEXT](03-using-go-to-get-an-access-token-with-the-password-grant.md) | [HOME](../index.md#msx-platform-sdk) |
-|---|---|---|
+
 

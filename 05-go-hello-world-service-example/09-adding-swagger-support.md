@@ -343,4 +343,3 @@ Users can now try out Hello World Service using Swagger, the last pieces of the 
 
 
 | [PREVIOUS](08-creating-the-security-clients.md) | [NEXT](10-implementing-role-based-access-control.md) | [HOME](../index.md#go-hello-world-service-example) |
-|---|---|---|

@@ -202,4 +202,3 @@ If you are having trouble running the application make sure you:
 
 
 | [PREVIOUS](03-using-go-to-get-an-access-token-with-the-password-grant.md) | [NEXT](10-catalog-microservice.md) | [HOME](../index.md#msx-platform-sdk) |
-|---|---|---|

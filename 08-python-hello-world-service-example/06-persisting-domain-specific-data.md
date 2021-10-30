@@ -788,4 +788,3 @@ In this guide we persisted domain specific data to CockroachDB. We walked throug
 
 
 | [PREVIOUS](05-adding-vault-configuration.md) | [NEXT](08-creating-the-security-clients.md) | [HOME](../index.md#python-hello-world-service-example) |
-|---|---|---|

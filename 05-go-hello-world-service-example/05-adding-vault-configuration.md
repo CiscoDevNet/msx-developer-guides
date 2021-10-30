@@ -439,4 +439,3 @@ Our service can now accept sensitive and non-sensitive configuration, the missin
 
 
 | [PREVIOUS](04-adding-consul-configuration.md) | [NEXT](06-persisting-domain-specific-data.md) | [HOME](../index.md#go-hello-world-service-example) |
-|---|---|---|

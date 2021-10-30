@@ -195,4 +195,4 @@ $ go run main.go
 
 
 | [NEXT](02-sending-mock-server-responses.md) | [HOME](../index.md#go-hello-world-service-example) |
-|---|---|
+

@@ -32,4 +32,3 @@ https://en.wikipedia.org/wiki/Self-signed_certificate
 
 
 | [PREVIOUS](01-choosing-a-user-interface-framework.md) | [NEXT](03-writing-an-application-with-react.md) | [HOME](../index.md#react-user-interface-example) |
-|---|---|---|

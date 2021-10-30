@@ -129,4 +129,3 @@ There are a few things to note about adding a new component to service controls.
 
 
 | [PREVIOUS](05-routing-in-msx.md) | [HOME](../index.md#angular-user-interface-example) |
-|---|---|

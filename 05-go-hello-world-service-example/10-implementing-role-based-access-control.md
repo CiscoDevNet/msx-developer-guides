@@ -711,4 +711,3 @@ Please check back periodically for new MSX development guides.
 
 
 | [PREVIOUS](09-adding-swagger-support.md) | [HOME](../index.md#go-hello-world-service-example) |
-|---|---|

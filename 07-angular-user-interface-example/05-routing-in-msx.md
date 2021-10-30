@@ -51,4 +51,3 @@ The available states to redirect the user to in MSX are:
 
 
 | [PREVIOUS](04-working-with-sites.md) | [NEXT](06-working-with-service-controls.md) | [HOME](../index.md#angular-user-interface-example) |
-|---|---|---|

@@ -189,4 +189,3 @@ Running the service locally is a good start but there are still a number of miss
 
 
 | [PREVIOUS](01-creating-a-hello-world-service-in-go.md) | [NEXT](03-building-the-component.md) | [HOME](../index.md#go-hello-world-service-example) |
-|---|---|---|

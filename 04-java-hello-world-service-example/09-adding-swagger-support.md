@@ -253,4 +253,3 @@ Now we have Swagger documentation the last piece of the puzzle is:
 
 
 | [PREVIOUS](08-creating-the-security-clients.md) | [NEXT](10-implementing-role-based-access-control.md) | [HOME](../index.md#java-hello-world-service-example) |
-|---|---|---|

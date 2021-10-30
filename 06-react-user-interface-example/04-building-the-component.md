@@ -145,4 +145,3 @@ Log in to your MSX environment and deploy "reactssosdkdemo-1.0.0-component.tar.g
 
 
 | [PREVIOUS](03-writing-an-application-with-react.md) | [NEXT](05-subscribing-to-your-application.md) | [HOME](../index.md#react-user-interface-example) |
-|---|---|---|

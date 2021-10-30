@@ -45,4 +45,3 @@ This guide outlines what is possible with the service, please check back for upd
 
 
 | [PREVIOUS](12-monitor-microservice.md) | [NEXT](14-workflow-microservice.md) | [HOME](../index.md#msx-platform-sdk) |
-|---|---|---|

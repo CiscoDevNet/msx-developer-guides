@@ -260,4 +260,3 @@ We have now built a Hello World Service that we can deploy to MSX, that has a Sw
 
 
 | [PREVIOUS](08-creating-the-security-clients.md) | [NEXT](10-implementing-role-based-access-control.md) | [HOME](../index.md#python-hello-world-service-example) |
-|---|---|---|

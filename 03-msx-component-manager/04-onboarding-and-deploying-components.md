@@ -45,4 +45,3 @@ After the message box has been dismissed the new component will appear in the li
 
 
 | [PREVIOUS](03-service-containerization-and-packaging.md) | [NEXT](05-service-offers-and-subscriptions.md) |  [HOME](../index.md#msx-component-manager) |
-|---|---|---|

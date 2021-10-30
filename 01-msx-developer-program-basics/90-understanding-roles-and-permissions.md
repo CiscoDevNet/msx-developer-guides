@@ -202,4 +202,4 @@ If everything went according to plan you have created a user called Jeff with ro
 
 
 | [PREVIOUS](80-configuring-security-clients.md) | [HOME](../index.md#msx-developer-program-basics) |
-|---|---|
+

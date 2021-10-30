@@ -86,4 +86,3 @@ After clicking "Save" the user is emailed a password reset link, you cannot choo
 
 
 | [PREVIOUS](02-getting-access-to-an-msx-environment.md) | [NEXT](04-using-the-swagger-documentation.md) | [HOME](../index.md#msx-developer-program-basics) |
-|---|---|---|

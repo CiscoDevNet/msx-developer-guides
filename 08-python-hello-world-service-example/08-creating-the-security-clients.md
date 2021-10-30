@@ -124,4 +124,3 @@ With that administrative task out of the way, we can move on to adding Swagger s
 
 
 | [PREVIOUS](06-persisting-domain-specific-data.md) | [NEXT](09-adding-swagger-support.md) | [HOME](../index.md#python-hello-world-service-example) |
-|---|---|---|

@@ -147,4 +147,3 @@ For example, if a Java application's "Max Heap" is larger than the defined limit
 
 
 | [PREVIOUS](01-what-is-component-manager-in-a-nutshell.md) | [NEXT](03-service-containerization-and-packaging.md) | [HOME](../index.md#msx-component-manager) |
-|---|---|---|

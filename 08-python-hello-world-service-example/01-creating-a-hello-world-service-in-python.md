@@ -296,4 +296,3 @@ In this guide we have built a simple Hello World Service that returns canned res
 
 
 | [NEXT](02-building-the-component.md) | [HOME](../index.md#python-hello-world-service-example) |
-|---|---|
