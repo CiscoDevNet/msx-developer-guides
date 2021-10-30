@@ -171,3 +171,6 @@ The following is a sample payload for creating a device.
 | status               | Shows the overall status of the device. |
 | statusDetails        | Shows the breakdown of the different status states (e.g. health, lifecycle state, when the status was last modified),  ee the API on updating device status for options. |
 
+
+| [PREVIOUS](10-catalog-microservice.md) | [NEXT](12-monitor-microservice.md) | [HOME](../index.md#msx-platform-sdk) |
+|---|---|---|

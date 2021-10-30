@@ -315,3 +315,7 @@ You have now boot-strapped Consul into your service and passed some configuratio
 
 ## Conclusion
 In this guide we added configuration to Hello World Service to bootstrap Consul support. Then we set some Consul values in the manifest before retrieving them at runtime and inspecting them using Kibana. Do not leak configuration in production as it is a security risk.
+
+
+| [PREVIOUS](02-building-the-component.md) | [NEXT](05-adding-vault-configuration.md) | [HOME](../index.md#python-hello-world-service-example) |
+|---|---|---|

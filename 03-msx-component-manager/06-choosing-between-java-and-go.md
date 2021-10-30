@@ -43,3 +43,7 @@ Go is a general-purpose programming language with a simple syntax, backed by a r
 [Java](https://www.java.com/en/)
 
 [Go](https://golang.org)
+
+
+| [PREVIOUS](05-service-offers-and-subscriptions.md) | [NEXT](07-working-with-openapi-specifications.md) | [HOME](../index.md#msx-component-manager) |
+|---|---|---|

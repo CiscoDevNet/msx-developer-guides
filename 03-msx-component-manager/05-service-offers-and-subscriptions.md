@@ -122,3 +122,7 @@ The application will no longer be visible in the dashboard once the process has 
 ![](images/unsubscribing-2.png?raw=true)
 
 <br>
+
+
+| [PREVIOUS](04-onboarding-and-deploying-components.md) | [NEXT](06-choosing-between-java-and-go.md) | [HOME](../index.md#msx-component-manager) |
+|---|---|---|

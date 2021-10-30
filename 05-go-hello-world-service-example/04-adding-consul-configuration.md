@@ -496,3 +496,6 @@ We can now pass configuration to our service, the remaining pieces are:
 
 [MSX Component Manager Manifest Reference](../reference/component-manager-manifest-reference.md)
 
+
+| [PREVIOUS](03-building-the-component.md) | [NEXT](05-adding-vault-configuration.md) | [HOME](../index.md#go-hello-world-service-example) |
+|---|---|---|

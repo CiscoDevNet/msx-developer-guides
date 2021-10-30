@@ -199,3 +199,7 @@ If you are having trouble running the application make sure you:
 * created the security client on your MSX environment
 * updated the global constants to point to your environment
 * uncommented the code to defeat the SSL certificate
+
+
+| [PREVIOUS](03-using-go-to-get-an-access-token-with-the-password-grant.md) | [NEXT](10-catalog-microservice.md) | [HOME](../index.md#msx-platform-sdk) |
+|---|---|---|

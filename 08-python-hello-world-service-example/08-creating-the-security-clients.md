@@ -121,3 +121,7 @@ When we deploy the secure Hello World Service with SLM [(help me)](../03-msx-com
 With that administrative task out of the way, we can move on to adding Swagger support.
 * add Swagger documentation
 * add Role Based Access Control
+
+
+| [PREVIOUS](06-persisting-domain-specific-data.md) | [NEXT](09-adding-swagger-support.md) | [HOME](../index.md#python-hello-world-service-example) |
+|---|---|---|

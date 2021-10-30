@@ -436,3 +436,7 @@ Our service can now accept sensitive and non-sensitive configuration, the missin
 [MSX Component Manager Manifest Reference](../reference/component-manager-manifest-reference.md)
 
 [Kibana Data Visualization Dashboard](https://www.elastic.co/kibana)
+
+
+| [PREVIOUS](04-adding-consul-configuration.md) | [NEXT](06-persisting-domain-specific-data.md) | [HOME](../index.md#go-hello-world-service-example) |
+|---|---|---|

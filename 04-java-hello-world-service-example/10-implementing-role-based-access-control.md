@@ -303,3 +303,7 @@ Congratulations you have reached the end of the Java guides for MSX service deve
 * working with notifications
 * accessing event and audit logs
 * migrating a service to a new version
+
+
+| [PREVIOUS](09-adding-swagger-support.md) | [HOME](../index.md#java-hello-world-service-example) |
+|---|---|

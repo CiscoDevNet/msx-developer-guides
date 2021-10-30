@@ -229,3 +229,7 @@ We have already built a useful framework and run code in MSX, but we still need 
 * create security clients
 * add Swagger documentation
 * add role based access control
+
+
+| [PREVIOUS](02-sending-mock-server-responses.md) | [NEXT](04-adding-consul-configuration.md) | [HOME](../index.md#go-hello-world-service-example) |
+|---|---|---|

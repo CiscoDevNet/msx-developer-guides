@@ -261,3 +261,7 @@ Leaking Vault configuration to the console is a security violation, but it is co
 
 ## Conclusion
 In this guide we added Vault support to the Hello World Service. Then we set secrets in the manifest before retrieving them at runtime and inspecting them using Kibana. Do not leak secrets in production as it is a security risk.
+
+
+| [PREVIOUS](04-adding-consul-configuration.md) | [NEXT](06-persisting-domain-specific-data.md) | [HOME](../index.md#python-hello-world-service-example) |
+|---|---|---|
