@@ -83,3 +83,7 @@ Enter the values for all the mandatory fields, you can select the "Tenant" you c
 <br>
 
 After clicking "Save" the user is emailed a password reset link, you cannot choose a password for the user in the user interface. If no email arrives check the email address is correct, still no dice, check the MSX SMTP and End User Notification settings.
+
+
+| [PREVIOUS](02-getting-access-to-an-msx-environment.md) | [NEXT](04-using-the-swagger-documentation.md) | [HOME](../index.md#msx-developer-program-basics) |
+|---|---|---|

@@ -42,3 +42,7 @@ Once the upload has finished a message box will indicating success of failure.
 After the message box has been dismissed the new component will appear in the list.
 
 ![](images/deploying-component-4.png?raw=true)
+
+
+| [PREVIOUS](03-service-containerization-and-packaging.md) | [NEXT](05-service-offers-and-subscriptions.md) |  [HOME](../index.md#msx-component-manager) |
+|---|---|---|

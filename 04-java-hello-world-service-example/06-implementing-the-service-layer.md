@@ -282,3 +282,7 @@ Despite doing a bunch of work in this guide all we have done is tidy up the proj
 * persist domain specific data
 * add role based access control
 * how Swagger documentation
+
+
+| [PREVIOUS](05-building-the-component.md) | [NEXT](07-persisting-domain-specific-data.md) | [HOME](../index.md#java-hello-world-service-example) |
+|---|---|---|

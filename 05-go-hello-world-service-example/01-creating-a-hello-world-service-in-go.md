@@ -192,3 +192,7 @@ $ go build
 $ go run main.go
 2021/03/14 11:34:04 Server started
 ```
+
+
+| [NEXT](02-sending-mock-server-responses.md) | [HOME](../index.md#go-hello-world-service-example) |
+|---|---|

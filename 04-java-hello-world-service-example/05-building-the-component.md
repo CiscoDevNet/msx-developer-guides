@@ -558,3 +558,6 @@ We have already built a useful framework and run code in MSX, but we still need 
 * add role based access control
 * how Swagger documentation
 
+
+| [PREVIOUS](04-adding-the-service-delegate.md) | [NEXT](06-implementing-the-service-layer.md) | [HOME](../index.md#java-hello-world-service-example) |
+|---|---|---|

@@ -32,3 +32,7 @@ This guide outlines what is possible with the service, please check back for upd
 * Get Product Offer
 * Update Product Offer
 * Delete Product Offer
+
+
+| [PREVIOUS](10-catalog-microservice.md) | [NEXT](11-manage-microservice.md) | [HOME](../index.md#msx-platform-sdk) |
+|---|---|---|

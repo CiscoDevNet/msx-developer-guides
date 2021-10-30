@@ -340,3 +340,7 @@ This ability to try the API is a powerful tool than can help you refine your ser
 ## The Missing Pieces
 Users can now try out Hello World Service using Swagger, the last pieces of the puzzle are:
 * add role based access control
+
+
+| [PREVIOUS](08-creating-the-security-clients.md) | [NEXT](10-implementing-role-based-access-control.md) | [HOME](../index.md#go-hello-world-service-example) |
+|---|---|---|

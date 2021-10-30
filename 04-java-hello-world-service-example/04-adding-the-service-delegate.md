@@ -264,3 +264,7 @@ Running the service locally is a good start but there are still a number of miss
 * persist domain specific data
 * add role based access control
 * create Swagger documentation
+
+
+| [PREVIOUS](03-creating-a-hello-world-service-in-java.md) | [NEXT](05-building-the-component.md) | [HOME](../index.md#java-hello-world-service-example) |
+|---|---|---|

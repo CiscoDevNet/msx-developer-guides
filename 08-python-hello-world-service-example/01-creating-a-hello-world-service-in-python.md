@@ -293,3 +293,7 @@ In this guide we have built a simple Hello World Service that returns canned res
 [PyCharm - The Python IDE for Professional Developers](https://www.jetbrains.com/pycharm/)
 
 [Flask - Web Development One Drop at a Time](https://flask.palletsprojects.com/en/2.0.x/) 
+
+
+| [NEXT](02-building-the-component.md) | [HOME](../index.md#python-hello-world-service-example) |
+|---|---|

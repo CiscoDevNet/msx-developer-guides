@@ -218,3 +218,7 @@ $ tar -czvf [MY_PROJECT_NAME]-[MY_DOCKER_TAG]-component.tar.gz  -C ./slm manifes
 
 ## References
 [Docker Desktop](https://www.docker.com/products/docker-desktop)
+
+
+| [PREVIOUS](02-configuring-the-component-manifest.md) | [NEXT](04-onboarding-and-deploying-components.md) | [HOME](../index.md#msx-component-manager) |
+|---|---|---|

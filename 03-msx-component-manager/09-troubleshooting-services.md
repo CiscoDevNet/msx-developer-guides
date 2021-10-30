@@ -129,3 +129,6 @@ A failing health check is one reason your service might not come up properly ins
 
 The Go Hello World Service is small so does not require much. Full details of what you can set here can be found in the Component Manager Manifest Reference [(help me)](../reference/component-manager-manifest-reference.md).
 
+
+| [PREVIOUS](08-managing-local-infrastructure.md) | [NEXT](10-accessing-logs-with-kibana.md) | [HOME](../index.md#msx-component-manager) |
+|---|---|---|

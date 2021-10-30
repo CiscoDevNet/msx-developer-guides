@@ -250,3 +250,7 @@ This Swagger page is interactive and can be used to try out the API. You can fet
 ## The Missing Pieces
 Now we have Swagger documentation the last piece of the puzzle is:
 * add role based access control
+
+
+| [PREVIOUS](08-creating-the-security-clients.md) | [NEXT](10-implementing-role-based-access-control.md) | [HOME](../index.md#java-hello-world-service-example) |
+|---|---|---|

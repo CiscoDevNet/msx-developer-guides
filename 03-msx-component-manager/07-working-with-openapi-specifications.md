@@ -519,3 +519,7 @@ components:
 [OpenAPI Specification Reference](https://swagger.io/docs/specification/about/)
 
 [Hello World Collection](http://helloworldcollection.de)
+
+
+| [PREVIOUS](06-choosing-between-java-and-go.md) | [NEXT](08-managing-local-infrastructure.md) | [HOME](../index.md#msx-component-manager) |
+|---|---|---|

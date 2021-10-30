@@ -29,3 +29,7 @@ Service applications are services that include a user interface component. They 
 [OpenAPI Specification](https://swagger.io/docs/specification/about/)
 
 [NASA APIs](https://api.nasa.gov)
+
+
+| [NEXT](02-configuring-the-component-manifest.md) | [HOME](../index.md#msx-component-manager) |
+|---|---|

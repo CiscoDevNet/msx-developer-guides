@@ -187,3 +187,5 @@ Time: 28ms total (execution 28ms / network 0ms)
 [Start CockroachDB Cluster in Docker](https://www.cockroachlabs.com/docs/v20.2/start-a-local-cluster-in-docker-mac.html)
 
 
+| [PREVIOUS](09-troubleshooting-services.md) | [NEXT](07-working-with-openapi-specifications.md) | [HOME](../index.md#msx-component-manager) |
+|---|---|---|

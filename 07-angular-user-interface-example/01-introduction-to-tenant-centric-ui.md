@@ -96,4 +96,6 @@ You should now see your service pack in the offer catalog under tenant workspace
 ## References
 [MSX Common Components](https://developer.cisco.com/docs/msx/#!msx-common-components-msx-common-components)
 
-[Icons for buttons](../../../reference/icons/IcoMoon - SVG Icons.html)
+
+| [NEXT](03-working-with-devices.md) | [HOME](../index.md#angular-user-interface-example) |
+|---|---|

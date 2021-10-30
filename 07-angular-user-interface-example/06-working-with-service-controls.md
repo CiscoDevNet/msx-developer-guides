@@ -126,3 +126,7 @@ Add this new section to point to the route we created earlier.
 After doing a build, there will be three service controls in your tenant workspace.
 
 There are a few things to note about adding a new component to service controls. The routes are declared at the module level, so a new module will need to be created (alternatively, you can add a new component to the routed-page module). As it stands components used by service controls cannot be called from other places in your service pack, be sure to plan out your modules accordingly.
+
+
+| [PREVIOUS](05-routing-in-msx.md) | [HOME](../index.md#angular-user-interface-example) |
+|---|---|

@@ -145,3 +145,7 @@ You will need a valid access token each time you want to make requests like this
 
 [Swagger - API Development for Everyone](https://swagger.io)
 
+
+| [PREVIOUS](03-navigating-the-msx-user-interface.md) | [NEXT](80-configuring-security-clients.md) | [HOME](../index.md#msx-developer-program-basics) |
+|---|---|---|
+

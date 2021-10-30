@@ -215,3 +215,7 @@ If the request is successful you see will an HTTP-201 response.
 [AppAuth Project](https://appauth.io)
 
 [AppAuth Flutter Library](https://pub.dev/packages/flutter_appauth)
+
+
+| [PREVIOUS](04-using-the-swagger-documentation.md) | [NEXT](90-understanding-roles-and-permissions.md) | [HOME](../index.md#msx-developer-program-basics) |
+|---|---|---|

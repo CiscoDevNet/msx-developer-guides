@@ -250,3 +250,7 @@ Clicking on "Tenants" in the application bar at the top of the screen will fetch
 [OAuth 2.0](https://oauth.net/2/)
 
 [AppAuth 1.3.0](https://appauth.io)
+
+
+| [PREVIOUS](02-working-with-self-signed-certifcates.md) | [NEXT](04-building-the-component.md) | [HOME](../index.md#react-user-interface-example) |
+|---|---|---|
