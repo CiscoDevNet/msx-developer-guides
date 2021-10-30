@@ -398,5 +398,6 @@ You can use `deviceService.updateStatus` to set any of the following statuses:
 | pnpStatus | CONNECTED, CALLED_HOME, FAILED_TO_CONNECT, UNKNOWN |
 | syncStatus | SYNCHRONIZED, FAILED_TO_SYNC, UNKNOWN |
 
+<br>
 
 | [PREVIOUS](01-introduction-to-tenant-centric-ui.md) | [NEXT](04-working-with-sites.md) | [HOME](../index.md#angular-user-interface-example) |

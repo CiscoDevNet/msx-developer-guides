@@ -34,5 +34,5 @@ This guide outlines what is possible with the service, please check back for upd
 * Delete Product Offer
 
 
-| [PREVIOUS](10-catalog-microservice.md) | [NEXT](11-manage-microservice.md) | [HOME](../index.md#msx-platform-sdk) |
+| [PREVIOUS](04-using-python-to-get-an-access-token-with-the-password-grant.md) | [NEXT](11-manage-microservice.md) | [HOME](../index.md#msx-platform-sdk) |
 
