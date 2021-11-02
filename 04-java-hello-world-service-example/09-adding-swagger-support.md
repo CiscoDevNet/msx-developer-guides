@@ -65,7 +65,7 @@ Update the "pom.xml" to include the dependencies below, noting that it requires 
 <br>
 
 ### application.yml
-We have already configured  Spring, CockroachDB connection pool, and JPA properties in `application.xml`. Now we tell the application about the public security client, and the pattern to integrate the Swagger documentation.
+We have already configured  Spring, CockroachDB connection pool, and JPA properties in `application.yml`. Now we tell the application about the public security client, and the pattern to integrate the Swagger documentation.
 ```yaml
 debug: false
 

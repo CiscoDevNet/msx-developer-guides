@@ -18,7 +18,7 @@
 
 
 ## Introduction
-Services and applications need to be passed configuration to control integrations and behaviours. In this guide will show how to bootstrap Consul integration and pass non-sensitive key value pairs through `manifest.xml`.
+Services and applications need to be passed configuration to control integrations and behaviours. In this guide will show how to bootstrap Consul integration and pass non-sensitive key value pairs through `manifest.yml`.
 
 
 ## Goals
@@ -59,7 +59,7 @@ consul:
 <br>
 
 ### manifest.yml
-We have to update `manifest.xml` that we introduced in the last example to tell the container where to pick up the bootstrap configuration, and create some **Consul** key value pairs for testing.
+We have to update `manifest.yml` that we introduced in the last example to tell the container where to pick up the bootstrap configuration, and create some **Consul** key value pairs for testing.
 
 ```yaml
 .
@@ -272,7 +272,7 @@ Log in to your MSX environment and deploy `helloworldservice-1.0.0-component.tar
 
 
 ## Inspecting the Server Log
-Leaking Consul configuration to the console is a security violation, but it is convenient for testing this example. Recall that we specified some Consul key value pairs in `manifest.xml`, and retrieved and printed them in `main.go`. To prove that it worked we will use Kibana.
+Leaking Consul configuration to the console is a security violation, but it is convenient for testing this example. Recall that we specified some Consul key value pairs in `manifest.yml`, and retrieved and printed them in `main.go`. To prove that it worked we will use Kibana.
  
 Click on "System Logs" in the left-hand navigation panel of the Cisco MSX Portal.
 

@@ -18,7 +18,7 @@
 
 
 ## Introduction
-In addition to non-sensitive configuration that we can pass with Consul, we also need a way to pass sensitive values like passwords and secrets. In this guide will show how to bootstrap Vault integration and pass sensitive key value pairs through `manifest.xml`.
+In addition to non-sensitive configuration that we can pass with Consul, we also need a way to pass sensitive values like passwords and secrets. In this guide will show how to bootstrap Vault integration and pass sensitive key value pairs through `manifest.yml`.
 
 
 ## Goals
@@ -254,7 +254,7 @@ Log in to your MSX environment and deploy `helloworldservice-1.0.0-component.tar
 
 
 ## Inspecting the Server Log
-Leaking Vault configuration to the console is a security violation, but it is convenient for testing this example. Recall that we specified a Vault key "secret.squirrel.location" in `manifest.xml`, and retrieved and printed it in `app.py`. To prove that it worked we will use Kibana in the same we did for the Consul guide, but this time we will search for "acorns".
+Leaking Vault configuration to the console is a security violation, but it is convenient for testing this example. Recall that we specified a Vault key "secret.squirrel.location" in `manifest.yml`, and retrieved and printed it in `app.py`. To prove that it worked we will use Kibana in the same we did for the Consul guide, but this time we will search for "acorns".
 
 ![](images/inspecting-vault-1.png)
 

@@ -91,7 +91,7 @@ cockroach:
 <br>
 
 ### manifest.yml
-When our service is deployed MSX creates the database for us, and populates Vault and Consul with the correct values. Then in our configuration code we will read those values to create our database connection string. We have to update `manifest.xml` to tell  MSX which database we want to use.
+When our service is deployed MSX creates the database for us, and populates Vault and Consul with the correct values. Then in our configuration code we will read those values to create our database connection string. We have to update `manifest.yml` to tell  MSX which database we want to use.
 
 ```yaml
 .

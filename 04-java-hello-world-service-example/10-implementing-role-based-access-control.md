@@ -5,8 +5,8 @@
 * [Prerequisites](#prerequisites)
 * [Configuring the Project](#configuring-the-project)
     * [pom.xml](#pomxml)
-    * [application.yml](#applicationxml)
-    * [manifest.xml](#manifestxml)
+    * [application.yml](#applicationyml)
+    * [manifest.yml](#manifestyml)
     * [LanguageService.java](#languageservicejava)
 * [Building and Deploying the Service](#building-and-deploying-the-service)
 * [Making a Secure Request](#making-a-secure-request)
@@ -59,8 +59,8 @@ A good rule of thumb is not to role your own encryption or security protocols. T
 
 <br>
 
-## application.xml
-In the previous guide we added a security rule to enable Swagger, now we update `application.xml` to include a rule for the Hello World Service. The consequence being that all Hello World Service requests will need to include an access token in the authorization header.
+## application.yml
+In the previous guide we added a security rule to enable Swagger, now we update `application.yml` to include a rule for the Hello World Service. The consequence being that all Hello World Service requests will need to include an access token in the authorization header.
 
 For the security integration to work we must also provide a reference to the confidential security client we created earlier [(help me)](../04-java-hello-world-service-example/08-creating-the-security-clients.md). This security client will be used when the access token is validated. 
 ```yaml
@@ -89,7 +89,7 @@ integration:
 
 <br>
 
-### manifest.xml
+### manifest.yml
 When we created the security clients [(help me)](../04-java-hello-world-service-example/08-creating-the-security-clients.md) we talked about configuring the confidential security client. We added the public security client identifier in the last guide, now update `manifest.yml` to include details of the confidential security client. Note that in a future release SLM will create and configure the confidential security client automatically, but today it is a manual task. 
 ```yaml
 .

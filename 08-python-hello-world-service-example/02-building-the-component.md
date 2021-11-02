@@ -3,7 +3,7 @@
 * [Goals](#goals)
 * [Prerequisites](#prerequisites)
 * [Configuring the Project](#configuring-the-project)
-    * [manifest.yml](#manifestxml)
+    * [manifest.yml](#manifestyml)
     * [Dockerfile](#dockerfile)
     * [Makefile](#makefile)
 * [Packaging the Component](#packaging-the-component)
@@ -36,7 +36,7 @@ Before we can install the Hello World Service in MSX, we need to containerize it
 ## Configuring the Project
 Before we can package up the Hello World Service component and deploy it into MSX with Component Manager [(help me)](../03-msx-component-manager/01-what-is-component-manager-in-a-nutshell.md), we need to create some configuration files.
 
-### manifest.xml
+### manifest.yml
 The first file is the SLM manifest which tells MSX how to deploy the associated containers. Create `manifest.yml` in the root folder of the project with the following contents:
 
 ```yaml
@@ -94,7 +94,7 @@ ENTRYPOINT ["flask", "run", "--host", "0.0.0.0", "--port", "8082"]
 
 > **GOTCHA**
 >
-> Take care to make sure the ports in `Dockerfile` and `manifest.xml` match.
+> Take care to make sure the ports in `Dockerfile` and `manifest.yml` match.
 
 ### Makefile
 There are several steps to containerize and package the component. This will be done multiple times during development, so we use a build utility. Create a file called `Makefile` with the contents below.

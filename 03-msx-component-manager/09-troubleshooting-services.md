@@ -47,7 +47,7 @@ Loaded image: helloworldservice:1.0.0
 ```
 
 ### Spinning up the Container
-Before we can spin up the container we need to check `manifest.xml` to see which port the service is exposed on.
+Before we can spin up the container we need to check `manifest.yml` to see which port the service is exposed on.
 
 ```yaml
 .
@@ -76,7 +76,7 @@ Check that the container is running with `docker container ls` or use `Docker De
 ![](images/docker-desktop-helloworld-1.png)
 
 ### Hitting the Container
-We can see that the container is up, but it is more convincing to get make a request and get a response. The container implements a simple Hello World service, and we can look in `manifest.xml` again to find the endpoint used for the health check.
+We can see that the container is up, but it is more convincing to get make a request and get a response. The container implements a simple Hello World service, and we can look in `manifest.yml` again to find the endpoint used for the health check.
 
 ```yaml
 .
@@ -113,7 +113,7 @@ $ curl --request GET "http://localhost:8080/helloworld/api/v1/items"
 The service health check is a simple request that can be made against your service that returns HTTP-200. The example above shows a request that gets a list of items, but you can have a simpler dedicated endpoint too. If the health check fails then you service will be reaped by Kubernetes inside MSX.
 
 ## Setting Service Resource Constraints
-A failing health check is one reason your service might not come up properly inside MSX, another is that it has not been allocated enough resources. You can tune the resources you expect your container to need in `manifest.xml` as follows:
+A failing health check is one reason your service might not come up properly inside MSX, another is that it has not been allocated enough resources. You can tune the resources you expect your container to need in `manifest.yml` as follows:
 
 ```yaml
 .

@@ -71,7 +71,7 @@ We need a public security client to integrate the Swagger documentation for our 
 ## Creating the Private Security Client
 The confidential security client is used to validate access tokens over a secure back channel. You cannot use the Cisco MSX Portal to look up the client secret once you have created the confidential security client, so make sure you store it in a safe place. Note you should never use a confidential security client in a situation that would require you to store the client secret insecurely, for example in a user interface. 
 
-When we deploy the secure Hello World Service with SLM [(help me)](../03-msx-component-manager/01-what-is-component-manager-in-a-nutshell.md) we will update `manifest.xml` to set the client identifiers in Consul and the client secret in Vault. In a future release SLM will take care of creating and configuring the confidential security client automatically. This is a planned improvement that will remove the need to manually handle client secrets.
+When we deploy the secure Hello World Service with SLM [(help me)](../03-msx-component-manager/01-what-is-component-manager-in-a-nutshell.md) we will update `manifest.yml` to set the client identifiers in Consul and the client secret in Vault. In a future release SLM will take care of creating and configuring the confidential security client automatically. This is a planned improvement that will remove the need to manually handle client secrets.
 ```json
 {
     "clientId": "hello-world-service-private-client",
