@@ -1,4 +1,4 @@
-# Creating a Hello World Service in Python
+# Components with Angular UI and Java API
 * [Introduction](#introduction)
 * [Goals](#goals)
 * [Prerequisites](#prerequisites)
