@@ -37,16 +37,19 @@ $ cd angular9-msx-service-pack-ui-generator
 - Run the following command, using `helloworld` as the servicepack name,
 
 ```bash
-$ ./createTemplate.sh -project-name="helloworld" -project-description="HelloWorld" -output-dir="./helloworld"
+$ ./createTemplate.sh -project-name="helloworld" \
+-image-file="./sample-image/sample.svg" \
+-project-description="HelloWorld_Description" \
+-output-dir="./helloworld"
 ```
 
 ### Parameters Explained
 
-| Parameter | Description |
+| Parameter             | Description |
 |-----------------------|-------------|
 | project-name          | The name of your service pack. |
 | project-description   | A description of the service pack. |
-| image-file (optional) | An con to display in the service catalog.|
+| image-file            | An icon to display in the service catalog.|
 | output-dir            | Output location of the generated service pack files. |
 
 

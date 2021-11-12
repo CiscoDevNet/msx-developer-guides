@@ -75,6 +75,9 @@
 * [Adding Swagger Support](08-python-hello-world-service-example/09-adding-swagger-support.md)
 * [Implementing Role Based Access Control](08-python-hello-world-service-example/10-implementing-role-based-access-control.md)
 
+# Components With Multiple Containers
+* [Creating a Hello World Service in Python](09-components-with-multiple-containers/01-components-with-a-ui-and-an-api.md)
+
 # Reference
 * [Component Manager Manifest Reference](reference/component-manager-manifest-reference.md)
 * [User Interface Style Guide](reference/user-interface-style-guide.md)
