@@ -70,7 +70,7 @@ The prefix depends on the version of MSX you are running:
 
 <br>
 
-When developing you can run Consul, Vault, and CockroachDB locally [(help me)](#references). You can pass the required CockroachDB configuration in `helloworld.yml` by adding the following.
+When developing you can run Consul, Vault, and CockroachDB locally [(help me)](../03-msx-component-manager/08-managing-local-infrastructure.md#running-consul-for-development). You can pass the required CockroachDB configuration in `helloworld.yml` by adding the following.
 
 ```yaml
 .
@@ -633,7 +633,7 @@ api.add_resource(LanguageApi, "/helloworld/api/v1/languages/<id>", resource_clas
 
 
 ## Debugging Locally
-At this juncture we are code complete, and all that remains is to test. If you are feeling lucky build, package, and deploy the component into MSX and cross your fingers that everything is correct. However running the service locally makes it easier to debug. First spin up Consul, Vault, and CockroachDB using Docker Desktop instances, then create the "helloworld" database [(help me)](#references).
+At this juncture we are code complete, and all that remains is to test. If you are feeling lucky build, package, and deploy the component into MSX and cross your fingers that everything is correct. However running the service locally makes it easier to debug. First spin up Consul, Vault, and CockroachDB using Docker Desktop instances, then create the "helloworld" database [(help me)](../03-msx-component-manager/08-managing-local-infrastructure.md#starting-cockroachdb-locally).
 
 
 ## Testing Locally
