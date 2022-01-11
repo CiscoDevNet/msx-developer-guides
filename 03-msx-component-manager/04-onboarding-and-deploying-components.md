@@ -54,7 +54,7 @@ Once the installation has finished, a message box will appear indicating success
 ![](images/deploying-component-6.png?raw=True)
 
 <br>
-After the message box has been dismissed, the installed component will have state "K8S_DEPLOYMENT_DONE"
+After the message box has been dismissed, the installed component will have state "K8S_DEPLOYMENT_DONE".
 
 ![](images/deploying-component-7.png?raw=True)
 
