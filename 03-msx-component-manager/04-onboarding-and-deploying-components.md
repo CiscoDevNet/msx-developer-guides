@@ -48,5 +48,15 @@ To install the component, click on the ellipsis and select "Install"
 
 ![](images/deploying-component-5.png?raw=true)
 
+<br>
+Once the installation has finished, a message box will appear indicating success or failure.
+
+![](images/deploying-component-6.png?raw=True)
+
+<br>
+After the message box has been dismissed, the installed component will have state "K8S_DEPLOYMENT_DONE"
+
+![](images/deploying-component-7.png?raw=True)
+
 
 | [PREVIOUS](03-service-containerization-and-packaging.md) | [NEXT](05-service-offers-and-subscriptions.md) |  [HOME](../index.md#msx-component-manager) |
