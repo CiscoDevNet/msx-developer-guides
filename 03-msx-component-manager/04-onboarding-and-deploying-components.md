@@ -34,14 +34,19 @@ Select "Add Component" and pick the file "helloworldservice-1.0.0-component.tar.
 ![](images/deploying-component-2.png?raw=true)
 
 <br>
-Once the upload has finished a message box will indicating success of failure.
+Once the upload has finished, a message box will appear prompting whether to install the component.
 
 ![](images/deploying-component-3.png?raw=true)
 
 <br>
-After the message box has been dismissed the new component will appear in the list.
+You can choose to install the component or upload another version of the component following the steps above.
 
 ![](images/deploying-component-4.png?raw=true)
+
+<br>
+To install the component, click on the ellipsis and select "Install"
+
+![](images/deploying-component-5.png?raw=true)
 
 
 | [PREVIOUS](03-service-containerization-and-packaging.md) | [NEXT](05-service-offers-and-subscriptions.md) |  [HOME](../index.md#msx-component-manager) |
