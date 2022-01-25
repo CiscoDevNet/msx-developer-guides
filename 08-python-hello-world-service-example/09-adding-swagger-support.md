@@ -49,7 +49,7 @@ Werkzeug==0.16.1
 psycopg2-binary==2.9.1
 PyYAML==5.4.1
 python-consul==1.1.0
-urllib3==1.24.1
+urllib3==1.26.5
 hvac==0.10.14
 msxswagger @ git+https://github.com/CiscoDevNet/python-msx-swagger@v0.6.0
 ```

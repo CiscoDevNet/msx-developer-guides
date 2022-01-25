@@ -57,10 +57,10 @@ Werkzeug==0.16.1
 psycopg2-binary==2.9.1
 PyYAML==5.4.1
 python-consul==1.1.0
-urllib3==1.24.1
+urllib3==1.26.5
 hvac==0.10.14
 msxswagger @ git+https://github.com/CiscoDevNet/python-msx-swagger@v0.6.0
-msxsecurity @ git+https://github.com/CiscoDevNet/python-msx-security@v0.1.0
+msxsecurity @ git+https://github.com/CiscoDevNet/python-msx-security@v0.2.0
 ```
 
 <br>
@@ -94,6 +94,7 @@ security:
   ssourl: "http://localhost:9515/idm" # CONSUL {prefix}/defaultapplication/swagger.security.sso.baseUrl
   clientid: "local-private-client" # CONSUL {prefix}/helloworldservice/integration.security.clientId
   clientsecret: "make-up-a-private-client-secret-and-keep-it-safe" # Required by MSX.
+  sslverify: false
 .
 .
 .
@@ -255,11 +256,16 @@ class SecurityHelper(object):
             secret=f"{self._config.config_prefix}/helloworldservice",
             key="integration.security.clientSecret",
             default=self._config.security.clientsecret)
-
+        ssl_verify = self._vault_helper.get_string(
+             secret=f"{self._config.config_prefix}/helloworldservice",
+             key="integration.security.sslVerify",
+             default=self._config.security.sslverify)
+             
         return MSXSecurityConfig(
             sso_url=sso_url,
             client_id=client_id,
             client_secret=client_secret,
+            ssl_verify=ssl_verify,
             cache_enabled=cache_enabled,
             cache_ttl_seconds=cache_ttl_seconds)
 ```
@@ -279,7 +285,7 @@ ConsulConfig = namedtuple("ConsulConfig", ["host", "port", "cacert"])
 VaultConfig = namedtuple("VaultConfig", ["scheme", "host", "port", "token", "cacert"])
 CockroachConfig = namedtuple("CockroachConfig", ["host", "port", "databasename","username", "sslmode", "cacert"])
 SwaggerConfig = namedtuple("SwaggerConfig", ["rootpath", "secure", "ssourl", "clientid", "swaggerjsonpath"])
-SecurityConfig = namedtuple("SecurityConfig", ["ssourl", "clientid", "clientsecret"])
+SecurityConfig = namedtuple("SecurityConfig", ["ssourl", "clientid", "clientsecret", "sslverify"])
 .
 .
 .

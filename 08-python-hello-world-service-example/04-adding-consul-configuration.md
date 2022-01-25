@@ -246,7 +246,7 @@ flask-restplus==0.13.0
 Werkzeug==0.16.1
 PyYAML==5.4.1
 python-consul==1.1.0
-urllib3==1.24.1
+urllib3==1.26.5
 ```
 
 
