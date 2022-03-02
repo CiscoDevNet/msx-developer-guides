@@ -3,10 +3,10 @@
 * [Introduction](#introduction)
 * [Goals](#goals)
 * [Prerequisites](#prerequisites)
-* [Prefix Required] (#prefex-required)
-* [Inspecting the Log](#inspecting-the-log)
-* [Generating the Log](#generating-the-log)
-* [Conclusion](#conclusion)
+* [Prefix Required](#prefix-required)
+* [Host Configuration](#host-configuration)
+* [Database Configuration](#database-configuration)
+* [Swagger Configuration](#swagger-configuration)
 
 ## Introduction
 
@@ -37,40 +37,39 @@ Depending on the version of MSX you are using, you would be required to use a di
 
 <br>
 
-## Generating the Log
+## Host Configuration
 
-The Hello World Service we deployed is written in Go, all it does to write a log entry is call `log.Printf`.
-
-```go
-func (s *LanguagesApiService) GetLanguages(ctx context.Context) (ImplResponse, error) {
- log.Printf(`Hello World - Get Languages`)
- list := []Language{StubLanguage}
- return Response(http.StatusOK, list), nil
-}
-```
-
-Make a `curl` command to get a list of languages from your MSX enviorment then check the log again.
-
-```bash
-$ export MY_MSX_ENVIRONMENT=dev-plt-aio1.lab.ciscomsx.com
-$ curl --insecure --request GET `https://$MY_MSX_ENVIRONMENT/helloworld/api/v1/languages`
-[
-  {
-    `id`:`20f329ac-123f-48f0-917d-a70497cfd22a`,
-    `name`:`Esperanto`,
-    `description`:`Esperanto is a constructed auxiliary language. Its creator was L. L. Zamenhof, a Polish eye doctor.`
-  }
-]
-```
-
-Switch back to Kibana and set the time window to `Minute` and narrow in on the log entry we just created.
-
-![](images/using-kibana-7.png)
+| Source                        | Path                                                       | Example |
+|-------------------------------|------------------------------------------------------------|---------|
+| swagger.security.sso.baseUrl  | {prefix}/defaultapplication/swagger.security.sso.baseUrl   |         |
+| msx.dns.host                  | {prefix}/defaultapplication/msx.dns.host                   |         |
 
 <br>
 
-## Conclusion
+## Database Configuration
 
-If your service works as expected locally, but has some strange behaviours when deployed to MSX, then using logging and Kibana to work out what is going on.
+The database configuration values can be divided into two categories:
+
+1. Common Configuration
+
+| Name    | Source | Path                                                       | Description                         |
+|---------|--------|------------------------------------------------------------|-------------------------------------|
+|Host     | Consul | {prefix}/defaultapplication/db.cockroach.host              | Get the hostname from Consul        |
+|Port     | Consul | {prefix}/defaultapplication/db.cockroach.port              | Get the port number from Consul     |
+|SSL Mode | Consul | {prefix}/defaultapplication/db.cockroach.sslmode           | Get the SSL Mode from Consul        |
+
+2. Application Configuration
+
+| Name             | Source | Path                                             | Description                                     |
+|------------------|--------|--------------------------------------------------|-------------------------------------------------|
+| Database Name    | Consul | {prefix}/{servicename}/db.cockroach.databaseName | Get the name of database to be read from Consul |
+| Username         | Consul | {prefix}/{servicename}db.cockroach.username      | Get the username from Consul                    |
+| Password         | Vault  | {prefix}/{servicename}/db.cockroach.password     | Get the password from Vault                     |
+
+<br>
+
+## Swagger Configuration
+
+<br>
 
 | [PREVIOUS](09-troubleshooting-services.md) | [HOME](../index.md#msx-component-manager) |
