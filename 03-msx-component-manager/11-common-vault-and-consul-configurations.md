@@ -41,7 +41,6 @@ Depending on the version of MSX you are using, you would be required to use a di
 
 | Source                        | Path                                                       | Example |
 |-------------------------------|------------------------------------------------------------|---------|
-| swagger.security.sso.baseUrl  | {prefix}/defaultapplication/swagger.security.sso.baseUrl   |         |
 | msx.dns.host                  | {prefix}/defaultapplication/msx.dns.host                   |         |
 
 <br>
@@ -60,15 +59,22 @@ The database configuration values can be divided into two categories:
 
 2. Application Configuration
 
-| Name             | Source | Path                                             | Description                                     |
-|------------------|--------|--------------------------------------------------|-------------------------------------------------|
-| Database Name    | Consul | {prefix}/{servicename}/db.cockroach.databaseName | Get the name of database to be read from Consul |
-| Username         | Consul | {prefix}/{servicename}db.cockroach.username      | Get the username from Consul                    |
-| Password         | Vault  | {prefix}/{servicename}/db.cockroach.password     | Get the password from Vault                     |
+| Name          | Source | Path                                             | Description                                     |
+|---------------|--------|--------------------------------------------------|-------------------------------------------------|
+| Database Name | Consul | {prefix}/{servicename}/db.cockroach.databaseName | Get the name of database to be read from Consul |
+| Username      | Consul | {prefix}/{servicename}/db.cockroach.username     | Get the username from Consul                    |
+| Password      | Vault  | {prefix}/{servicename}/db.cockroach.password     | Get the password from Vault                     |
 
 <br>
 
 ## Swagger Configuration
+
+The Swagger Configuration values are as follow: 
+
+| Name       | Source | Path                                                      | Description                    |
+|------------|--------|-----------------------------------------------------------|--------------------------------|
+| SSO URL    | Consul | {prefix}//defaultapplication/swagger.security.sso.baseUrl | Gets the SSO URL from Consul   |
+| Client ID  | Consul | {prefix}/{servicename}/public.security.clientId           | Get the client ID from Consul  |
 
 <br>
 
