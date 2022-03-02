@@ -78,4 +78,4 @@ The Swagger Configuration values are as follow:
 
 <br>
 
-| [PREVIOUS](09-troubleshooting-services.md) | [HOME](../index.md#msx-component-manager) |
+| [PREVIOUS](10-accessing-logs-with-kibana.md) | [HOME](../index.md#msx-component-manager) |
