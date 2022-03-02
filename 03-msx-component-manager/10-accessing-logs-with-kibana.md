@@ -102,4 +102,4 @@ Switch back to Kibana and set the time window to `Minute` and narrow in on the l
 If your service works as expected locally, but has some strange behaviours when deployed to MSX, then using logging and Kibana to work out what is going on.
 
 
-| [PREVIOUS](09-troubleshooting-services.md) | [HOME](../index.md#msx-component-manager) |
+| [PREVIOUS](09-troubleshooting-services.md) | [NEXT](11-common-vault-and-consul-configurations.md) | [HOME](../index.md#msx-component-manager) |
