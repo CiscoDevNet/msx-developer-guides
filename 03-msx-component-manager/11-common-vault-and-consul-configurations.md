@@ -4,9 +4,9 @@
 * [Goals](#goals)
 * [Prerequisites](#prerequisites)
 * [Prefix Required](#prefix-required)
-* [Host Configuration](#host-configuration)
-* [Database Configuration](#database-configuration)
-* [Swagger Configuration](#swagger-configuration)
+* [Common Host Configuration Value](#common-host-configuration-value)
+* [Common Database Configuration Values](#common-database-configuration-values)
+* [Common Swagger Configuration Values](#common-swagger-configuration-values)
 
 ## Introduction
 
@@ -37,15 +37,15 @@ Depending on the version of MSX you are using, you would be required to use a di
 
 <br>
 
-## Host Configuration
+## Common Host Configuration Value
 
-| Source                        | Path                                                       | Example |
-|-------------------------------|------------------------------------------------------------|---------|
-| msx.dns.host                  | {prefix}/defaultapplication/msx.dns.host                   |         |
+|Name      | Source   | Path                                      | Description                   |
+|----------|----------|-------------------------------------------|-------------------------------|
+| DNS Host | Consul   | {prefix}/defaultapplication/msx.dns.host  | Gets the DNS Host from Consul |
 
 <br>
 
-## Database Configuration
+## Common Database Configuration Values
 
 The database configuration values can be divided into two categories:
 
@@ -67,13 +67,13 @@ The database configuration values can be divided into two categories:
 
 <br>
 
-## Swagger Configuration
+## Common Swagger Configuration Values
 
 The Swagger Configuration values are as follow: 
 
 | Name       | Source | Path                                                      | Description                    |
 |------------|--------|-----------------------------------------------------------|--------------------------------|
-| SSO URL    | Consul | {prefix}//defaultapplication/swagger.security.sso.baseUrl | Gets the SSO URL from Consul   |
+| SSO URL    | Consul | {prefix}/defaultapplication/swagger.security.sso.baseUrl  | Gets the SSO URL from Consul   |
 | Client ID  | Consul | {prefix}/{servicename}/public.security.clientId           | Get the client ID from Consul  |
 
 <br>
