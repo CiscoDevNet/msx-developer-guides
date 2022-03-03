@@ -29,6 +29,7 @@
 * [Managing Local Infrastructure](03-msx-component-manager/08-managing-local-infrastructure.md)
 * [Troubleshooting Services](03-msx-component-manager/09-troubleshooting-services.md)
 * [Accessing Logs With Kibana](03-msx-component-manager/10-accessing-logs-with-kibana.md)
+* [Common Vault and Consul Configurations](03-msx-component-manager/11-common-vault-and-consul-configurations.md)
 
 # Java Hello World Service Example
 * [Creating a Hello World Service in Java](04-java-hello-world-service-example/03-creating-a-hello-world-service-in-java.md)
