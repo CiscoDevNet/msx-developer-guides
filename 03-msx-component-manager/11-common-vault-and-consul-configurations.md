@@ -39,9 +39,9 @@ Depending on the version of MSX you are using, you would be required to use a di
 
 ## Common Host Configuration Value
 
-|Name      | Source   | Path                                      | Description                   |
-|----------|----------|-------------------------------------------|-------------------------------|
-| DNS Host | Consul   | {prefix}/defaultapplication/msx.dns.host  | Gets the DNS Host from Consul |
+|Name      | Source   | Path                                      | Description                        |
+|----------|----------|-------------------------------------------|------------------------------------|
+| DNS Host | Consul   | {prefix}/defaultapplication/msx.dns.host  | Gets the DNS Host Name from Consul |
 
 <br>
 
