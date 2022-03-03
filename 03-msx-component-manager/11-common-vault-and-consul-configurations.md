@@ -88,7 +88,7 @@ The Security Configuration values used by third-parties to implement RBAC and Te
 | SSO URL       | Consul | {prefix}/defaultapplication/swagger.security.sso.baseUrl  | Gets the SSO URL from Consul                             |
 | Client ID     | Consul | {prefix}/{servicename}/public.security.clientId           | Gets the client ID from Consul                           |
 | Client Secret | Vault  | {prefix}/{servicename}/integration.security.clientSecret  | Gets the client secret from Vault                        |
-| SSL Verfify   | Vault  | {prefix}/{servicename}/integration.security.sslVerify     | Get the fingerprint from Vault to verify SSL Certificate | 
+| SSL Verfify   | Vault  | {prefix}/{servicename}/integration.security.sslVerify     | Get the fingerprint to verify SSL Certificate from Vault | 
 
 <br>
 
