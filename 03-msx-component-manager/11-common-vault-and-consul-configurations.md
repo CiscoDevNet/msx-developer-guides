@@ -7,6 +7,7 @@
 * [Common Host Configuration Value](#common-host-configuration-value)
 * [Common Database Configuration Values](#common-database-configuration-values)
 * [Common Swagger Configuration Values](#common-swagger-configuration-values)
+* [Common Security Configuration Values](#common-security-configuration-values)
 
 ## Introduction
 
@@ -39,7 +40,7 @@ Depending on the version of MSX you are using, you would be required to use a di
 
 ## Common Host Configuration Value
 
-|Name      | Source   | Path                                      | Description                        |
+| Name     | Source   | Path                                      | Description                        |
 |----------|----------|-------------------------------------------|------------------------------------|
 | DNS Host | Consul   | {prefix}/defaultapplication/msx.dns.host  | Gets the DNS Host Name from Consul |
 
@@ -75,6 +76,19 @@ The Swagger Configuration values are as follow:
 |------------|--------|-----------------------------------------------------------|--------------------------------|
 | SSO URL    | Consul | {prefix}/defaultapplication/swagger.security.sso.baseUrl  | Gets the SSO URL from Consul   |
 | Client ID  | Consul | {prefix}/{servicename}/public.security.clientId           | Get the client ID from Consul  |
+
+<br>
+
+## Common Security Configuration Values
+
+The Security Configuration values used by third-parties to implement RBAC and Tenancy are as follow: 
+
+| Name          | Source | Path                                                      | Description                                              |
+|---------------|--------|-----------------------------------------------------------|----------------------------------------------------------|
+| SSO URL       | Consul | {prefix}/defaultapplication/swagger.security.sso.baseUrl  | Gets the SSO URL from Consul                             |
+| Client ID     | Consul | {prefix}/{servicename}/public.security.clientId           | Gets the client ID from Consul                           |
+| Client Secret | Vault  | {prefix}/{servicename}/integration.security.clientSecret  | Gets the client secret from Vault                        |
+| SSL Verfify   | Vault  | {prefix}/{servicename}/integration.security.sslVerify     | Get the fingerprint from Vault to verify SSL Certificate | 
 
 <br>
 
