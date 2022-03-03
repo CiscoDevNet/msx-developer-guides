@@ -49,15 +49,15 @@ Depending on the version of MSX you are using, you would be required to use a di
 
 The database configuration values can be divided into two categories:
 
-1. Common Configuration
+1. Common Configuration for common system values
 
-| Name    | Source | Path                                                       | Description                         |
-|---------|--------|------------------------------------------------------------|-------------------------------------|
-|Host     | Consul | {prefix}/defaultapplication/db.cockroach.host              | Get the hostname from Consul        |
-|Port     | Consul | {prefix}/defaultapplication/db.cockroach.port              | Get the port number from Consul     |
-|SSL Mode | Consul | {prefix}/defaultapplication/db.cockroach.sslmode           | Get the SSL Mode from Consul        |
+| Name    | Source | Path                                             | Description                     |
+|---------|--------|--------------------------------------------------|---------------------------------|
+|Host     | Consul | {prefix}/defaultapplication/db.cockroach.host    | Get the hostname from Consul    |
+|Port     | Consul | {prefix}/defaultapplication/db.cockroach.port    | Get the port number from Consul |
+|SSL Mode | Consul | {prefix}/defaultapplication/db.cockroach.sslmode | Get the SSL Mode from Consul    |
 
-2. Application Configuration
+2. Application Configuration for service specific values
 
 | Name          | Source | Path                                             | Description                                     |
 |---------------|--------|--------------------------------------------------|-------------------------------------------------|
