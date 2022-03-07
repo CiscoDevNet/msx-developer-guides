@@ -50,7 +50,7 @@ Depending on the version of MSX you are using the Consul and Vault path prefixes
 
 The database configuration values can be divided into two categories:
 
-1. Common Configuration for common system values
+- Common Configuration for common system values
 
 | Name     | Source | Path                                             | Description                 |
 |----------|--------|--------------------------------------------------|-----------------------------|
@@ -58,7 +58,7 @@ The database configuration values can be divided into two categories:
 | Port     | Consul | {prefix}/defaultapplication/db.cockroach.port    | the port number from Consul |
 | SSL Mode | Consul | {prefix}/defaultapplication/db.cockroach.sslmode | the SSL Mode from Consul    |
 
-2. Application Configuration for service specific values
+- Application Configuration for service specific values
 
 | Name          | Source | Path                                             | Description                                 |
 |---------------|--------|--------------------------------------------------|---------------------------------------------|
