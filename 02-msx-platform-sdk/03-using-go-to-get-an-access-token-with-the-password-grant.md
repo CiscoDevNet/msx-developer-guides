@@ -101,54 +101,102 @@ Now that the security client has been created, and the project has been configur
 package main
 
 import (
+	"context"
 	"crypto/tls"
 	"encoding/base64"
 	"fmt"
-	"github.com/CiscoDevNet/go-msx-sdk"
 	"net/http"
+	"os"
+
+	msxsdk "github.com/CiscoDevNet/go-msx-sdk"
+	"github.com/google/uuid"
 )
 
 func main() {
-    // TODO - Replace these with values from your test MSX environment.
-    const myServerName = "https://dev-plt-aio1.lab.ciscomsx.com"
-    const myClientId = "my-test-private-client"
-    const myClientSecret = "make-up-a-private-client-secret-and-keep-it-safe"
-    const myUsername = "jeff"
-    const myPassword = "Password@1"
+	// TODO - Replace these with values from your test MSX environment.
+	const (
+		myHostName     = "dev-alt-aio1.ciscomsx.com"
+		myClientId     = "go-test-private-client"
+		myClientSecret = "make-up-a-private-client-secret-and-keep-it-safe"
+		myUsername     = "Jeff"
+		myPassword     = "Password@1"
+	)
 
-    // <DANGER> Do not defeat the SSL certificate in production.
-    // customTransport := http.DefaultTransport.(*http.Transport).Clone()
-    // customTransport.TLSClientConfig = &tls.Config{InsecureSkipVerify: true}
-    // </DANGER>
+	var (
+		config             = msxsdk.NewConfiguration()
+		ctx                = context.Background()
+		client             = msxsdk.NewAPIClient(config)
+		basicToken         = fmt.Sprintf("%s:%s", myClientId, myClientSecret)
+		basicAuthorization = fmt.Sprintf("Basic %s", base64.StdEncoding.EncodeToString([]byte(basicToken)))
+	)
 
-    // Create the MSX SDK client.
-    var config = msx.NewConfiguration()
-    config.BasePath = myServerName
-    config.HTTPClient = &http.Client{Transport: customTransport}
-    var client = msx.NewAPIClient(config)
+	// <DANGER> Do not defeat the SSL certificate in production.
+	customTransport = http.DefaultTransport.(*http.Transport).Clone()
+	customTransport.TLSClientConfig = &tls.Config{InsecureSkipVerify: true}
+	// </DANGER>
 
-    // Make the authorization token to pass to MSX.
-    var basicToken = myClientId + ":" + myClientSecret
-    var basicAuthorization = "Basic " + base64.StdEncoding.EncodeToString([]byte(basicToken))
+	// Create the MSX SDK client.
+	config.Scheme = "https"
+	config.Host = myHostName
+	config.HTTPClient = &http.Client{Transport: customTransport}
 
-    // Call GetAccessToken with a username and credentials.
-    var response, _, err = client.SecurityApi.GetAccessToken(
-        nil,
-        basicAuthorization,
-        "password", &msx.GetAccessTokenOpts{
-            Username: optional.NewString(myUsername),
-            Password: optional.NewString(myPassword)})
+	// Make the authorization token to pass to MSX.
 
-    // Print the user details and access token.
-    if err == nil {
-        fmt.Printf("First Name: " + response.FirstName + "\n")
-        fmt.Printf("Last Name: " + response.LastName + "\n")
-        fmt.Printf("Email: " + response.Email + "\n")
-        fmt.Printf("Access Token:\n" + response.AccessToken + "\n")
-    } else {
-        fmt.Printf("Something went wrong.\n")
-        fmt.Printf(err.Error())
-    }
+	// Call GetAccessToken with a username and credentials.
+	accessToken, _, _ := client.SecurityApi.
+		GetAccessToken(ctx).
+		Authorization(basicAuthorization).
+		GrantType("password").
+		Username(myUsername).
+		Password(myPassword).
+		Execute()
+
+	// Add Access Token Header in the Request
+	if token := accessToken.GetAccessToken(); token != "" {
+		bearer := fmt.Sprintf("Bearer %s", token)
+		config.AddDefaultHeader("Authorization", bearer)
+		fmt.Printf("Access Token: %s\n\n", token)
+	}
+
+	// Create a new Tenant
+	tenantCreate := *msxsdk.NewTenantCreate("GoSDKTestTenant_" + uuid.New().String())
+
+	createResp, _, _ := client.TenantsApi.
+		CreateTenant(ctx).
+		TenantCreate(tenantCreate).
+		Execute()
+
+	// Get list of tenant pages
+	pageResp, _, err := client.TenantsApi.
+		GetTenantsPage(ctx).
+		Page(0).
+		PageSize(100).
+		Execute()
+
+	if err != nil {
+		fmt.Printf("Something went wrong.\n%s\n", err.Error())
+		os.Exit(1)
+	}
+
+	fmt.Println("Create tenant:")
+	fmt.Printf("\tId : %s \n", *createResp.Id)
+	fmt.Printf("\tName : %s\n\n", createResp.Name)
+
+	fmt.Println("List of tenants:")
+	for _, v := range pageResp.GetContents() {
+		fmt.Printf("\tId : %s\n", *v.Id)
+		fmt.Printf("\tName : %s\n\n", v.Name)
+	}
+
+	// Delete previously created tenant
+	client.TenantsApi.
+		DeleteTenant(ctx, *createResp.Id).
+		Execute()
+
+	fmt.Println("Delete tenant:")
+	fmt.Printf("\tId : %s \n", *createResp.Id)
+	fmt.Printf("\tName : %s\n\n", createResp.Name)
+
 }
 ```
 
@@ -172,11 +220,29 @@ If you are running against a test environment you will need to uncomment the cod
 Now we can run the app from a terminal window.
 ```shell
 $ go run main.go
-First Name: Jeff
-Last Name: Pop
-Email: nobody@example.com
 Access Token:
 eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6ImFuZDBMV3ByYzBUckVSWSJ9.eyJzdWIiOiJqZWZmIiwibGFzdE5hbWUiOiJQb3AiLCJ1c2VyX25hbWUiOiJqZWZmIiwicm9sZXMiOlsiT1BFUkFUT1IiLCJIRUxMT1dPUkxEX0NPTlNVTUVSIl0sImlzcyI6Imh0dHBzOi8vZGV2LXBsdC1haW8xLmxhYi5jaXNjb21zeC5jb206NDQzL2lkbSIsImF1dGhvcml0aWVzIjpbIlJPTEVfQ0xJRU5UIl0sImNsaWVudF9pZCI6Im15LXRlc3QtcHJpdmF0ZS1jbGllbnQiLCJmaXJzdE5hbWUiOiJKZWZmIiwic2NvcGUiOlsiYWRkcmVzcyIsImVtYWlsIiwib3BlbmlkIiwicGhvbmUiLCJwcm9maWxlIiwicmVhZCIsInRlbmFudF9oaWVyYXJjaHkiLCJ0b2tlbl9kZXRhaWxzIiwid3JpdGUiXSwidGVuYW50SWQiOiJkNjZlNGEzMC0zOGNmLTExZWItOTg0My0wOTE2ZTdmMzY5ZTAiLCJleHAiOjE2MDgzMjIzNDksImlhdCI6MTYwODMxMzM0OSwianRpIjoiOWM1NDk3ZmQtNGQ1ZS00ZjllLWIxMTUtNmMwOTk3OWQ0MzQxIiwiZW1haWwiOiJub2JvZHlAZXhhbXBsZS5jb20ifQ.ojnB817ptzry0HfQTaTZVnZZZ0E6R_iTQ6iKsIy8c1YP4_JVXIoIEeHxHjiJxV2-GWXfMkiW5sHL0EFl37J5jJnzpRJRhY-wvmWOWUpWmRunacnylbnqqTSnOm-QGxsDFGd3qds8uQrBkkoZbSQKi4EZeVtYCNoGxh9KsySpeMc42JwGB4JItrdhIxgUEISerEYYmEEsXSYnqxQM1ApWcx7dqRnbz-w3GR-pVuEPYgypjOMIToHkS2-yoBPdQNV73tz5STtYU-g8yBzth0sqCVjChq-xUxBQC8EWWWAIsrqkAeun7_N-XW2Rh16tgkdBH0E9AUHh7wiLsZdlDiJ_9Nx46nYBH-MyzulrohlTiOXLiG7MsemMmiTCgQZR_7HgwFw7koZv1-YAvsC5CjqtkKbSitCQTmrKlhtXQwU5Q-QNJ83_rS_Y7EH6DDdR04mzXs5ZAAWKbff0IKDpFARIFgM1xWdaYHDzdgJD4c5ohr_ZUqByQe0HDjxUKM6H8izaJqvhMwYfkYA_9aHAQGOvN_-iOK-k3bfXCsFV4QmrkhoYOaMighJP2Ne89FJnmPCPtSZ4KwvvaBq7YTe4Iz42qk0h9-_iIhrMBl-UmvExN3X3AgTMK1OjqAWkUS2eyjVO9uoOzZ51B55D_th5s7AvsiV3EFJd06eqOJMCytbcwJI
+
+Create tenant:
+	Id : ce8c2072-b12c-4453-a59a-b380cc62be9c
+	Name : GoSDKTestTenant_acdefcf2-17a1-4fde-b53f-ceab1b137b3d
+
+List of tenants:
+	Id : 16697b5f-e2c5-44d6-9c28-c8ab74b70d73
+	Name : Pepsi
+
+	Id : 1de5c310-2244-4da7-a0f0-1bbf9a740b20
+	Name : Fritolays
+
+	Id : 2e4a7c3b-0484-4c14-a68c-53f6c2e838ef
+	Name : Coca-Cola
+
+	Id : ce8c2072-b12c-4453-a59a-b380cc62be9c
+	Name : GoSDKTestTenant_acdefcf2-17a1-4fde-b53f-ceab1b137b3d
+
+Delete tenant:
+	Id : ce8c2072-b12c-4453-a59a-b380cc62be9c
+	Name : GoSDKTestTenant_acdefcf2-17a1-4fde-b53f-ceab1b137b3d
 ```
 
 <br>
