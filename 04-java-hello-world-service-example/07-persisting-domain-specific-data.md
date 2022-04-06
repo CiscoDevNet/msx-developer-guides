@@ -167,16 +167,6 @@ spring:
         enabled: true
         prefix: thirdpartycomponents
         defaultContext: defaultapplication
-    vault:
-      host: localhost
-      port: 8200
-      scheme: http
-      kv:
-        default-context: defaultapplication
-        enabled: true
-        backend: secret/thirdpartycomponents
-      authentication: TOKEN
-      token: replace_with_token_value # replace with actual token value or provide this value via another property source 
 .
 .
 .
@@ -204,16 +194,6 @@ spring:
         enabled: true
         prefix: thirdpartyservices
         defaultContext: defaultapplication
-    vault:
-      host: localhost
-      port: 8200
-      scheme: http
-      kv:
-        default-context: defaultapplication
-        enabled: true
-        backend: secret/thirdpartyservices
-      authentication: TOKEN
-      token: replace_with_token_value # replace with actual token value or provide this value via another property source 
 .
 .
 .
