@@ -66,6 +66,17 @@ In the interests of brevity we will not include the entire `pom.xml` in this doc
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-vault-config</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework.vault</groupId>
+                    <artifactId>spring-vault-core</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.vault</groupId>
+            <artifactId>spring-vault-core</artifactId>
+            <version>2.2.2.RELEASE</version>
         </dependency>
 
         <!-- CockroachDB -->
@@ -175,8 +186,7 @@ spring:
         default-context: defaultapplication
         enabled: true
         backend: secret/thirdpartyservices
-      authentication: TOKEN
-      token: replace_with_token_value # replace with actual token value or provide this value via another property source        
+      authentication: NONE       
 .
 .
 .
