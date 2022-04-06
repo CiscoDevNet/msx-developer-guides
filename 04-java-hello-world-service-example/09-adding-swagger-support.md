@@ -5,6 +5,7 @@
 * [Prerequisites](#prerequisites)
 * [Configuring the Project](#configuring-the-project)
     * [pom.xml](#pomxml)
+    * [logback.xml](#logbackxml)
     * [application.yml](#applicationyml)
     * [manifest.yml](#manifestyml)
     * [SwaggerConfig.java](#swaggerconfigjava)
@@ -62,6 +63,74 @@ Update the "pom.xml" to include the dependencies below, noting that it requires 
 .
 ```
 
+<br>
+
+### logback.xml
+Let's now create a `logback.xml` file to configure the logging for the example.
+```xml
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<configuration debug="false" scan="true">
+
+    <!-- Spring Boot's defaults.xml sets up color, ROOT logger, properties -->
+    <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+
+    <!-- Skip printing incoming status messages. -->
+    <statusListener class="ch.qos.logback.core.status.NopStatusListener" />
+
+    <!-- Enable JMX implementation of LoggerContextListener to listen to events related to lifecycle or logger context. -->
+    <jmxConfigurator/>
+
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%relative [%thread] %-5level %logger{35} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <encoder>
+            <pattern>%relative [%thread] %-5level %logger{35} - %msg%n</pattern>
+        </encoder>
+        <file>${LOG_FILE}</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <cleanHistoryOnStart>${LOG_FILE_CLEAN_HISTORY_ON_START:-false}</cleanHistoryOnStart>
+            <fileNamePattern>${ROLLING_FILE_NAME_PATTERN:-${LOG_FILE}.%d{yyyy-MM-dd}.%i.gz}</fileNamePattern>
+            <maxFileSize>${LOG_FILE_MAX_SIZE:-10MB}</maxFileSize>
+            <maxHistory>${LOG_FILE_MAX_HISTORY:-7}</maxHistory>
+            <totalSizeCap>${LOG_FILE_TOTAL_SIZE_CAP:-0}</totalSizeCap>
+        </rollingPolicy>
+    </appender>
+
+    <!-- default logging levels, unless we overwrite then use INFO-->
+    <root>
+        <level value="INFO"/>
+        <!-- CONSOLE appender always enabled -->
+        <appender-ref ref="CONSOLE"/>
+        <!-- FILE appender enabled IF these profiles exist -->
+        <springProfile name="fileLogging, jsonFileLogging">
+            <appender-ref ref="FILE"/>
+        </springProfile>
+    </root>
+
+    <logger name="org.springframework" level="DEBUG"/>
+<!--    <logger name="org.springframework.security.oauth2" level="INFO"/>-->
+<!--    <logger name="org.springframework.integration" level="OFF"/>-->
+<!--    <logger name="org.springframework.oxm" level="OFF"/>-->
+<!--    <logger name="org.springframework.http" level="ERROR"/>-->
+
+    <logger name="org.apache.catalina.startup.DigesterFactory" level="ERROR"/>
+    <logger name="org.apache.catalina.util.LifecycleBase" level="ERROR"/>
+    <logger name="org.apache.coyote.http11.Http11NioProtocol" level="WARN"/>
+    <logger name="org.apache.sshd.common.util.SecurityUtils" level="WARN"/>
+    <logger name="org.apache.tomcat.util.net.NioSelectorPool" level="WARN"/>
+    <logger name="org.hibernate.validator.internal.util.Version" level="WARN"/>
+
+    <logger name="com.example.helloworldservice" level="DEBUG" />
+
+    <logger name="org.springframework.vault.core" level="TRACE" />
+    <logger name="org.springframework.vault" level="TRACE" />
+
+</configuration>
+```
 <br>
 
 ### application.yml
@@ -152,7 +221,7 @@ Update `manifest.yml` to tell SLM the public security client identifier, but do 
 # during startup and runtime.  The service configurations are in a sandbox with restricted access. Multiple name:value
 # pairs can be specified.
 ConsulKeys:
-  - Name: "public.security.clientId" # DO NOT CHANGE THIS
+  - Name: "public.security.clientId"
     Value: "hello-world-service-public-client"
 .
 .
