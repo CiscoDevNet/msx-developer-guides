@@ -234,7 +234,7 @@ class CockroachHelper(object):
             connection_str = f'postgres://{self._username}:{self._password}@{self._host}:{self._port}/{self._databasename}?sslmode={self._sslmode}'
         else:
             connection_str = f'postgres://{self._username}:{self._password}@{self._host}:{self._port}/{self._databasename}?sslmode={self._sslmode}&sslrootcert={self._cacert}'
-        logging.info(f'Opening database connection {connection_str}')
+        logging.info(f'Opening database connection')
         self._conn = psycopg2.connect(connection_str)
         logging.info(f'Connection status={self._conn.status}')
         return self
