@@ -69,7 +69,7 @@ msxsecurity @ git+https://github.com/CiscoDevNet/python-msx-security@v0.2.0
 The MSX Swagger package is hosted on GitHub, so we have to make some changes to the `Dockerfile` so that it can be installed in the container. 
 
 ```dockerfile
-FROM python:3.9.6-slim-buster
+FROM --platform=linux/amd64 python:3.9.6-slim-buster
 WORKDIR /app
 ADD . /app
 RUN apt-get update \
@@ -283,7 +283,7 @@ Add a named tuple to `config.py` for the Security configuration:
 .
 ConsulConfig = namedtuple("ConsulConfig", ["host", "port", "cacert"])
 VaultConfig = namedtuple("VaultConfig", ["scheme", "host", "port", "token", "cacert"])
-CockroachConfig = namedtuple("CockroachConfig", ["host", "port", "databasename","username", "sslmode", "cacert"])
+CockroachConfig = namedtuple("CockroachConfig", ["host", "port", "databasename", "username", "sslmode", "cacert"])
 SwaggerConfig = namedtuple("SwaggerConfig", ["rootpath", "secure", "ssourl", "clientid", "swaggerjsonpath"])
 SecurityConfig = namedtuple("SecurityConfig", ["ssourl", "clientid", "clientsecret", "sslverify"])
 .
