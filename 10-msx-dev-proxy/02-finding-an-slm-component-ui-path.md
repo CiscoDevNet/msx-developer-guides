@@ -40,7 +40,9 @@ There is a separate guide that walks you through generating, building, and deplo
 
 ## Finding the SLM Component UI Path
 Before you open the service control open the `Developer Tools` in your browser and select the `Network` tab. 
-You can also save yourself some headaches by disabling caching. After you have opened the service control look in the `Network` tab for the path the UI was served from. See the highlighted areas in the screenshot.
+You can also save yourself some headaches by disabling caching. After you have opened the service control look in the 
+`Network` tab for the path the UI was served from. See the highlighted areas in the screenshot. So in this example the 
+value we are looking for is `/workflowexecutorui`.
 
 ![](images/workflow_service_control_ui.png)
 
