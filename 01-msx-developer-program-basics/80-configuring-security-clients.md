@@ -54,7 +54,7 @@ Public clients will not have a client secret, and can only be configured with li
 
 ### Automatic Security Client Creation for MSX 4.3 and up
 
-Users are not required to create public and confidential security clients when deploying via SLM as it will be done automatically. However, if the user plans on writing a command-line tool, then they are **required** to create the security client manually.
+Users are not required to create public and confidential security clients when deploying via SLM as it will be done automatically. However, if the user plans on writing a command-line tool, then they are **required** to create the security client manually using the steps below.
 
 ## Confidential Security Client Basics
 If you are creating a confidential security client first ask yourself if you need it. To create one you will need:
