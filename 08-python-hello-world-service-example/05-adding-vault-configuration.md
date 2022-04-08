@@ -80,7 +80,7 @@ Update `manifest.yml` to set a secret in Vault that we can retrieve at runtime.
 .
 Secrets:
   - Name: "secret.squirrel.location"
-    Value: "The acorns are buried under the big oak tree!" # For MSX 4.3 and up, configuring values here will override automatic value creation by SLM.
+    Value: "The acorns are buried under the big oak tree!"
 .
 .
 .
