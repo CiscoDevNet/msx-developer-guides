@@ -62,7 +62,7 @@ vault:
   scheme: "http"                         # Bound to env var SPRING_CLOUD_VAULT_SCHEME at runtime.
   host: "127.0.0.1"                      # Bound to env var SPRING_CLOUD_VAULT_HOST at runtime.
   port: "8200"                           # Bound to env var SPRING_CLOUD_VAULT_PORT at runtime.
-  token: "s.l06JWgzNUHCwZCXM124iyIXr"
+  token:
   cacert: "/etc/ssl/certs/ca-bundle.crt" # Required by MSX.
 .
 .
