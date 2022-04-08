@@ -4,7 +4,7 @@
 * [Goals](#goals)
 * [Prerequisites](#prerequisites)
 * [OAuth2 Basics](#oauth2-basics)
-  * [Automatic Security Client Creation for MSX 4.3 and up](Automatic-Security-Client-Creation)
+* [Automatic Security Client Creation for MSX 4.3 and Up](#automatic-security-client-creation-for-msx-43-and-up)
 * [Confidential Security Clients Basics](#confidential-security-client-basics)
 * [Confidential Security Clients the Hard Way](#confidential-security-clients-the-hard-way)
 * [Public Security Client Basics](#public-security-client-basics)
@@ -52,7 +52,7 @@ secret whereas a javascript browser app cannot, because the javascript app can b
 Therefore, we separate clients into public clients and confidential clients. Public clients are suitable for use by apps that cannot keep a secret, and confidential client for apps that can.
 Public clients will not have a client secret, and can only be configured with limited scopes, the can also can only be configured with a subset of the oauth2 grant types.
 
-### Automatic Security Client Creation for MSX 4.3 and up
+## Automatic Security Client Creation for MSX 4.3 and Up
 
 Users are not required to create public and confidential security clients when deploying via SLM as it will be done automatically. However, if the user plans on writing a command-line tool, then they are **required** to create the security client manually using the steps below.
 
