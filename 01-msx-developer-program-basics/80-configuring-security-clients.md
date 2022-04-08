@@ -51,6 +51,7 @@ secret whereas a javascript browser app cannot, because the javascript app can b
 Therefore, we separate clients into public clients and confidential clients. Public clients are suitable for use by apps that cannot keep a secret, and confidential client for apps that can.
 Public clients will not have a client secret, and can only be configured with limited scopes, the can also can only be configured with a subset of the oauth2 grant types.
 
+**NOTE:** As of MSX 4.3, user will no longer need to manually create public or confidential security clients for components that are deployed by SLM. If one still wishes to create a security client, it will require writing the cli tool yourself.
 
 ## Confidential Security Client Basics
 If you are creating a confidential security client first ask yourself if you need it. To create one you will need:
