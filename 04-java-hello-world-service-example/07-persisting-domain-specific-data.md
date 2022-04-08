@@ -185,8 +185,8 @@ spring:
       kv:
         default-context: defaultapplication
         enabled: true
-        backend: secret/thirdpartyservices
-      authentication: NONE       
+        backend: secret/thirdpartycomponents
+      authentication: NONE  
 .
 .
 .
