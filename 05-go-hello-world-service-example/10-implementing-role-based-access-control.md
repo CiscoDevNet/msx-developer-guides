@@ -423,7 +423,7 @@ ConsulKeys:
 
 Secrets:
   - Name: "secret.squirrel.location"
-    Value: "The acorns are buried under the big oak tree!" # For MSX 4.3 and up, configuring values here will override automatic value creation by SLM.
+    Value: "The acorns are buried under the big oak tree!"
   - Name: "integration.security.clientSecret"
     Value: "make-up-a-private-client-secret-and-keep-it-safe" # For MSX 4.3 and up, configuring values here will override automatic value creation by SLM.
 .
