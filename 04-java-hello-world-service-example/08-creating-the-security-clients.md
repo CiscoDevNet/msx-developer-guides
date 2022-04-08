@@ -8,9 +8,8 @@
 
 
 ## Introduction
-In order to integrate the Hello World Service into the security mechanisms provided by MSX we need to create two security clients. These clients will enable us to show Swagger documentation, provide Single Sign On (SSO) flows, and enforce Role Based Access Control rules for the requests.
+In order to integrate the Hello World Service into the security mechanisms provided by MSX we need to create two security clients if using MSX 4.2 or below [(help me)](../01-msx-developer-program-basics/Automatic-Security-Client-Creation). These clients will enable us to show Swagger documentation, provide Single Sign On (SSO) flows, and enforce Role Based Access Control rules for the requests.
 
-**NOTE:** As of MSX 4.3, user will no longer need to manually create public or confidential security clients for components that are deployed by SLM. If one still wishes to create a security client, it will require writing the cli tool yourself.
 
 ## Goals
 * create a public security client for Hello World Service
