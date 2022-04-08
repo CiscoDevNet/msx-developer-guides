@@ -152,7 +152,7 @@ Update `manifest.yml` to tell SLM the public security client identifier, but do 
 # during startup and runtime.  The service configurations are in a sandbox with restricted access. Multiple name:value
 # pairs can be specified.
 ConsulKeys:
-  - Name: "public.security.clientId" # DO NOT CHANGE THIS
+  - Name: "public.security.clientId"
     Value: "hello-world-service-public-client"
 .
 .

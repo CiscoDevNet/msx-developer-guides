@@ -62,7 +62,7 @@ vault:
   scheme: "http"                         # Bound to env var SPRING_CLOUD_VAULT_SCHEME at runtime.
   host: "127.0.0.1"                      # Bound to env var SPRING_CLOUD_VAULT_HOST at runtime.
   port: "8200"                           # Bound to env var SPRING_CLOUD_VAULT_PORT at runtime.
-  token: "s.l06JWgzNUHCwZCXM124iyIXr"    # Bound to env var SPRING_CLOUD_VAULT_TOKEN at runtime.
+  token:
   cacert: "/etc/ssl/certs/ca-bundle.crt" # Required by MSX.
 .
 .
@@ -141,7 +141,7 @@ class VaultHelper(object):
     def __init__(self, config: VaultConfig):
         self._client = hvac.Client(
             url=config.scheme + "://" + config.host + ":" + config.port,
-            token=config.token,
+            token=config.token if config.token else None,
             verify=config.cacert)
 
     def get_string(self, secret, key, default):

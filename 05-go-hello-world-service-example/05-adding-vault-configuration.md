@@ -82,10 +82,10 @@ The file `helloworld.yml` is where we pass the values to bootstrap Vault, some o
 .
 .
 vault:
-  scheme: "http"                      # Bound to env var SPRING_CLOUD_VAULT_SCHEME at runtime.
-  host: "127.0.0.1"                   # Bound to env var SPRING_CLOUD_VAULT_HOST at runtime.
-  port: "8200"                        # Bound to env var SPRING_CLOUD_VAULT_PORT at port.
-  token: "s.erq0ll7pkPctres2fFpbjxZx" # Bound to env var SPRING_CLOUD_VAULT_TOKEN at port.
+  scheme: "http"     # Bound to env var SPRING_CLOUD_VAULT_SCHEME at runtime.
+  host: "127.0.0.1"  # Bound to env var SPRING_CLOUD_VAULT_HOST at runtime.
+  port: "8200"       # Bound to env var SPRING_CLOUD_VAULT_PORT at runtime.
+  token:             # Bound to env var SPRING_CLOUD_VAULT_TOKEN at runtime.
   cacert: "/etc/ssl/certs/ca-bundle.crt"
   insecure: false
 .
@@ -147,6 +147,7 @@ func ReadConfig() *Config {
     .
     .
     .
+    	v.AllowEmptyEnv(true)
 	// Bind config to environment based on expected injections.
 	bindConfig(v,"Consul.Host", "SPRING_CLOUD_CONSUL_HOST")
 	bindConfig(v,"Consul.Port", "SPRING_CLOUD_CONSUL_PORT")
@@ -216,7 +217,11 @@ func (v *HelloWorldVault) Connect() error {
 	if err != nil {
 		return err
 	}
-	client.SetToken(v.Config.Token)
+
+	// Ignore empty Vault tokens.
+	if strings.TrimSpace(v.Config.Token) != "" {
+		client.SetToken(v.Config.Token)
+	}
 	v.Client = client
 	return nil
 }

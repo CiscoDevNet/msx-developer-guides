@@ -5,7 +5,7 @@
 * [Configuring the Project](#configuring-the-project)
     * [requirements.txt](#requirementstxt)
     * [Dockerfile](#dockerfile)
-    * [helloworld.yml](helloworldyml)
+    * [helloworld.yml](#helloworldyml)
 * [Updating the Project](#updating-the-project)
     * [swagger.json](#swaggerjson)
     * [helpers/swagger_helper.py](#helpersswagger_helperpy)
