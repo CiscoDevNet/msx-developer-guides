@@ -417,15 +417,15 @@ ConsulKeys:
   - Name: "favourite.dinosaur"
     Value: "Moros Intrepidus"
   - Name: "public.security.clientId"
-    Value: "hello-world-service-public-client"
+    Value: "hello-world-service-public-client" # For MSX 4.3 and up, configuring values here will override automatic value creation by SLM.
   - Name: "integration.security.clientId"
-    Value: "hello-world-service-private-client"
+    Value: "hello-world-service-private-client" # For MSX 4.3 and up, configuring values here will override automatic value creation by SLM.
 
 Secrets:
   - Name: "secret.squirrel.location"
-    Value: "The acorns are buried under the big oak tree!"
+    Value: "The acorns are buried under the big oak tree!" # For MSX 4.3 and up, configuring values here will override automatic value creation by SLM.
   - Name: "integration.security.clientSecret"
-    Value: "make-up-a-private-client-secret-and-keep-it-safe"
+    Value: "make-up-a-private-client-secret-and-keep-it-safe" # For MSX 4.3 and up, configuring values here will override automatic value creation by SLM.
 .
 .
 .
