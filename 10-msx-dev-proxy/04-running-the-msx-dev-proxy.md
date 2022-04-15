@@ -11,7 +11,7 @@
 
 
 ## Introduction
-We have built and deployed and SLM component, found the path it is server on, then started serving the UI from that path locally. Now we are going to use `msx-dev-proxy` to develop our UI locally against a remote MSX instance.
+We have built and deployed an SLM component, found the path it is served on, then started serving the UI from that path locally. Now we are going to use `msx-dev-proxy` to develop our UI locally against a remote MSX instance.
 
 
 ## Goals
@@ -75,7 +75,7 @@ Hit refresh on the browser and navigate to the service control again. You should
 > This does not update the version of your component on the MSX instance.
 
 ## Conclusion
-You can not work on your SLM component UI locally without having to package and upload it to MSX every time. There are some hoops to jump through, like the SSO redirect workaround and having to reload the entire application, but it faster that building, packaging, and deploying everytime.
+You can now work on your SLM component UI locally without having to package and upload it to MSX every time. There are some hoops to jump through, like the SSO redirect workaround and having to reload the entire application. However, it is faster than building, packaging, and deploying every time.
 
 
 | [PREVIOUS](03-serving-an-slm-component-ui-locally.md) |  [HOME](../index.md#msx-dev-proxy) |

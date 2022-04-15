@@ -66,7 +66,7 @@ to match the version running in the MSX instance.
 ## Watching the Project on a Specific Path
 We are now ready to start serving `workflow-service-control-example` locally. Do that run the command below:
 ```shell
-$ env BUILD_PATH=build/workflowexecutorui rollup -c --watch
+$ env BUILD_PATH=build/workflowexecutorui npx rollup -c --watch
 .
 .
 .

@@ -11,9 +11,9 @@
 
 
 ## Introduction
-If you have written a Service Pack or Service Control that was deployed into MSX as an SLM component then you will
+If you have written a Service Pack or Service Control that was deployed into MSX as an SLM component, then you will 
 already have experienced the slow debug cycle. This guide explains how to use the `msx-dev-proxy` to serve the UI for
-component locally against a remote MSX instance.
+the component locally against a remote MSX instance.
 
 
 ## Goals
@@ -66,7 +66,7 @@ $ npm install --save-dev @cisco-msx/dev-proxy
 
 
 ## Conclusion 
-You now have all the software required to serve an SLM component UI locally against a remove MSX instance.
+You now have all the software required to serve an SLM component UI locally against a remote MSX instance.
 
 
 | [NEXT](02-finding-an-slm-component-ui-path.md) | [HOME](../index.md#msx-dev-proxy) |
