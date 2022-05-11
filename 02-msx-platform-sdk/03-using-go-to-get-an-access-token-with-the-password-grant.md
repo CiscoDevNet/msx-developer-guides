@@ -116,7 +116,7 @@ func main() {
 	// TODO - Replace these with values from your test MSX environment.
 	const (
 		myHostName     = "dev-alt-aio1.ciscomsx.com"
-		myClientId     = "go-test-private-client"
+		myClientId     = "my-test-private-client"
 		myClientSecret = "make-up-a-private-client-secret-and-keep-it-safe"
 		myUsername     = "Jeff"
 		myPassword     = "Password@1"
