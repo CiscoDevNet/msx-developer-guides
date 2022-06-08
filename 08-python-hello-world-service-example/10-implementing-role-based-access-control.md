@@ -6,6 +6,7 @@
     * [requirements.txt](#requirementstxt)
     * [Dockerfile](#dockerfile)
     * [helloworld.yml](#helloworldyml)
+    * [manifest.yml](#manifestyml)
 * [Updating the Project](#updating-the-project)
     * [models/error.py](#modelserrorpy)
     * [controllers/languages_controller.py](#controllerslanguages_controllerpy)
@@ -92,12 +93,94 @@ When a service is deployed to MSX it will pick up the Security configuration fro
 .
 security:
   ssourl: "http://localhost:9515/idm" # CONSUL {prefix}/defaultapplication/swagger.security.sso.baseUrl
-  clientid: "local-private-client" # CONSUL {prefix}/helloworldservice/integration.security.clientId
-  clientsecret: "make-up-a-private-client-secret-and-keep-it-safe" # Required by MSX.
+  clientid:                           # CONSUL {prefix}/helloworldservice/integration.security.clientId
+  clientsecret:                       # VAULT {prefix}/helloworldservice/integration.security.clientSecret
   sslverify: false
 .
 .
 .
+```
+
+<br>
+
+### manifest.yml
+For MSX <= 4.2 update `manifest.yml` to include configuration for the public security client identifier required by Swagger [(help me)](../04-java-hello-world-service-example/08-creating-the-security-clients.md).
+
+For MSX >= 4.3 the security client will be created for you automatically.
+
+```yaml
+#
+# Copyright (c) 2021 Cisco Systems, Inc and its affiliates
+# All Rights reserved
+#
+---
+Name: "helloworldservice"
+Description: "Hello World service with support for multiple languages."
+Version: "1.0.0"
+Type: Internal
+
+Containers:
+  - Name: "helloworldservice"
+    Version: "1.0.0"
+    Artifact: "helloworldservice-1.0.0.tar.gz"
+    Port: 8082
+    ContextPath: "/helloworld"
+    Tags:
+      - "3.10.0"
+      - "4.0.0"
+      - "4.1.0"
+      - "4.2.0"
+      - "4.3.0"
+      - "managedMicroservice"
+      - "name=Hello World Service"
+      - "componentAttributes=serviceName:helloworldservice~context:/helloworld~name:Hello World Service~description:Hello World service with support for multiple languages."
+    Check:
+      Http:
+        Scheme: "http"
+        Host: "127.0.0.1"
+        Path: "/helloworld/api/v1/items"
+      IntervalSec: 60
+      InitialDelaySec: 30
+      TimeoutSec: 30
+    Limits:
+      Memory: "1000Mi"
+      CPU: "1"
+    Command:
+      - "/usr/local/bin/gunicorn"
+      - "--bind"
+      - "0.0.0.0:8082"
+      - "wsgi:app"
+
+ConfigFiles:
+  - Name: "helloworld.yml"
+    MountTo:
+      Container: "helloworldservice"
+      Path: "/helloworld.yml"
+
+ConsulKeys:
+  - Name: "favourite.color"
+    Value: "Green"
+  - Name: "favourite.food"
+    Value: "Pizza"
+  - Name: "favourite.dinosaur"
+    Value: "Moros Intrepidus"
+# NOT NEEDED FOR MSX >= 4.3
+#  - Name: "public.security.clientId"
+#    Value: "hello-world-service-public-client"
+#  - Name: "integration.security.clientId"
+#    Value: "hello-world-service-private-client"
+
+Secrets:
+  - Name: "secret.squirrel.location"
+    Value: "The acorns are buried under the big oak tree!"
+# NOT NEEDED FOR MSX >= 4.3
+#  - Name: "integration.security.clientSecret"
+#    Value: "make-up-a-private-client-secret-and-keep-it-safe"
+
+Infrastructure:
+  Database:
+    Type: Cockroach
+    Name: "helloworld"
 ```
 
 ## Updating the Project
@@ -260,7 +343,18 @@ class SecurityHelper(object):
              secret=f"{self._config.config_prefix}/helloworldservice",
              key="integration.security.sslVerify",
              default=self._config.security.sslverify)
-             
+
+        # 20220524 - Temporary workaround for key issue.
+        if not client_id:
+            client_id = self._consul_helper.get_string(
+                key=f"{self._config.config_prefix}/helloworldservice/integration.security.client.clientId",
+                default=self._config.security.clientid)
+        if not client_secret:
+            client_secret = self._vault_helper.get_string(
+                secret=f"{self._config.config_prefix}/helloworldservice",
+                key="integration.security.client.clientSecret",
+                default=self._config.security.clientsecret)
+            
         return MSXSecurityConfig(
             sso_url=sso_url,
             client_id=client_id,

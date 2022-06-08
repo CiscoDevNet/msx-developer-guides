@@ -59,7 +59,7 @@ Containers:
       - "4.2.0"
       - "managedMicroservice"
       - "name=Hello World Service"
-      - "componentAttributes=serviceName:helloworldservice~context:helloworld~name:Hello World Service~description:Hello World service with support for multiple languages."
+      - "componentAttributes=serviceName:helloworldservice~context:/helloworld~name:Hello World Service~description:Hello World service with support for multiple languages."
     Check:
       Http:
         Scheme: "http"
