@@ -248,6 +248,14 @@ func UpdateConfig(c *config.Config, consul *consul.HelloWorldConsul, vault *vaul
 	c.Security.SsoURL, _ = consul.GetString(c.Consul.Prefix + "/defaultapplication/swagger.security.sso.baseUrl", c.Security.SsoURL)
 	c.Security.ClientID, _ = consul.GetString(c.Consul.Prefix + "/helloworldservice/integration.security.clientId", c.Security.ClientID)
 	c.Security.ClientSecret, _ = vault.GetString(c.Vault.Prefix + "/helloworldservice", "integration.security.clientSecret", c.Security.ClientSecret)
+
+	// 20220524 - Temporary workaround for key issue.
+	if c.Security.ClientID == "" {
+		c.Security.ClientID, _ = consul.GetString(c.Consul.Prefix+"/helloworldservice/integration.security.client.clientId", c.Security.ClientID)
+	}
+	if c.Security.ClientSecret == "" {
+		c.Security.ClientSecret, _ = vault.GetString(c.Vault.Prefix+"/helloworldservice", "integration.security.client.clientSecret", c.Security.ClientSecret)
+	}
 	return nil
 }
 
@@ -393,8 +401,8 @@ The bootstrap configuration file `helloworld.yml` is where we pass the RBAC conf
   .
 security:
   ssourl: "http://localhost:9515/idm" # CONSUL thirdpartyservices/defaultapplication/swagger.security.sso.baseUrl
-  clientid: "local-private-client" # CONSUL thirdpartyservices/helloworldservice/integration.security.clientId
-  clientsecret: "make-up-a-private-client-secret-and-keep-it-safe" # Required by MSX.
+  clientid:                           # CONSUL thirdpartyservices/helloworldservice/integration.security.clientId
+  clientsecret:                       # VAULT {prefix}/helloworldservice/integration.security.clientSecret
   .
   .
   .
@@ -403,7 +411,9 @@ security:
 <br>
 
 ### manifest.yml
-Update `manifest.yml` to include configuration for the confidential security client identifier and secret required by RBAC [(help me)](../04-java-hello-world-service-example/08-creating-the-security-clients.md).
+For MSX <= 4.2 update `manifest.yml` to include configuration for the confidential security client identifier and secret required by RBAC [(help me)](../04-java-hello-world-service-example/08-creating-the-security-clients.md).
+
+For MSX >= 4.3 the security client will be created for you automatically.
 
 ```yml
 .
@@ -416,16 +426,18 @@ ConsulKeys:
     Value: "Pizza"
   - Name: "favourite.dinosaur"
     Value: "Moros Intrepidus"
-  - Name: "public.security.clientId"
-    Value: "hello-world-service-public-client"
-  - Name: "integration.security.clientId"
-    Value: "hello-world-service-private-client"
+# NOT NEEDED FOR MSX >= 4.3
+#  - Name: "public.security.clientId"
+#    Value: "hello-world-service-public-client"
+#  - Name: "integration.security.clientId"
+#    Value: "hello-world-service-private-client"
 
 Secrets:
   - Name: "secret.squirrel.location"
     Value: "The acorns are buried under the big oak tree!"
-  - Name: "integration.security.clientSecret"
-    Value: "make-up-a-private-client-secret-and-keep-it-safe"
+# NOT NEEDED FOR MSX >= 4.3
+#  - Name: "integration.security.clientSecret"
+#    Value: "make-up-a-private-client-secret-and-keep-it-safe"
 .
 .
 .

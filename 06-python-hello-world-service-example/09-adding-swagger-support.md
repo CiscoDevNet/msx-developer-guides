@@ -5,7 +5,8 @@
 * [Configuring the Project](#configuring-the-project)
     * [requirements.txt](#requirementstxt)
     * [Dockerfile](#dockerfile)
-    * [helloworld.yml](#helloworldyml)
+    * [helloworld.yml](helloworldyml)
+    * [manifest.yml](#manifestyml)
 * [Updating the Project](#updating-the-project)
     * [swagger.json](#swaggerjson)
     * [helpers/swagger_helper.py](#helpersswagger_helperpy)
@@ -83,12 +84,86 @@ swagger:
   rootpath: "/helloworld"             # Required by MSX.
   secure: true                        # Required by MSX.
   ssourl: "http://localhost:9515/idm" # CONSUL {prefix}/defaultapplication/swagger.security.sso.baseUrl
-  clientid: "local-public-client"     # CONSUL {prefix}/helloworldservice/public.security.clientId
+  clientid:                           # CONSUL {prefix}/helloworldservice/public.security.clientId
   swaggerjsonpath: "swagger.json"     # Required by MSX.
 .
 .
 .
 ```
+
+<br>
+
+### manifest.yml
+For MSX <= 4.2 update `manifest.yml` to include configuration for the public security client identifier required by Swagger [(help me)](../04-java-hello-world-service-example/08-creating-the-security-clients.md).
+
+For MSX >= 4.3 the security client will be created for you automatically.
+
+```yml
+---
+Name: "helloworldservice"
+Description: "Hello World service with support for multiple languages."
+Version: "1.0.0"
+Type: Internal
+
+Containers:
+  - Name: "helloworldservice"
+    Version: "1.0.0"
+    Artifact: "helloworldservice-1.0.0.tar.gz"
+    Port: 8082
+    ContextPath: "/helloworld"
+    Tags:
+      - "3.10.0"
+      - "4.0.0"
+      - "4.1.0"
+      - "4.2.0"
+      - "4.3.0"
+      - "managedMicroservice"
+      - "name=Hello World Service"
+      - "componentAttributes=serviceName:helloworldservice~context:/helloworld~name:Hello World Service~description:Hello World service with support for multiple languages."
+    Check:
+      Http:
+        Scheme: "http"
+        Host: "127.0.0.1"
+        Path: "/helloworld/api/v1/items"
+      IntervalSec: 60
+      InitialDelaySec: 30
+      TimeoutSec: 30
+    Limits:
+      Memory: "1000Mi"
+      CPU: "1"
+    Command:
+      - "/usr/local/bin/gunicorn"
+      - "--bind"
+      - "0.0.0.0:8082"
+      - "wsgi:app"
+
+ConfigFiles:
+  - Name: "helloworld.yml"
+    MountTo:
+      Container: "helloworldservice"
+      Path: "/helloworld.yml"
+
+ConsulKeys:
+  - Name: "favourite.color"
+    Value: "Green"
+  - Name: "favourite.food"
+    Value: "Pizza"
+  - Name: "favourite.dinosaur"
+    Value: "Moros Intrepidus"
+# NOT NEEDED FOR MSX >= 4.3
+#  - Name: "public.security.clientId"
+#    Value: "hello-world-service-public-client"
+
+Secrets:
+  - Name: "secret.squirrel.location"
+    Value: "The acorns are buried under the big oak tree!"
+
+Infrastructure:
+  Database:
+    Type: Cockroach
+    Name: "helloworld"
+```
+
 
 ## Updating the Project
 Now that the project is configured we need to add the OpenAPI Specification and update the application to serve up a Swagger UI for it.
