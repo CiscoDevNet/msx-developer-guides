@@ -108,7 +108,7 @@ MY_SERVER_URL = "https://dev-plt-aio1.lab.ciscomsx.com"
 VERIFY_SSL = False
 # </DANGER>
 
-MY_CLIENT_ID = "hello-world-service-private-client"
+MY_CLIENT_ID = "my-test-private-client"
 MY_CLIENT_SECRET = "make-up-a-private-client-secret-and-keep-it-safe"
 MY_USERNAME = "superuser"
 MY_PASSWORD = "FrmedealY((!1[ps=wCBwG!E[%|]Ob7="

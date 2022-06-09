@@ -93,6 +93,7 @@ Containers:
       - "4.0.0"
       - "4.1.0"
       - "4.2.0"
+      - "4.3.0"
       - "name=Hello World Service"
       - "componentAttributes=serviceName:helloworldservice~context:/helloworld~name:Hello World Service~description:Hello World service with support for multiple languages."
     Check:
@@ -116,7 +117,7 @@ Containers:
 Next we create or edit `Dockerfile`, so that we can containerize Hello World Service. Create `Dockerfile` as shown below:
 
 ```dockerfile
-FROM golang:alpine as builder
+FROM --platform=linux/amd64 golang:alpine as builder
 RUN apk update && apk add ca-certificates upx git
 COPY go/ /go/src/github.com/CiscoDevNet/msx-examples/go-hello-world-service-2/go
 COPY go.mod go.sum main.go /go/src/github.com/CiscoDevNet/msx-examples/go-hello-world-service-2/

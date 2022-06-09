@@ -329,7 +329,7 @@ The prefix depends on the version of MSX you are running:
 In the last guide we learnt how to containerize HelloWorldService, so we could deploy it into MSX. As we have added some new Go source files we need to update the `Dockerfile`, so it knows about them. In the interests of completeness we include the entire `Dockerfile` below. In addition to changing "go-hello-world-service-2" to "go-hello-world-service-3" we marked other additions with start and end region comments.
 
 ```Dockerfile
-FROM golang:alpine as builder
+FROM --platform=linux/amd64 golang:alpine as builder
 RUN apk update && apk add ca-certificates upx git
 COPY go/ /go/src/github.com/CiscoDevNet/msx-examples/go-hello-world-service-3/go
 COPY go.mod go.sum main.go /go/src/github.com/CiscoDevNet/msx-examples/go-hello-world-service-3/
