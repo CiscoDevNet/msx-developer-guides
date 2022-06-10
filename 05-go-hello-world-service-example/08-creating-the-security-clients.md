@@ -12,7 +12,6 @@ For MSX <= 4.2 to integrate the Hello World Service into the security mechanisms
 
 For MSX >= 4.3 the security clients will be created for you automatically.
 
-
 ## Goals
 * create a public security client for Hello World Service
 * create a confidential security for Hello World Service

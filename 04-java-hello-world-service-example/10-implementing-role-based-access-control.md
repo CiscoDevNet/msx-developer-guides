@@ -100,9 +100,9 @@ When we created the security clients [(help me)](../04-java-hello-world-service-
 # pairs can be specified.
 ConsulKeys:
   - Name: "public.security.clientId"
-    Value: "hello-world-service-public-client"
+    Value: "hello-world-service-public-client"  # For MSX 4.3 and up, configuring values here will override automatic value creation by SLM.
   - Name: "integration.security.clientId" 
-    Value: "hello-world-service-private-client"
+    Value: "hello-world-service-private-client" # For MSX 4.3 and up, configuring values here will override automatic value creation by SLM.
 
 
 # [Optional] Configuration section for sensitive values such as passwords.  The name:value pairs specified in the Secrets section
@@ -110,7 +110,7 @@ ConsulKeys:
 # The service configurations are in a sandbox with restricted access.  Multiple name:value pairs can be specified.
 Secrets:
   - Name: "integration.security.clientSecret"
-    Value: "make-up-a-private-client-secret-and-keep-it-safe"
+    Value: "make-up-a-private-client-secret-and-keep-it-safe" # For MSX 4.3 and up, configuring values here will override automatic value creation by SLM.
 .
 .
 .
