@@ -182,7 +182,7 @@ Update `helloworld.yml` to include the Swagger configuration. You can download t
 swagger:
   secure: true                                # Required by MSX.
   ssourl: "http://localhost:9515/idm"         # CONSUL {prefix}/defaultapplication/swagger.security.sso.baseUrl
-  clientid: "local-public-client"             # CONSUL {prefix}/helloworldservice/public.security.clientId
+  clientid:                                   # CONSUL {prefix}/helloworldservice/public.security.clientId
   swaggerjsonpath: "HelloWorldService-1.json" # Required by MSX.
 .
 .
@@ -192,7 +192,9 @@ swagger:
 <br>
 
 ### manifest.yml
-Update `manifest.yml` to include configuration for the public security client identifier required by Swagger [(help me)](../04-java-hello-world-service-example/08-creating-the-security-clients.md).
+For MSX <= 4.2 update `manifest.yml` to include configuration for the public security client identifier required by Swagger [(help me)](../04-java-hello-world-service-example/08-creating-the-security-clients.md).
+
+For MSX >= 4.3 the security client will be created for you automatically.
 
 ```yml
 ---
@@ -219,9 +221,10 @@ ConsulKeys:
     Value: "Pizza"
   - Name: "favourite.dinosaur"
     Value: "Moros Intrepidus"
-  - Name: "public.security.clientId"
-    Value: "hello-world-service-public-client"
-
+# NOT NEEDED FOR MSX >= 4.3
+#  - Name: "public.security.clientId"
+#    Value: "hello-world-service-public-client"
+  
 Containers:
   - Name: "helloworldservice"
     Version: "1.0.0"
@@ -233,9 +236,10 @@ Containers:
       - "4.0.0"
       - "4.1.0"
       - "4.2.0"
+      - "4.3.0"
       - "managedMicroservice"
       - "name=Hello World Service"
-      - "componentAttributes=serviceName:helloworldservice~serviceName:helloworldservice~context:helloworld~name:Hello World Service~description:Hello World service with support for multiple languages."
+      - "componentAttributes=serviceName:helloworldservice~serviceName:helloworldservice~context:/helloworld~name:Hello World Service~description:Hello World service with support for multiple languages."
     Check:
       Http:
         Scheme: "http"
@@ -257,7 +261,7 @@ Containers:
 Update `Dockerfile` to copy `HelloWorldService-1.json` into the container.
 
 ```dockerfile
-FROM golang:alpine as builder
+FROM --platform=linux/amd64 golang:alpine as builder
 RUN apk update && apk add ca-certificates upx git
 COPY go/ /go/src/github.com/CiscoDevNet/msx-examples/go-hello-world-service-6/go
 COPY go.mod go.sum main.go /go/src/github.com/CiscoDevNet/msx-examples/go-hello-world-service-6/

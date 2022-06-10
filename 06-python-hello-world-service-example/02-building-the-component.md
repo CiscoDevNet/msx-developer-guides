@@ -57,9 +57,10 @@ Containers:
       - "4.0.0"
       - "4.1.0"
       - "4.2.0"
+      - "4.3.0"
       - "managedMicroservice"
       - "name=Hello World Service"
-      - "componentAttributes=serviceName:helloworldservice~context:helloworld~name:Hello World Service~description:Hello World service with support for multiple languages."
+      - "componentAttributes=serviceName:helloworldservice~context:/helloworld~name:Hello World Service~description:Hello World service with support for multiple languages."
     Check:
       Http:
         Scheme: "http"
@@ -84,7 +85,7 @@ Containers:
 Next we create or edit Dockerfile, so that we can containerize Hello World Service. Create `Dockerfile` as shown below:
 
 ```dockerfile
-FROM python:3.9.6-slim-buster
+FROM --platform=linux/amd64 python:3.9.6-slim-buster
 WORKDIR /app
 ADD . /app
 RUN pip3 install -r requirements.txt

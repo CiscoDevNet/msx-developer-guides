@@ -52,32 +52,32 @@
 * [Adding Swagger Support](05-go-hello-world-service-example/09-adding-swagger-support.md)
 * [Implementing Role Based Access Control](05-go-hello-world-service-example/10-implementing-role-based-access-control.md)
 
-# React User Interface Example
-* [Choosing a User Interface Framework](06-react-user-interface-example/01-choosing-a-user-interface-framework.md)
-* [Working with Self-Signed SSL Certificates](06-react-user-interface-example/02-working-with-self-signed-certifcates.md)
-* [Writing an Application With React](06-react-user-interface-example/03-writing-an-application-with-react.md)
-* [Packaging and Installing Applications](06-react-user-interface-example/04-building-the-component.md)
-* [Subscribing to Your Application](06-react-user-interface-example/05-subscribing-to-your-application.md)
-
-# Angular User Interface Example
-* [Introduction to MSX Tenant-Centric UI](07-angular-user-interface-example/01-introduction-to-tenant-centric-ui.md)
-* [Working with Devices](07-angular-user-interface-example/03-working-with-devices.md)
-* [Working With Sites](07-angular-user-interface-example/04-working-with-sites.md)
-* [Routing in MSX](07-angular-user-interface-example/05-routing-in-msx.md)
-* [Working With Service Controls](07-angular-user-interface-example/06-working-with-service-controls.md)
-
 # Python Hello World Service Example
-* [Creating a Hello World Service in Python](08-python-hello-world-service-example/01-creating-a-hello-world-service-in-python.md)
-* [Building the Component](08-python-hello-world-service-example/02-building-the-component.md)
-* [Adding Consul Configuration](08-python-hello-world-service-example/04-adding-consul-configuration.md)
-* [Adding Vault Configuration](08-python-hello-world-service-example/05-adding-vault-configuration.md)
-* [Persisting Domain Specific Data](08-python-hello-world-service-example/06-persisting-domain-specific-data.md)
-* [Creating the Security Clients](08-python-hello-world-service-example/08-creating-the-security-clients.md)
-* [Adding Swagger Support](08-python-hello-world-service-example/09-adding-swagger-support.md)
-* [Implementing Role Based Access Control](08-python-hello-world-service-example/10-implementing-role-based-access-control.md)
+* [Creating a Hello World Service in Python](06-python-hello-world-service-example/01-creating-a-hello-world-service-in-python.md)
+* [Building the Component](06-python-hello-world-service-example/02-building-the-component.md)
+* [Adding Consul Configuration](06-python-hello-world-service-example/04-adding-consul-configuration.md)
+* [Adding Vault Configuration](06-python-hello-world-service-example/05-adding-vault-configuration.md)
+* [Persisting Domain Specific Data](06-python-hello-world-service-example/06-persisting-domain-specific-data.md)
+* [Creating the Security Clients](06-python-hello-world-service-example/08-creating-the-security-clients.md)
+* [Adding Swagger Support](06-python-hello-world-service-example/09-adding-swagger-support.md)
+* [Implementing Role Based Access Control](06-python-hello-world-service-example/10-implementing-role-based-access-control.md)
 
 # Components With Multiple Containers
-* [Components with Angular UI and Java API](09-components-with-multiple-containers/01-components-with-a-ui-and-an-api.md)
+* [Components with Angular UI and Java API](07-components-with-multiple-containers/01-components-with-a-ui-and-an-api.md)
+
+# Angular User Interface Example
+* [Introduction to MSX Tenant-Centric UI](08-angular-user-interface-example/01-introduction-to-tenant-centric-ui.md)
+* [Working with Devices](08-angular-user-interface-example/03-working-with-devices.md)
+* [Working With Sites](08-angular-user-interface-example/04-working-with-sites.md)
+* [Routing in MSX](08-angular-user-interface-example/05-routing-in-msx.md)
+* [Working With Service Controls](08-angular-user-interface-example/06-working-with-service-controls.md)
+
+# React User Interface Example
+* [Choosing a User Interface Framework](09-react-user-interface-example/01-choosing-a-user-interface-framework.md)
+* [Working with Self-Signed SSL Certificates](09-react-user-interface-example/02-working-with-self-signed-certifcates.md)
+* [Writing an Application With React](09-react-user-interface-example/03-writing-an-application-with-react.md)
+* [Packaging and Installing Applications](09-react-user-interface-example/04-building-the-component.md)
+* [Subscribing to Your Application](09-react-user-interface-example/05-subscribing-to-your-application.md)
 
 # Reference
 * [Component Manager Manifest Reference](reference/component-manager-manifest-reference.md)

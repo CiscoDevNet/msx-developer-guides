@@ -76,6 +76,7 @@ Containers:
       - "4.0.0"
       - "4.1.0"
       - "4.2.0"
+      - "4.3.0"
       - "managedMicroservice"
       - "buildNumber=@project.version@"
       - "name=@project.artifactId@"
