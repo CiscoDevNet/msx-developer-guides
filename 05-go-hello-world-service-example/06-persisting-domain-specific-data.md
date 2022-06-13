@@ -304,7 +304,9 @@ func (c *Cockroach) CreateItem(ctx context.Context, i openapi.Item) (openapi.Imp
 	if err != nil {
 		return openapi.ImplResponse{}, fmt.Errorf("languageId not found")
 	}
-	i.Id = uuid.New().String()
+	if i.Id == "" {
+		i.Id = uuid.New().String()
+	}
 	defer func() {
 		err = tx.Rollback(context.Background())
 		if err != nil {
@@ -391,6 +393,7 @@ func (c *Cockroach) DeleteItem(ctx context.Context, id string) (openapi.ImplResp
 }
 
 func (c *Cockroach) UpdateItem(ctx context.Context, id string, item openapi.Item) (openapi.ImplResponse, error) {
+	item.Id = id
 	return c.CreateItem(ctx, item)
 }
 
@@ -400,7 +403,9 @@ func (c *Cockroach) CreateLanguage(ctx context.Context, l openapi.Language) (ope
 	if err != nil {
 		return openapi.ImplResponse{}, err
 	}
-	l.Id = uuid.New().String()
+	if l.Id == "" {
+		l.Id = uuid.New().String()
+	}
 	defer func() {
 		err = tx.Rollback(context.Background())
 		if err != nil {
@@ -484,6 +489,7 @@ func (c *Cockroach) DeleteLanguage(ctx context.Context, id string) (openapi.Impl
 }
 
 func (c *Cockroach) UpdateLanguage(ctx context.Context, id string , language openapi.Language) (openapi.ImplResponse, error) {
+	language.Id = id
 	return c.CreateLanguage(ctx, language)
 }
 ```
