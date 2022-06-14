@@ -25,6 +25,9 @@ def main():
             title = fin.readline()[1:].strip()
             print("* [%s](%s)" % (title, filename))
 
+    # Hard coded reference sections.
+    print("* [%s](%s)" % ("MSX 4.3 Installation Requirements", "https://www.cisco.com/c/en/us/td/docs/net_mgmt/msx/4_3_0/install_guide/articles/msx_installation_requirements.html"))
+
 
 if __name__ == "__main__":
     main()

@@ -79,6 +79,13 @@
 * [Packaging and Installing Applications](09-react-user-interface-example/04-building-the-component.md)
 * [Subscribing to Your Application](09-react-user-interface-example/05-subscribing-to-your-application.md)
 
+# MSX Dev Proxy
+* [Installing the MSX Development Proxy](10-msx-dev-proxy/01-installing-the-msx-dev-proxy.md)
+* [Finding an SLM Component UI Path](10-msx-dev-proxy/02-finding-an-slm-component-ui-path.md)
+* [Serving an SLM Component UI Locally](10-msx-dev-proxy/03-serving-an-slm-component-ui-locally.md)
+* [Running the MSX Dev Proxy](10-msx-dev-proxy/04-running-the-msx-dev-proxy.md)
+
 # Reference
 * [Component Manager Manifest Reference](reference/component-manager-manifest-reference.md)
 * [User Interface Style Guide](reference/user-interface-style-guide.md)
+* [MSX 4.3 Installation Requirements](https://www.cisco.com/c/en/us/td/docs/net_mgmt/msx/4_3_0/install_guide/articles/msx_installation_requirements.html)
