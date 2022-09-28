@@ -19,7 +19,7 @@ In this guide we will write a Go application that uses the MSX Platform SDK to g
 
 ## Prerequisites
 * access to an MSX environment [(help me)](../01-msx-developer-program-basics/02-getting-access-to-an-msx-environment.md)
-* a confidential security client for your application [(help me)](../01-msx-developer-program-basics/80-configuring-security-clients.md) 
+* a confidential security client for your application [(help me)](../01-msx-developer-program-basics/80-configuring-security-clients.md)
 * the example source code [(help me)](https://github.com/CiscoDevNet/msx-examples/tree/main/go-password-grant-demo)
 * a Go IDE like IntelliJ GoLand [(help me)](https://www.jetbrains.com/goland/)
 
@@ -96,7 +96,7 @@ go: golang.org/x/net upgrade => v0.0.0-20210226172049-e18ecbb05110
 
 
 ## Writing the Code
-Now that the security client has been created, and the project has been configured, we can write "main.go". Make sure you update the constants in main() to match your MSX environment. 
+Now that the security client has been created, and the project has been configured, we can write "main.go". Make sure you update the constants in main() to match your MSX environment.
 ```go
 package main
 

@@ -2,7 +2,6 @@
 * [Introduction](#introduction)
 * [Goals](#goals)
 * [Prerequisites](#prerequisites)
-* [Java](#java)
 * [Go](#go)
 * [References](#references)
 
@@ -20,12 +19,6 @@ Choosing a language for your project depends on several factors. Even if you hav
 * details of available team experience
 
 
-## Java
-Java is class-based, object-oriented programming language originally developed by Sun Microsystems but now owned by Oracle. Java applications are typically compiled to bytecode and can be run on any computer with a Java Virtual Machine (JVM).
-
-The Java slogan "Write Once, Run Anywhere" from the mid 1990s promised a cross platform solution for the masses. In reality, it fell short of that goal but did find purpose as the enterprise programming language of a generation. The upside of this adoption is that Java programmers are not hard to find, and third party libraries are abundant and well supported. Consequently, it is possible to put a team together and build a prototype quickly. However even with optimisation, Java services tend to be on the heavy side, and the garbage collector can be a performance anchor. Java is a good choice for smaller projects when you do not anticipate high loads and performance is not a key metric. 
-
-
 ## Go
 Go, also known as Golang, is an open source, compiled, and statically typed programming language developed by Google. 
 
@@ -40,8 +33,6 @@ Go is a general-purpose programming language with a simple syntax, backed by a r
 
 
 ## References
-[Java](https://www.java.com/en/)
-
 [Go](https://golang.org)
 
 

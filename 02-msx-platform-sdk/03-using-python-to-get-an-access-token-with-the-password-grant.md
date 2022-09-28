@@ -201,4 +201,4 @@ If you are having trouble running the application make sure you:
 * uncommented the code to defeat the SSL certificate
 
 
-| [PREVIOUS](03-using-go-to-get-an-access-token-with-the-password-grant.md) | [NEXT](10-catalog-microservice.md) | [HOME](../index.md#msx-platform-sdk) |
+| [PREVIOUS](02-using-go-to-get-an-access-token-with-the-password-grant.md) | [NEXT](10-catalog-microservice.md) | [HOME](../index.md#msx-platform-sdk) |

@@ -137,7 +137,7 @@ There are two important things to note about the request we made:
 1. we added the switch "--insecue" because the SSL certificate in our environment is not signed
 2. the access token in the header will be different each time you sign in 
    
-You will need a valid access token each time you want to make requests like this. You can get that token from Swagger, at which point it maybe just as easy to make your request there. In later guides we show how to get an access token using the password grant in [Java](../02-msx-platform-sdk/02-using-java-to-get-an-access-token-with-the-password-grant.md) and [Go](../02-msx-platform-sdk/03-using-go-to-get-an-access-token-with-the-password-grant.md) which you can then use to make SDK client requests.
+You will need a valid access token each time you want to make requests like this. You can get that token from Swagger, at which point it maybe just as easy to make your request there. In later guides we show how to get an access token using the password grant in [Java](../02-msx-platform-sdk/02-using-java-to-get-an-access-token-with-the-password-grant.md) and [Go](../02-msx-platform-sdk/02-using-go-to-get-an-access-token-with-the-password-grant.md) which you can then use to make SDK client requests.
 
 
 ## References
