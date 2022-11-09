@@ -8,7 +8,6 @@
   * [Extra Configuration Files](#extra-configuration-files)
   * [Defining Custom Secrets](#defining-custom-secrets)
   * [Defining Custom Consul Configurations](#defining-custom-consul-configurations)
-  * [Configuring Cassandra](#configuring-cassandra)
   * [Configuring CockraochDB](#configuring-cockroachdb)
 * [References](#references)
 
@@ -135,15 +134,9 @@ PrePopulate:
 # [Optional] Configuration section for infrastructure needs such as database for your application.
 # List of required infra services required all are optional
 # Consul and Vault access granted by default restricted to /<servicename> path in KV
-# Population of Env defaults (e.g. cassandra address) will be done by onboarding service
+# Population of Env defaults (e.g. cockroach address) will be done by onboarding service
 Infrastructure:
   # Database configuration section.  The details for the account that was created for your service can be retrieved from Consul.
-  # If your application needs Cassandra, the following configurations can be retrieved from Consul at startup/runtime:
-  # - db.cassandra.username
-  # - db.cassandra.keyspaceName
-  #
-  # and the following attribute can be retrieved from Vault at startup time:
-  # - db.cassandra.password
   #
   # If your application needs CockroachDB, the following configurations can be retrieved from Consul at startup/runtime:
   # - db.cockroach.username
@@ -152,7 +145,7 @@ Infrastructure:
   # and the following attribute can be retrieved from Vault at startup time:
   # - db.cockroach.password
   Database:
-    Type: Cassandra # or Cockroach
+    Type: Cockroach
     Name: "Expected DB name"
 
   # !!! Bus functionality is currently not supported.
@@ -212,7 +205,7 @@ Infrastructure:
 | Infrastructure                   | N        | Infrastructure related configurations for the service to be deployed. This section contains information such as database and caching dependency definitions. |
 | Infrastructure.Database          | N        | Configurations for database connection requirements. |
 | Infrastructure.Database.Name     | Y        | Name of database to create for the service. |
-| Infrastructure.Database.Type     | Y        | Type of database to use [Cassandra &#124; CockroachDB]. |
+| Infrastructure.Database.Type     | Y        | Type of database to use [CockroachDB]. |
 | Infrastructure.Bus               | N        | UNSUPPORTED - Configurations for Kafka requirements. |
 | Infrastructure.Bus.Topics        | Y        | UNSUPPORTED |
 | Infrastructure.Bus.Type          | Y        | UNSUPPORTED |
@@ -377,20 +370,6 @@ ConsulKeys:
     Value: value1
   - Name: config2
     Value: value2
-```
-
-
-### Configuring Cassandra 
-If your service requires a Cassandra database, please add a Infrastructure.Database block to your manifest.yml. A Cassandra DB will be created for your application with the specified name.  A user will also be created for your service. The SLM service generates a unique account for your application. To retrieve the username that your application needs to use to connect to the generated Cassandra DB please retrieve the value under key db.cassandra.username from Consul and value under key db.cassandra.password from Vault to get the auto generated password. The database name(keyspace name) is stored by the key db.cassandra.keyspaceName in Consul.
-```yaml
-Name: "servicename"
-Type: Internal
-Containers:
-  ...
-Infrastructure:
-  Database:
-    Type: "Cassandra"
-    Name: "myServiceDB"
 ```
 
 
