@@ -55,7 +55,7 @@ Binary services are those written in languages like Rust and Go that much be cro
 ```dockerfile
 # Select a base image to use as builder.  
 # This container will be used to compile source but will not be included in the final image.
-FROM golang:alpine as builder
+FROM --platform=linux/amd64 golang:alpine as builder
 
 # Add any additional packages required for the build or for populating the final image. 
 # In this case we are pulling ca-certificates and upx (to compact the binary for truely minimal size)
@@ -102,7 +102,7 @@ RUN chown -R agentuser:agentuser /conf/
 # This example shows a scratch container as such it does not contain anything that has not been added. 
 # Finaly containers can just as easily be based on an OS such as Alpine or Debian.
 # If using a target OS its a good idea to version pin and not use latest for stability. 
-FROM scratch
+FROM --platform=linux/amd64 scratch
 
 # Copy in the final compiled binary from the build container
 COPY --from=builder /go/src/cto-github.cisco.com/NFV-BU/msx-agent/agent /agent
@@ -134,7 +134,7 @@ This example shows how to create a containerized Java service. Most of the steps
 # Since this is a single step container we are selecting a minimized Debian image as our base 
 # Details of how its put together can be found here: https://github.com/bitnami/minideb 
 # Note that we are version pinning to buster to ensure consistency 
-FROM bitnami/minideb:buster
+FROM --platform=linux/amd64 bitnami/minideb:buster
 
 # Here we are defining the name of application jar as a build arg that can be overwritten by a pipeline job
 ARG APP_JAR="myservice.jar"
@@ -181,7 +181,7 @@ ENTRYPOINT ["/service/dockerlaunch.sh"]
 ## Containerizing a React Application
 This example shows how to containerize a React application. In this example we assume that "npm run build" has been run manually or via automation. 
 ```Dockerfile
-FROM nginx:latest
+FROM --platform=linux/amd64 nginx:latest
 COPY ./build/ /usr/share/nginx/html/reactSsoAppAuthDemo
 COPY ./slm/nginx.conf /etc/nginx/conf.d/default.conf
 ```

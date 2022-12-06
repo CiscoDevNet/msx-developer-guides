@@ -92,7 +92,7 @@ server {
 Next we create a dockerfile so that we can containerize the application. Create "Dockerfile" as shown below:
 ```dockerfile
 # this dockerfile is used to wrap the react demo in a container for deployment
-FROM nginx:latest
+FROM --platform=linux/amd64 nginx:latest
 COPY ./build/ /usr/share/nginx/html/reactSsoSdkDemo
 COPY ./config/nginx.conf /etc/nginx/conf.d/default.conf
 ```

@@ -140,7 +140,7 @@ RUN adduser \
     "${USER}"
 RUN chown helloworld:helloworld /go/src/github.com/CiscoDevNet/msx-examples/go-hello-world-service-2/helloworld
 
-FROM scratch
+FROM --platform=linux/amd64 scratch
 COPY --from=builder /go/src/github.com/CiscoDevNet/msx-examples/go-hello-world-service-2/helloworld /
 COPY --from=builder /etc/passwd /etc/passwd
 COPY --from=builder /etc/group /etc/group

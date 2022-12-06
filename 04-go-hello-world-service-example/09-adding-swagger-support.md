@@ -287,7 +287,7 @@ RUN adduser \
 RUN chown helloworld:helloworld /go/src/github.com/CiscoDevNet/msx-examples/go-hello-world-service-6/helloworld
 RUN chown helloworld:helloworld /HelloWorldService-1.json
 
-FROM scratch
+FROM --platform=linux/amd64 scratch
 COPY --from=builder /go/src/github.com/CiscoDevNet/msx-examples/go-hello-world-service-6/helloworld /
 COPY --from=builder /HelloWorldService-1.json /
 COPY --from=builder /etc/passwd /etc/passwd

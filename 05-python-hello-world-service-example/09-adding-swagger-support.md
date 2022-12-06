@@ -59,7 +59,7 @@ msxswagger @ git+https://github.com/CiscoDevNet/python-msx-swagger@v0.6.0
 The MSX Swagger package is hosted on GitHub, so we have to make some changes to the `Dockerfile` so that it can be installed in the container. 
 
 ```dockerfile
-FROM python:3.9.6-slim-buster
+FROM --platform=linux/amd64 python:3.9.6-slim-buster
 WORKDIR /app
 ADD . /app
 RUN apt-get update \
