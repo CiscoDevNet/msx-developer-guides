@@ -21,7 +21,6 @@
     * [Making Requests As Jeff](#making-requests-as-jeff)
 * [The Missing Pieces](#the-missing-pieces)
 
-
 ## Introduction
 All the Hello World Service requests we have made so were insecure because we have not passed an access token in the
 header. In this guide, we will add that security and show how to validate the access token and get a list of permissions
@@ -651,7 +650,7 @@ $ curl -k -X GET "https://$MY_MSX_HOSTNAME/idm/api/v1/roles/OPERATOR" \
 
 You now have role identifiers for `HELLOWORLD_CONSUMER` and `OPERATOR` which we can use to create a user.
 
-Expand the Swagger documentation for Users and find **Swagger -> IDM Microservice -> User -> POST /idm/api/v8/user**”, plug your role identifiers into the payload below, then call it.
+Expand the Swagger documentation for Users and find **Swagger -> IDM Microservice -> Users -> POST /idm/api/v8/users**”, plug your role identifiers into the payload below, then call it.
 
 ```json
 {
@@ -663,6 +662,9 @@ Expand the Swagger documentation for Users and find **Swagger -> IDM Microservic
   "roleIds": [
     "1811c107-9433-4285-872b-84d6130c8dcf",
     "d6660cd0-38cf-11eb-9843-0916e7f369e0"
+  ],
+  "tenantIds": [
+    "3fa85f64-5717-4562-b3fc-2c963f66afa6"
   ],
   "username": "jeff"
 }
