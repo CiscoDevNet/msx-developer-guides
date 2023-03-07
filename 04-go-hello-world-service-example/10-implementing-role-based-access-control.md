@@ -1,25 +1,26 @@
 # Implementing Role Based Access Control
-* [Introduction](#introduction)
-* [Goals](#goals)
-* [Prerequisites](#prerequisites)
-* [Configuring the Project](#configuring-the-project)
-    * [go.mod](#gomod)
-    * [go/routers.mod](#goroutersgo)
-    * [go/api_items.go](#goapi_itemsgo)
-    * [go/api_languages.go](#goapi_languagesgo)
-    * [internal/config/config.go](#internalconfigconfiggo)
-    * [internal/security/security.go](#internalsecuritysecuritygo)
-    * [main.go](#maingo)
-    * [helloworld.yml](#helloworldyml)
-    * [manifest.yml](#manifestyml)
-* [Building the Component](#building-the-component)
-* [Deploying the Component](#deploying-the-component)
-* [Testing the Component](#testing-the-component)
-    * [Creating Custom Permissions](#creating-custom-permissions)
-    * [Creating Custom Roles](#creating-custom-roles)
-    * [Creating a Special User](#creating-a-special-user)
-    * [Making Requests As Jeff](#making-requests-as-jeff)
-* [The Missing Pieces](#the-missing-pieces)
+- [Implementing Role Based Access Control](#implementing-role-based-access-control)
+	- [Introduction](#introduction)
+	- [Goals](#goals)
+	- [Prerequisites](#prerequisites)
+	- [Configuring the Project](#configuring-the-project)
+		- [go.mod](#gomod)
+		- [internal/config/config.go](#internalconfigconfiggo)
+		- [go/routers.go](#goroutersgo)
+		- [go/api\_items.go](#goapi_itemsgo)
+		- [go/api\_languages.go](#goapi_languagesgo)
+		- [internal/security/security.go](#internalsecuritysecuritygo)
+		- [main.go](#maingo)
+		- [helloworld.yml](#helloworldyml)
+		- [manifest.yml](#manifestyml)
+	- [Building the Component](#building-the-component)
+	- [Deploying the Component](#deploying-the-component)
+	- [Testing the Component](#testing-the-component)
+		- [Creating Custom Permissions](#creating-custom-permissions)
+		- [Creating Custom Roles](#creating-custom-roles)
+		- [Creating a Special User](#creating-a-special-user)
+	- [Making Requests As Jeff](#making-requests-as-jeff)
+	- [The Missing Pieces](#the-missing-pieces)
 
 
 ## Introduction
@@ -651,7 +652,7 @@ $ curl -k -X GET "https://$MY_MSX_HOSTNAME/idm/api/v1/roles/OPERATOR" \
 
 You now have role identifiers for `HELLOWORLD_CONSUMER` and `OPERATOR` which we can use to create a user.
 
-Expand the Swagger documentation for Users and find **Swagger -> IDM Microservice -> User -> POST /idm/api/v8/user**”, plug your role identifiers into the payload below, then call it.
+Expand the Swagger documentation for Users and find **Swagger -> IDM Microservice -> Users -> POST /idm/api/v8/users**”, plug your role identifiers into the payload below, then call it.
 
 ```json
 {
@@ -663,6 +664,9 @@ Expand the Swagger documentation for Users and find **Swagger -> IDM Microservic
   "roleIds": [
     "1811c107-9433-4285-872b-84d6130c8dcf",
     "d6660cd0-38cf-11eb-9843-0916e7f369e0"
+  ],
+  "tenantIds": [
+    "3fa85f64-5717-4562-b3fc-2c963f66afa6"
   ],
   "username": "jeff"
 }

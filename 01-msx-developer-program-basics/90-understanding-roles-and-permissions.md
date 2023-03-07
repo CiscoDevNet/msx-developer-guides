@@ -1,10 +1,11 @@
 # Understanding Roles and Permissions
-* [Introduction](#introduction)
-* [Goals](#goals)
-* [Prerequisites](#prerequisites)
-* [Creating Custom Permissions](#creating-custom-permissions)
-* [Creating Custom Roles](#creating-custom-roles)
-* [Creating a User With Custom Roles](#creating-a-user-with-custom-roles)
+- [Understanding Roles and Permissions](#understanding-roles-and-permissions)
+  - [Introduction](#introduction)
+- [Goals](#goals)
+- [Prerequisites](#prerequisites)
+  - [Creating Custom Permissions](#creating-custom-permissions)
+  - [Creating Custom Roles](#creating-custom-roles)
+  - [Creating a User With Custom Roles](#creating-a-user-with-custom-roles)
 
 
 ## Introduction
@@ -172,6 +173,9 @@ You now have role identifiers for HELLOWORLD_CONSUMER and OPERATOR which we can 
   "passwordPolicyName": "ppolicy_default",
   "roleIds": [
     "1811c107-9433-4285-872b-84d6130c8dcf", "d6660cd0-38cf-11eb-9843-0916e7f369e0"
+  ],
+  "tenantIds": [
+    "3fa85f64-5717-4562-b3fc-2c963f66afa6"
   ],
   "username": "jeff"
 }
