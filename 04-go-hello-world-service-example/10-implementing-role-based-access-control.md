@@ -1,4 +1,4 @@
-# Implementing Role Based Access Control* [Introduction](#introduction)
+# Implementing Role Based Access Control
 * [Introduction](#introduction)
 * [Goals](#goals)
 * [Prerequisites](#prerequisites)
