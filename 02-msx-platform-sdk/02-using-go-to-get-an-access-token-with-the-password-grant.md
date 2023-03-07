@@ -253,4 +253,4 @@ If you are having trouble running the application make sure you:
 * uncommented the code to defeat the SSL certificate
 
 
-| [PREVIOUS](02-using-java-to-get-an-access-token-with-the-password-grant.md) | [NEXT](04-using-python-to-get-an-access-token-with-the-password-grant.md) | [HOME](../index.md#msx-platform-sdk) |
+| [PREVIOUS](01-introducing-the-msx-platform-sdk.md) | [NEXT](03-using-python-to-get-an-access-token-with-the-password-grant.md) | [HOME](../index.md#msx-platform-sdk) |

@@ -76,5 +76,4 @@
 
 # Reference
 * [Component Manager Manifest Reference](reference/component-manager-manifest-reference.md)
-* [User Interface Style Guide](reference/user-interface-style-guide.md)
 * [MSX 4.3 Installation Requirements](https://www.cisco.com/c/en/us/td/docs/net_mgmt/msx/4_3_0/install_guide/articles/msx_installation_requirements.html)
