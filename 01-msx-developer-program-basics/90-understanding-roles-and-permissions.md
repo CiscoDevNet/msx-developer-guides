@@ -1,12 +1,10 @@
 # Understanding Roles and Permissions
-- [Understanding Roles and Permissions](#understanding-roles-and-permissions)
-  - [Introduction](#introduction)
-- [Goals](#goals)
-- [Prerequisites](#prerequisites)
-  - [Creating Custom Permissions](#creating-custom-permissions)
-  - [Creating Custom Roles](#creating-custom-roles)
-  - [Creating a User With Custom Roles](#creating-a-user-with-custom-roles)
-
+* [Introduction](#introduction)
+* [Goals](#goals)
+* [Prerequisites](#prerequisites)
+* [Creating Custom Permissions](#creating-custom-permissions)
+* [Creating Custom Roles](#creating-custom-roles)
+* [Creating a User With Custom Roles](#creating-a-user-with-custom-roles)
 
 ## Introduction
 What you can see and do in MSX is controlled by the Roles assigned to your User. MSX comes preconfigured with multiples Roles, each with a set of Permissions, where Permissions control the level of access to particular resources. For example, there is a one Permission to manage tenants, and one to read tenants. An administrator Role will be able to read and write tenants, but a general user will be restricted to read only access.
